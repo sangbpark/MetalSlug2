@@ -65,7 +65,7 @@ namespace sb
 	{
 		Time::Update();
 		Input::Update();
-		
+		CollisionManager::Update();
 		SceneManager::Update();
 	
 	}
