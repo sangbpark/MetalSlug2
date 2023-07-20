@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{eb42aea0-adbb-4990-8e63-1b4ac54c3d92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Header">
+      <UniqueIdentifier>{4ca4eeeb-add6-469c-8625-36a2c460d90b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows\Resource">
+      <UniqueIdentifier>{1592b4e4-cc1d-42d0-9420-ff754579d1ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{66b14f13-997e-4cd9-a2d2-a7fc359f41ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Common">
+      <UniqueIdentifier>{c89ac545-816b-4970-ae26-25e3890220f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\High Level interface">
+      <UniqueIdentifier>{fa501b30-b329-4644-a6fe-a34d1cd0199c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{98750d9b-5f1b-440c-8eb8-8e7e14a6505b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Time">
+      <UniqueIdentifier>{ee6970c8-ebfe-4f6e-ad3c-8713d43db6ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Auto Ellipse">
+      <UniqueIdentifier>{3d90480f-d243-45b4-9cb5-d83aaf9e8d16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Entity">
+      <UniqueIdentifier>{1f8bd229-5b1c-4d99-928e-14cef7047fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene">
+      <UniqueIdentifier>{d38e21f6-1563-41c3-9a2b-4640739ab49b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Layer">
+      <UniqueIdentifier>{e2a530dc-32dd-4226-9852-9e44713aa087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject">
+      <UniqueIdentifier>{85ee1b04-8718-4940-8313-1a1d7b08abf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component">
+      <UniqueIdentifier>{0c2357c8-5d56-4e0a-a04e-3c0f839fe347}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\Transform">
+      <UniqueIdentifier>{20148a04-ca3c-48f5-ae4f-ee602cf0b7c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\SpriteRenderer">
+      <UniqueIdentifier>{aa135c25-db04-4941-bce6-fc331446a0c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>{0a0fd048-a032-41c8-8fb5-644455f96527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Scene">
+      <UniqueIdentifier>{57198486-0b9e-46c8-ba04-6d5fdd791536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Scene\TitleScene">
+      <UniqueIdentifier>{698f39db-82e1-4c46-af80-7a854a88003e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct">
+      <UniqueIdentifier>{3c732ea4-d978-4f48-a55d-c988f166c495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Player">
+      <UniqueIdentifier>{331f096b-1491-4247-9c5a-8bd367cb1681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{45c5a514-6d09-4d24-b396-7684f04aca5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{3ea1eae6-5f9f-435f-ae06-f208066e2091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\BackGround">
+      <UniqueIdentifier>{e3378bc3-332a-4f4a-b9a4-ffbd88f67437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Scene\Mission1">
+      <UniqueIdentifier>{44282ea5-6802-4710-9c39-7732e37cd57c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\BackGround\BGDesert">
+      <UniqueIdentifier>{713910e5-0500-4530-9f6c-6b5b2105a1c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\BackGround\BGMDesert">
+      <UniqueIdentifier>{2ff87f37-c66e-4dbf-90fd-18f2a0d39613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Camera">
+      <UniqueIdentifier>{678ae7d1-d145-4557-9b02-cc497a837e31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Dev">
+      <UniqueIdentifier>{a5b290d5-7ad3-447c-b763-6d0d8666f43e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\FrontBackGround">
+      <UniqueIdentifier>{5075f4f7-ae76-4396-aa9c-77ee1b1dbce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Monster">
+      <UniqueIdentifier>{1b0f398f-fd10-4691-a0ee-8371fb56bb89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Monster\MiddleBoss">
+      <UniqueIdentifier>{ea5b8c97-bbd5-4a89-9e7d-60f3faf63a34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Npc">
+      <UniqueIdentifier>{7a7cf869-6fad-4c76-b66a-27157a0b7223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Npc\OldMan">
+      <UniqueIdentifier>{6d9966b2-7f38-47a0-98de-a1d2e56126fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\CameraPlayer">
+      <UniqueIdentifier>{de542601-548c-43ee-a87e-5e16f0c9f605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Animation">
+      <UniqueIdentifier>{e77a8bd1-a157-412d-8033-287716116263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\Animator">
+      <UniqueIdentifier>{00e2aefc-c196-4124-8939-129c8aeb9d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Player\PlayerTop">
+      <UniqueIdentifier>{aaa10e75-f191-4798-9960-c2ed95e0a02d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Player\PlayerBottom">
+      <UniqueIdentifier>{6fb92dfe-60ab-4a8b-aa86-f6ecaf8a4397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\BackGround\BGbossCanopi">
+      <UniqueIdentifier>{d68491ed-e39b-490b-9203-979f84f3435a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Collision">
+      <UniqueIdentifier>{3e829216-91df-49f7-a0a4-1a5ab5ca8f58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component\Collider">
+      <UniqueIdentifier>{d169dc38-8b23-4d1b-918f-436638c7c21d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Windows\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="METAL SLUG.h">
+      <Filter>Windows\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Windows\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Windows\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Commoninclude.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="sbApplication.h">
+      <Filter>Engine\High Level interface</Filter>
+    </ClInclude>
+    <ClInclude Include="sbMath.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="sbInput.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="sbTime.h">
+      <Filter>Engine\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="sbAuto.h">
+      <Filter>Engine\Auto Ellipse</Filter>
+    </ClInclude>
+    <ClInclude Include="sbEntity.h">
+      <Filter>Engine\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="sbScene.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sbLayer.h">
+      <Filter>Engine\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="sbGameObject.h">
+      <Filter>Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="sbComponent.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="sbTransform.h">
+      <Filter>Engine\Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="sbSpriteRenderer.h">
+      <Filter>Engine\Component\SpriteRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="sbSceneManager.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sbObject.h">
+      <Filter>Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="sbTitleScene.h">
+      <Filter>Content\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="sbPlayer.h">
+      <Filter>Content\GameObejct\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="sbMission1.h">
+      <Filter>Content\Scene\Mission1</Filter>
+    </ClInclude>
+    <ClInclude Include="sbResource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="sbResources.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="sbTexture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBackGround.h">
+      <Filter>Content\GameObejct\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBGDesert.h">
+      <Filter>Content\GameObejct\BackGround\BGDesert</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBGMDesert.h">
+      <Filter>Content\GameObejct\BackGround\BGMDesert</Filter>
+    </ClInclude>
+    <ClInclude Include="sbCamera.h">
+      <Filter>Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="sbDev.h">
+      <Filter>Content\GameObejct\Dev</Filter>
+    </ClInclude>
+    <ClInclude Include="sbFrontBackGround.h">
+      <Filter>Content\GameObejct\FrontBackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="sbMonster.h">
+      <Filter>Content\GameObejct\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="sbMiddleBoss.h">
+      <Filter>Content\GameObejct\Monster\MiddleBoss</Filter>
+    </ClInclude>
+    <ClInclude Include="sbNpc.h">
+      <Filter>Content\GameObejct\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="sbOldMan.h">
+      <Filter>Content\GameObejct\Npc\OldMan</Filter>
+    </ClInclude>
+    <ClInclude Include="sbCameraPlayer.h">
+      <Filter>Content\GameObejct\CameraPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="sbAnimation.h">
+      <Filter>Resource\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="sbAnimator.h">
+      <Filter>Engine\Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="sbPlayerTop.h">
+      <Filter>Content\GameObejct\Player\PlayerTop</Filter>
+    </ClInclude>
+    <ClInclude Include="sbPlayerBottom.h">
+      <Filter>Content\GameObejct\Player\PlayerBottom</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBGbossCanopi.h">
+      <Filter>Content\GameObejct\BackGround\BGbossCanopi</Filter>
+    </ClInclude>
+    <ClInclude Include="sbCollisionManager.h">
+      <Filter>Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="sbCollider.h">
+      <Filter>Engine\Component\Collider</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="METAL SLUG.ico">
+      <Filter>Windows\Resource</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>Windows\Resource</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="sbApplication.cpp">
+      <Filter>Engine\High Level interface</Filter>
+    </ClCompile>
+    <ClCompile Include="sbInput.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="sbTime.cpp">
+      <Filter>Engine\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="sbAuto.cpp">
+      <Filter>Engine\Auto Ellipse</Filter>
+    </ClCompile>
+    <ClCompile Include="sbEntity.cpp">
+      <Filter>Engine\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="sbScene.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sbLayer.cpp">
+      <Filter>Engine\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="sbGameObject.cpp">
+      <Filter>Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="sbComponent.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="sbTransform.cpp">
+      <Filter>Engine\Component\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="sbSpriteRenderer.cpp">
+      <Filter>Engine\Component\SpriteRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="sbSceneManager.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sbTitleScene.cpp">
+      <Filter>Content\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="sbPlayer.cpp">
+      <Filter>Content\GameObejct\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="sbMission1.cpp">
+      <Filter>Content\Scene\Mission1</Filter>
+    </ClCompile>
+    <ClCompile Include="sbResource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="sbResources.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="sbTexture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="sbMath.cpp">
+      <Filter>Engine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBackGround.cpp">
+      <Filter>Content\GameObejct\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBGDesert.cpp">
+      <Filter>Content\GameObejct\BackGround\BGDesert</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBGMDesert.cpp">
+      <Filter>Content\GameObejct\BackGround\BGMDesert</Filter>
+    </ClCompile>
+    <ClCompile Include="sbCamera.cpp">
+      <Filter>Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="sbDev.cpp">
+      <Filter>Content\GameObejct\Dev</Filter>
+    </ClCompile>
+    <ClCompile Include="sbFrontBackGround.cpp">
+      <Filter>Content\GameObejct\FrontBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="sbMonster.cpp">
+      <Filter>Content\GameObejct\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="sbMiddleBoss.cpp">
+      <Filter>Content\GameObejct\Monster\MiddleBoss</Filter>
+    </ClCompile>
+    <ClCompile Include="sbNpc.cpp">
+      <Filter>Content\GameObejct\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="sbOldMan.cpp">
+      <Filter>Content\GameObejct\Npc\OldMan</Filter>
+    </ClCompile>
+    <ClCompile Include="sbCameraPlayer.cpp">
+      <Filter>Content\GameObejct\CameraPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="sbAnimation.cpp">
+      <Filter>Resource\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="sbAnimator.cpp">
+      <Filter>Engine\Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="sbPlayerTop.cpp">
+      <Filter>Content\GameObejct\Player\PlayerTop</Filter>
+    </ClCompile>
+    <ClCompile Include="sbPlayerBottom.cpp">
+      <Filter>Content\GameObejct\Player\PlayerBottom</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBGbossCanopi.cpp">
+      <Filter>Content\GameObejct\BackGround\BGbossCanopi</Filter>
+    </ClCompile>
+    <ClCompile Include="sbCollisionManager.cpp">
+      <Filter>Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="sbCollider.cpp">
+      <Filter>Engine\Component\Collider</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="METAL SLUG.rc">
+      <Filter>Windows\Resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
