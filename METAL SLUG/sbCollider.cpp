@@ -5,11 +5,17 @@
 
 namespace sb
 {
+	UINT Collider::mCollisionCount = 0;
+
 	Collider::Collider()
 		:Component(enums::eComponentType::Collider)
 		, mSize(Vector2::Zero)
 		, mOffset(Vector2::Zero)
+		, mCollisionNumber(-1)
+		, mbIsCollision(false)
 	{
+		mCollisionNumber = mCollisionCount;
+		mCollisionCount++;
 	}
 	Collider::~Collider()
 	{

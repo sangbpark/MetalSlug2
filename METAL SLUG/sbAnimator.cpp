@@ -39,13 +39,9 @@ namespace sb
 		, float duration)
 	{
 		Animation* animation = nullptr;
-		animation = Resources::Find<Animation>(name);
+		animation = FindAnimation(name);
 		if (animation != nullptr)
-		{	
-			animation->SetAnimator(this);
-			mAnimations.insert(std::make_pair(name, animation));
 			return animation;
-		}
 	
 		
 		animation = new Animation();
@@ -56,7 +52,8 @@ namespace sb
 
 		mAnimations.insert(std::make_pair(name, animation));
 		Resources::Insert<Animation>(name, animation);
-	
+		
+		return animation;
 	}
 	void Animator::CreateAnimationFolder(const std::wstring& name
 		, const std::wstring& path, Vector2 offset, float duration)

@@ -28,11 +28,11 @@ namespace sb
 
 		pos.y = pos2.y;
 
-		if (Input::GetKey(eKeyCode::UP))
+		if (Input::GetKey(eKeyCode::W))
 		{
-			pos.y -= 300.0f * Time::DeltaTime();
+			pos.y -= 300.0f * Time::DeltaTime();	
 		}
-		if (Input::GetKey(eKeyCode::DOWN))
+		if (Input::GetKey(eKeyCode::S))
 		{
 			pos.y += 300.0f * Time::DeltaTime();
 		}

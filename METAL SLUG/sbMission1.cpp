@@ -18,6 +18,8 @@
 #include "sbAnimator.h"
 #include "sbBGbossCanopi.h"
 #include "sbCollider.h"
+#include "sbCollisionManager.h"
+
 namespace sb
 {
 	Mission1::Mission1()
@@ -174,7 +176,6 @@ namespace sb
 		OMat1->CreateAnimation(L"NpcOldManIdleAX", imageNpcOldMan, Vector2(0.0f, 11.0f), Vector2(44.0f, 42.0f), 2);
 		OMat1->SetScale(Vector2(4.5f, 4.5f));
 		OMat1->PlayAnimation(L"NpcOldManIdleAX",true);
-	
 
 
 
@@ -193,9 +194,9 @@ namespace sb
 		Transform* OMtr3 = NpcOldMan3->GetComponent<Transform>();
 		OMtr3->SetPosition(Vector2(9000.0f, 600.0f));
 		Animator* OMat3 = NpcOldMan3->AddComponent<Animator>();
-		OMat3->CreateAnimation(L"NpcOldManIdle3AX", imageNpcOldMan, Vector2(0.0f, 11.0f), Vector2(44.0f, 42.0f), 2);
+		OMat3->CreateAnimation(L"NpcOldManIdleAX", imageNpcOldMan, Vector2(0.0f, 11.0f), Vector2(44.0f, 42.0f), 2);
 		OMat3->SetScale(Vector2(4.5f, 4.5f));
-		OMat3->PlayAnimation(L"NpcOldManIdle3AX", true);
+		OMat3->PlayAnimation(L"NpcOldManIdleAX", true);
 	
 
 		
@@ -203,18 +204,11 @@ namespace sb
 		Transform* OMtr4 = NpcOldMan4->GetComponent<Transform>();
 		OMtr4->SetPosition(Vector2(13500.0f, 600.0f));
 		Animator* OMat4 = NpcOldMan4->AddComponent<Animator>();
-		OMat4->CreateAnimation(L"NpcOldManIdle4AX", imageNpcOldMan, Vector2(0.0f, 11.0f), Vector2(44.0f, 42.0f), 2);
+		OMat4->CreateAnimation(L"NpcOldManIdleAX", imageNpcOldMan, Vector2(0.0f, 11.0f), Vector2(44.0f, 42.0f), 2);
 		OMat4->SetScale(Vector2(4.5f, 4.5f));
-		OMat4->PlayAnimation(L"NpcOldManIdle4AX", true);
+		OMat4->PlayAnimation(L"NpcOldManIdleAX", true);
 	
 		
-		OldMan* NpcOldMan5 = object::Instantiate<OldMan>(enums::eLayerType::Npc);
-		Transform* OMtr5 = NpcOldMan5->GetComponent<Transform>();
-		Animator* OMat5 = NpcOldMan1->AddComponent<Animator>();
-		OMat5->CreateAnimation(L"NpcOldManIdle5AX", imageNpcOldMan, Vector2(0.0f, 11.0f), Vector2(44.0f, 42.0f), 2);
-		OMat5->SetScale(Vector2(4.5f, 4.5f));
-		OMat5->PlayAnimation(L"NpcOldManIdle5AX", true);
-	
 		Texture* imagePlayer = Resources::Load<Texture>(L"Player"
 			, L"..\\Resource\\Character\\Neo Geo NGCD - Metal Slug 2 Metal Slug X - Marco Rossi.bmp");
 	
@@ -242,10 +236,6 @@ namespace sb
 		pt->SetScale(Vector2(4.5f, 4.5f));
 		pt->PlayAnimation(L"PlayerIdlerightTAX", true);
 
-		Collider* col = playerbottom->AddComponent<Collider>();
-		col->SetSize(Vector2(100.0f, 160.0f));
-		col->SetOffset(Vector2(33.0f, 82.0f));
-
 
 		Texture* imageCameraPlayer = Resources::Load<Texture>(L"CameraPlayer"
 			, L"..\\Resource\\Character\\Dev.bmp");
@@ -255,6 +245,10 @@ namespace sb
 		cptr->SetPosition(Vector2(600.0f, 400.0f));
 		cpsr->SetImage(imageCameraPlayer);
 		cpsr->SetAlpha(0.0f);
+
+		Collider* col = playerbottom->AddComponent<Collider>();
+		col->SetSize(Vector2(100.0f, 160.0f));
+		col->SetOffset(Vector2(0.0f, 0.0f));
 	
 		
 		Camera::SetTarget(cameraplayer);
