@@ -13,6 +13,7 @@ namespace sb
 			Death,
 			attack,
 			bomb,
+			jump,
 			End,
 		};
 
@@ -31,9 +32,10 @@ namespace sb
 
 		void Idle();
 		void Move();
-		void Dead();
+		void Death();
 		void Attack();
 		void Bomb();
+		void Jump();
 
 		static math::Vector2 GetPlayerPosition() { return mPlayposition; }
 
@@ -41,5 +43,6 @@ namespace sb
 		static math::Vector2 mPlayposition;
 		eState mState;
 		bool mDirect;
+		bool mbGround;
 	};
 }

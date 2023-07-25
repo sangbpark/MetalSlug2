@@ -51,6 +51,7 @@ namespace sb
 		Time::Initailize();
 		Input::Initailize();
 		Camera::Initialize();
+
 		CollisionManager::Initialize();
 		SceneManager::Initialize();
 
@@ -65,6 +66,7 @@ namespace sb
 	{
 		Time::Update();
 		Input::Update();
+
 		CollisionManager::Update();
 		SceneManager::Update();
 	

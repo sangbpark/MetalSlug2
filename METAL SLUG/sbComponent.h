@@ -3,10 +3,11 @@
 
 namespace sb
 {
+	using namespace enums;
 	class Component : public Entity
 	{
 	public:
-		Component(enums::eComponentType type);
+		Component(eComponentType type);
 		virtual ~Component();
 
 		virtual void Initialize();
@@ -17,7 +18,7 @@ namespace sb
 		class GameObject* GetOwner() { return mOwner; }
 
 	private:
-		const enums::eComponentType mType;
+		const eComponentType mType;
 		class GameObject* mOwner;
 	};
 }

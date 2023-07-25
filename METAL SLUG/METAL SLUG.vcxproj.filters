@@ -127,6 +127,12 @@
     <Filter Include="Engine\Component\Collider">
       <UniqueIdentifier>{d169dc38-8b23-4d1b-918f-436638c7c21d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Component\Rigidbody">
+      <UniqueIdentifier>{83c1f2cf-1b23-4585-acad-4cc509d1527e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Floor">
+      <UniqueIdentifier>{3cbcb364-7e75-464b-9275-9b325fda0be3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -258,6 +264,12 @@
     <ClInclude Include="sbCollider.h">
       <Filter>Engine\Component\Collider</Filter>
     </ClInclude>
+    <ClInclude Include="sbRigidbody.h">
+      <Filter>Engine\Component\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="sbFloor.h">
+      <Filter>Content\GameObejct\Floor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="METAL SLUG.ico">
@@ -379,6 +391,12 @@
     </ClCompile>
     <ClCompile Include="sbCollider.cpp">
       <Filter>Engine\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="sbRigidbody.cpp">
+      <Filter>Engine\Component\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="sbFloor.cpp">
+      <Filter>Content\GameObejct\Floor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

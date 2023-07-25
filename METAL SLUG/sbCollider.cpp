@@ -8,7 +8,7 @@ namespace sb
 	UINT Collider::mCollisionCount = 0;
 
 	Collider::Collider()
-		:Component(enums::eComponentType::Collider)
+		:Component(eComponentType::Collider)
 		, mSize(Vector2::Zero)
 		, mOffset(Vector2::Zero)
 		, mCollisionNumber(-1)
@@ -17,15 +17,20 @@ namespace sb
 		mCollisionNumber = mCollisionCount;
 		mCollisionCount++;
 	}
+
 	Collider::~Collider()
 	{
 	}
+
 	void Collider::Initialize()
 	{
 	}
+
 	void Collider::Update()
 	{
+
 	}
+
 	void Collider::Render(HDC hdc)
 	{
 		Transform* tr = GetOwner()->GetComponent<Transform>();
@@ -78,5 +83,4 @@ namespace sb
 		mbIsCollision = false;
 		GetOwner()->OnCollisionExit(other);
 	}
-
 }

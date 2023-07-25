@@ -34,6 +34,7 @@ namespace sb
 		void SetAlpha(float alpha) { mAlpha = alpha; }
 		Vector2 GetScale() { return mScale; }
 		void SetScale(Vector2 scale) { mScale = scale; }
+		bool Getcomplete() { return mActiveAnimation->IsComplete(); }
 
 	private:
 		std::map<std::wstring, Animation*> mAnimations;

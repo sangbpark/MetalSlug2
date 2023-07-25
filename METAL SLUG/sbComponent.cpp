@@ -2,7 +2,7 @@
 
 namespace sb
 {
-	Component::Component(enums::eComponentType type)
+	Component::Component(eComponentType type)
 		: mType(type)
 	{
 	}
