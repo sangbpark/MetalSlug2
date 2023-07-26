@@ -47,7 +47,26 @@ namespace sb
 
 	void Floor::OnCollisionStay(Collider* other)
 	{
+<<<<<<< HEAD
 	
+=======
+		PlayerBottom* playerb = dynamic_cast<PlayerBottom*>(other->GetOwner());
+		Transform* tr = playerb->GetComponent<Transform>();
+		Rigidbody* rb = playerb->GetComponent<Rigidbody>();
+
+
+		float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+		float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+		if (len < scale)
+		{
+			Vector2 playerPos = tr->GetPosition();
+			playerPos.y -= (scale - len) - 1.0f;
+			tr->SetPosition(playerPos);
+		}
+
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 	}
 	void Floor::OnCollisionExit(Collider* other)
 	{

@@ -15,7 +15,10 @@ namespace sb
 			attack,
 			bomb,
 			jump,
+<<<<<<< HEAD
 			stay,
+=======
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 			End,
 		};
 
@@ -38,8 +41,11 @@ namespace sb
 		void Attack();
 		void Bomb();
 		void Jump();
+<<<<<<< HEAD
 		void Down();
 		void Stay();
+=======
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 
 		static math::Vector2 GetPlayerPosition() { return mPlayposition; }
 

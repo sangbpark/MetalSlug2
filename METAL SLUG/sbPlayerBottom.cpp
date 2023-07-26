@@ -9,11 +9,19 @@
 namespace sb
 {
 	math::Vector2 PlayerBottom::mPlayposition = {};
+<<<<<<< HEAD
 	bool PlayerBottom::mGround = {};
 	bool state = false;
 	PlayerBottom::PlayerBottom()
 		:mDirect(true)
 
+=======
+
+
+	PlayerBottom::PlayerBottom()
+		:mDirect(true)
+		
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 	{
 	}
 	PlayerBottom::~PlayerBottom()
@@ -34,6 +42,7 @@ namespace sb
 		case sb::PlayerBottom::eState::Move:
 			Move();
 			break;
+<<<<<<< HEAD
 		case sb::PlayerBottom::eState::Down:
 			Down();
 			break;
@@ -43,6 +52,11 @@ namespace sb
 		case sb::PlayerBottom::eState::bomb:
 			Bomb();
 			break;
+=======
+		case sb::PlayerBottom::eState::attack:
+			Attack();
+			break;
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		case sb::PlayerBottom::eState::jump:
 			Jump();
 			break;
@@ -68,7 +82,11 @@ namespace sb
 	}
 	void PlayerBottom::OnCollisionEnter(Collider* other)
 	{
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 	}
 	void PlayerBottom::OnCollisionStay(Collider* other)
 	{
@@ -93,15 +111,26 @@ namespace sb
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+<<<<<<< HEAD
 			if (mDirect)
 			{
 				animator->PlayAnimation(L"PlayerrightdownBAX");
 				mState = eState::Down;
+=======
+			if(mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightdownBAX");
+				mState = eState::Move;
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 			}
 			else
 			{
 				animator->PlayAnimation(L"PlayerleftdownBAX");
+<<<<<<< HEAD
 				mState = eState::Down;
+=======
+				mState = eState::Move;
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 			}
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
@@ -113,7 +142,11 @@ namespace sb
 
 		if (Input::GetKey(eKeyCode::A))
 		{
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		}
 		if (Input::GetKeyDown(eKeyCode::S))
 		{
@@ -127,11 +160,15 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftjumpBAX");
 				mState = eState::jump;
 			}
+<<<<<<< HEAD
 			Rigidbody* rb = GetComponent<Rigidbody>();
 			Vector2 velocity = rb->GetVelocity();
 			velocity.y = -500.0f;
 			rb->SetVelocity(velocity);
 			rb->SetGround(false);
+=======
+
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		}
 
 	}
@@ -144,6 +181,7 @@ namespace sb
 		{
 
 		}
+<<<<<<< HEAD
 
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
@@ -318,21 +356,30 @@ namespace sb
 		{
 			animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
 			mDirect = false;
+=======
+		if (Input::GetKey(eKeyCode::DOWN))
+		{
+
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
 			pos.x -= 1000.0f * Time::DeltaTime();
 
 		}
+<<<<<<< HEAD
 		if (Input::GetKeyDown(eKeyCode::RIGHT))
 		{
 			animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
 			mDirect = true;
 		}
+=======
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		if (Input::GetKey(eKeyCode::RIGHT))
 		{
 			pos.x += 1000.0f * Time::DeltaTime();
 		}
+<<<<<<< HEAD
 		if (Input::GetKeyDown(eKeyCode::D))
 		{
 			if (mDirect)
@@ -377,6 +424,15 @@ namespace sb
 		}
 
 		if (Input::GetKeyUp(eKeyCode::DOWN))
+=======
+
+		tr->SetPosition(pos);
+
+		if (Input::GetKeyUp(eKeyCode::UP)
+			|| Input::GetKeyUp(eKeyCode::LEFT)
+			|| Input::GetKeyUp(eKeyCode::DOWN)
+			|| Input::GetKeyUp(eKeyCode::RIGHT))
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		{
 			if (mDirect)
 			{
@@ -391,4 +447,39 @@ namespace sb
 		}
 
 	}
+<<<<<<< HEAD
+=======
+
+	void PlayerBottom::Death()
+	{
+	}
+	void PlayerBottom::Attack()
+	{
+	}
+	void PlayerBottom::Bomb()
+	{
+	}
+	void PlayerBottom::Jump()
+	{
+		Animator* animator = GetComponent<Animator>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		Vector2 velocity = rb->GetVelocity();
+		velocity.y = -300.0f;
+		rb->SetVelocity(velocity);
+		rb->SetGround(false);
+		if (animator->Getcomplete())
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+				mState = eState::Idle;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+				mState = eState::Idle;
+			}
+		}
+	}
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 }

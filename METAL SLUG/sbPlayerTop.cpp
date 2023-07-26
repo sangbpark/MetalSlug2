@@ -38,9 +38,12 @@ namespace sb
 		case sb::PlayerTop::eState::Move:
 			Move();
 			break;
+<<<<<<< HEAD
 		case sb::PlayerTop::eState::Down:
 			Down();
 			break;
+=======
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		case sb::PlayerTop::eState::attack:
 			Attack();
 			break;
@@ -53,9 +56,12 @@ namespace sb
 		case sb::PlayerTop::eState::bomb:
 			Bomb();
 			break;
+<<<<<<< HEAD
 		case sb::PlayerTop::eState::stay:
 			Stay();
 			break;
+=======
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		case sb::PlayerTop::eState::End:
 			break;
 		default:
@@ -63,7 +69,11 @@ namespace sb
 		}
 
 		tr->SetPosition(pos);
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 	}
 	void PlayerTop::Render(HDC hdc)
 	{
@@ -98,12 +108,20 @@ namespace sb
 			if (mDirect)
 			{
 				animator->PlayAnimation(L"PlayerrightdownTAX");
+<<<<<<< HEAD
 				mState = eState::Down;
+=======
+				mState = eState::Move;
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 			}
 			else
 			{
 				animator->PlayAnimation(L"PlayerleftdownTAX");
+<<<<<<< HEAD
 				mState = eState::Down;
+=======
+				mState = eState::Move;
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 			}
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
@@ -113,15 +131,24 @@ namespace sb
 			mDirect = false;
 		}
 
+<<<<<<< HEAD
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
 			if (mDirect)
 			{
 				animator->PlayAnimation(L"PlayerrightknifeTAX");
+=======
+		if (Input::GetKey(eKeyCode::A))
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightknifeTAX", true);
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 				mState = eState::attack;
 			}
 			else
 			{
+<<<<<<< HEAD
 				animator->PlayAnimation(L"PlayerleftknifeTAX");
 				mState = eState::attack;
 			}
@@ -136,6 +163,9 @@ namespace sb
 			else
 			{
 				animator->PlayAnimation(L"PlayerleftgunTAX");
+=======
+				animator->PlayAnimation(L"PlayerleftknifeTAX", true);
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 				mState = eState::attack;
 			}
 		}
@@ -143,6 +173,22 @@ namespace sb
 		{
 			if (mDirect)
 			{
+<<<<<<< HEAD
+=======
+				animator->PlayAnimation(L"PlayerrightgunTAX", true);
+				mState = eState::attack;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerleftgunTAX", true);
+				mState = eState::attack;
+			}
+		}
+		if (Input::GetKeyDown(eKeyCode::S))
+		{
+			if (mDirect)
+			{
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 				animator->PlayAnimation(L"PlayerrightjumpTAX");
 				mState = eState::jump;
 			}
@@ -151,7 +197,11 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftjumpTAX");
 				mState = eState::jump;
 			}
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		}
 		if (Input::GetKey(eKeyCode::D))
 		{
@@ -174,6 +224,7 @@ namespace sb
 		Vector2 pos = tr->GetPosition();
 		if (Input::GetKey(eKeyCode::UP))
 		{
+<<<<<<< HEAD
 
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
@@ -184,11 +235,28 @@ namespace sb
 		{
 			mDirect = false;
 
+=======
+		
+		}
+		if (Input::GetKey(eKeyCode::DOWN))
+		{
+			
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
+		}
+		if (Input::GetKey(eKeyCode::LEFT))
+		{
+			/*pos.x -= 1000.0f * Time::DeltaTime();*/
+
 		}
 		if (Input::GetKey(eKeyCode::RIGHT))
 		{
+<<<<<<< HEAD
 			mDirect = true;
 
+=======
+			//pos.x += 1000.0f * Time::DeltaTime();
+			
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		}
 		tr->SetPosition(pos);
 
@@ -290,6 +358,33 @@ namespace sb
 		}
 
 	}
+<<<<<<< HEAD
+=======
+
+	void PlayerTop::Death()
+	{
+	}
+	void PlayerTop::Attack()
+	{
+
+		if (Input::GetKeyUp(eKeyCode::A)
+			|| Input::GetKeyUp(eKeyCode::Z))
+		{
+			if (mDirect)
+			{
+				Animator* animator = GetComponent<Animator>();
+				animator->PlayAnimation(L"PlayerIdlerightTAX", true);
+				mState = eState::Idle;
+			}
+			else
+			{
+				Animator* animator = GetComponent<Animator>();
+				animator->PlayAnimation(L"PlayerIdleleftTAX", true);
+				mState = eState::Idle;
+			}
+		}
+	}
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 	void PlayerTop::Bomb()
 	{
 		if (Input::GetKeyUp(eKeyCode::D))
@@ -312,12 +407,18 @@ namespace sb
 	{
 
 		Animator* animator = GetComponent<Animator>();
+<<<<<<< HEAD
 		if (Input::GetKeyDown(eKeyCode::RIGHT))
 			mDirect = true;
 		if (Input::GetKeyDown(eKeyCode::LEFT))
 			mDirect = false;
 
 		if (PlayerBottom::Getground())
+=======
+	
+
+		if (animator->Getcomplete())
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		{
 			if (mDirect)
 			{
@@ -330,6 +431,7 @@ namespace sb
 				mState = eState::Idle;
 			}
 		}
+<<<<<<< HEAD
 	}
 	void PlayerTop::Down()
 	{
@@ -403,5 +505,7 @@ namespace sb
 				tstate = false;
 			}
 		}
+=======
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 	}
 }

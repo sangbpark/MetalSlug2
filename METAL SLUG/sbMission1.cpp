@@ -216,13 +216,18 @@ namespace sb
 	
 		PlayerBottom* playerbottom = object::Instantiate<PlayerBottom>(enums::eLayerType::Player);
 		tr = playerbottom->GetComponent<Transform>();
+<<<<<<< HEAD
 		tr->SetPosition(Vector2(600.0f, 200.0f));
+=======
+		tr->SetPosition(Vector2(600.0f, 500.0f));
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		at = playerbottom->AddComponent<Animator>();
 		at->CreateAnimation(L"PlayerIdlerightBAX", imagePlayer, Vector2(176.0f, 258.0f), Vector2(44.0f, 36.0f), 1);
 		at->CreateAnimation(L"PlayerIdleleftBAX", imagePlayer, Vector2(0.0f, 299.0f), Vector2(44.0f, 36.0f), 1,Vector2(-35.0f, 0.0f));
 		at->CreateAnimation(L"PlayerrightBAX", imagePlayer, Vector2(0.0f, 506.0f), Vector2(44.0f, 25.0f), 12,Vector2(-5.0f,25.0f));
 		at->CreateAnimation(L"PlayerleftBAX", imagePlayer, Vector2(0.0f, 425.0f), Vector2(44.0f, 25.0f), 12, Vector2(-5.0f, 25.0f));
 		at->CreateAnimation(L"PlayerdeadBAX", imagePlayer, Vector2(906.0f, 53.0f), Vector2(44.0f, 44.0f), 19, Vector2(5.0f, -4.0f));
+<<<<<<< HEAD
 		at->CreateAnimation(L"PlayerrightjumpBAX", imagePlayer, Vector2(0.0f, 616.0f), Vector2(44.0f, 44.0f), 12, Vector2(-5.0f, 40.0f),0.05f);
 		at->CreateAnimation(L"PlayerleftjumpBAX", imagePlayer, Vector2(0.0f, 704.0f), Vector2(44.0f, 44.0f), 12, Vector2(5.0f, 40.0f),0.05f);
 		at->CreateAnimation(L"PlayerrightdownBAX", imagePlayer, Vector2(0.0f, 1144.0f), Vector2(44.0f, 44.0f), 7, Vector2(13.0f, -18.0f), 0.000001f);
@@ -237,6 +242,12 @@ namespace sb
 		at->CreateAnimation(L"PlayerleftdowngunBAX", imagePlayer, Vector2(0.0f, 1364.0f), Vector2(88.0f, 44.0f), 6, Vector2(0.0f, -18.0f),0.01f);
 		at->CreateAnimation(L"PlayerrightdownbombBAX", imagePlayer, Vector2(0.0f, 1408.0f), Vector2(44.0f, 44.0f), 6, Vector2(0.0f, -18.0f), 0.001f);
 		at->CreateAnimation(L"PlayerleftdownbombBAX", imagePlayer, Vector2(264.0f, 1408.0f), Vector2(44.0f, 44.0f), 6, Vector2(0.0f, -18.0f), 0.001f);
+=======
+		at->CreateAnimation(L"PlayerrightjumatAX", imagePlayer, Vector2(0.0f, 616.0f), Vector2(44.0f, 44.0f), 12, Vector2(5.0f, 40.0f),0.1f);
+		at->CreateAnimation(L"PlayerleftjumatAX", imagePlayer, Vector2(0.0f, 704.0f), Vector2(44.0f, 44.0f), 12, Vector2(5.0f, 40.0f),0.1f);
+		at->CreateAnimation(L"PlayerrightdownBAX", imagePlayer, Vector2(0.0f, 1144.0f), Vector2(44.0f, 44.0f), 7, Vector2(13.0f, -18.0f), 0.000001f);
+		at->CreateAnimation(L"PlayerleftdownBAX", imagePlayer, Vector2(0.0f, 1188.0f), Vector2(44.0f, 44.0f), 7, Vector2(-25.0f, -18.0f), 0.000001f);
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		at->SetScale(Vector2(4.5f, 4.5f));
 		at->PlayAnimation(L"PlayerIdlerightBAX", true);
 
@@ -245,19 +256,29 @@ namespace sb
 
 		PlayerTop* playerTop = object::Instantiate<PlayerTop>(enums::eLayerType::Player);
 		tr = playerTop->GetComponent<Transform>();
+<<<<<<< HEAD
 		tr->SetPosition(Vector2(600.0f, 170.0f));
+=======
+		tr->SetPosition(Vector2(600.0f, 470.0f));
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		at = playerTop->AddComponent<Animator>();
 		at->CreateAnimation(L"PlayerIdlerightTAX", imagePlayer, Vector2(0.0f, 264.0f), Vector2(44.0f, 34.0f), 4 , Vector2(0.0f, 17.0f));
 		at->CreateAnimation(L"PlayerIdleleftTAX", imagePlayer, Vector2(44.0f, 304.0f), Vector2(44.0f, 34.0f), 4, Vector2(-35.0f, 13.0f));
 		at->CreateAnimation(L"PlayerrightTAX", imagePlayer, Vector2(0.0f, 472.0f), Vector2(44.0f, 34.0f), 12,Vector2(-5.0f, -7.0f));
 		at->CreateAnimation(L"PlayerleftTAX", imagePlayer, Vector2(0.0f, 391.0f), Vector2(44.0f, 34.0f), 12, Vector2(-5.0f, -7.0f));
 		at->CreateAnimation(L"PlayerdeadTAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 12, Vector2(-20.0f, -2.0f));
+<<<<<<< HEAD
 		at->CreateAnimation(L"PlayerrightjumpTAX", imagePlayer, Vector2(0.0f, 572.0f), Vector2(44.0f, 44.0f), 6, Vector2(-5.0f, -29.0f),0.2f);
 		at->CreateAnimation(L"PlayerleftjumpTAX", imagePlayer, Vector2(0.0f, 660.0f), Vector2(44.0f, 44.0f), 6, Vector2(5.0f, -29.0f),0.2f);
+=======
+		at->CreateAnimation(L"PlayerrightjumatAX", imagePlayer, Vector2(0.0f, 572.0f), Vector2(44.0f, 44.0f), 6, Vector2(5.0f, -29.0f),0.2f);
+		at->CreateAnimation(L"PlayerleftjumatAX", imagePlayer, Vector2(0.0f, 660.0f), Vector2(44.0f, 44.0f), 6, Vector2(5.0f, -29.0f),0.2f);
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		at->CreateAnimation(L"PlayerrightbombTAX", imagePlayer, Vector2(0.0f, 792.0f), Vector2(44.0f, 44.0f), 6, Vector2(-3.0f, -8.0f), 0.001f);
 		at->CreateAnimation(L"PlayerleftbombTAX", imagePlayer, Vector2(0.0f, 924.0f), Vector2(44.0f, 44.0f), 6, Vector2(-6.0f, -8.0f), 0.001f);
 		at->CreateAnimation(L"PlayerrightknifeTAX", imagePlayer, Vector2(0.0f, 836.0f), Vector2(44.0f, 88.0f), 6, Vector2(-8.0f, -3.0f),0.001f);
 		at->CreateAnimation(L"PlayerleftknifeTAX", imagePlayer, Vector2(0.0f, 968.0f), Vector2(44.0f, 88.0f), 6, Vector2(-10.0f, -3.0f), 0.001f);
+<<<<<<< HEAD
 		at->CreateAnimation(L"PlayerrightgunTAX", imagePlayer, Vector2(0.0f, 1056.0f), Vector2(88.0f, 44.0f), 6, Vector2(5.0f, 0.0f), 0.000001f);
 		at->CreateAnimation(L"PlayerleftgunTAX", imagePlayer, Vector2(0.0f, 1100.0f), Vector2(88.0f, 44.0f), 6, Vector2(-15.0f, 0.0f), 0.000001f);
 		at->CreateAnimation(L"PlayerrightdownTAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 12, Vector2(5.0f, 72.0f), 0.000001f);
@@ -274,6 +295,12 @@ namespace sb
 		at->CreateAnimation(L"PlayerleftkniferunTAX", imagePlayer, Vector2(0.0f, 968.0f), Vector2(44.0f, 88.0f), 6, Vector2(-10.0f, -13.0f), 0.001f);
 		at->CreateAnimation(L"PlayerrightgunrunTAX", imagePlayer, Vector2(0.0f, 1056.0f), Vector2(88.0f, 44.0f), 6, Vector2(5.0f, -10.0f), 0.000001f);
 		at->CreateAnimation(L"PlayerleftgunrunTAX", imagePlayer, Vector2(0.0f, 1100.0f), Vector2(88.0f, 44.0f), 6, Vector2(-15.0f, -10.0f), 0.000001f);
+=======
+		at->CreateAnimation(L"PlayerrightgunTAX", imagePlayer, Vector2(0.0f, 1056.0f), Vector2(88.0f, 44.0f), 10, Vector2(5.0f, 0.0f), 0.000001f);
+		at->CreateAnimation(L"PlayerleftgunTAX", imagePlayer, Vector2(0.0f, 1100.0f), Vector2(88.0f, 44.0f), 10, Vector2(-15.0f, 0.0f), 0.000001f);
+		at->CreateAnimation(L"PlayerrightdownTAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 12, Vector2(5.0f, 72.0f), 0.000001f);
+		at->CreateAnimation(L"PlayerleftdownTAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 12, Vector2(5.0f, 72.0f), 0.000001f);		
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		at->SetScale(Vector2(4.5f, 4.5f));
 		at->PlayAnimation(L"PlayerIdlerightTAX", true);
 
@@ -299,7 +326,12 @@ namespace sb
 		tr = floor->AddComponent<Transform>();
 		col->SetSize(Vector2(1500.0f, 100.0f));
 		tr = floor->GetComponent<Transform>();
+<<<<<<< HEAD
 		tr->SetPosition(Vector2(600.0f, 600.0f));
+=======
+		tr->SetPosition(Vector2(600.0f, 800.0f));
+		
+>>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
 		Camera::SetTarget(cameraplayer);
 
 		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Npc, true);
