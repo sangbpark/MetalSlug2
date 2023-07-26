@@ -19,4 +19,13 @@ namespace sb
 	{
 		GameObject::Render(hdc);
 	}
+	void OldMan::OnCollisionEnter(Collider* other)
+	{
+	}
+	void OldMan::OnCollisionStay(Collider* other)
+	{
+	}
+	void OldMan::OnCollisionExit(Collider* other)
+	{
+	}
 }

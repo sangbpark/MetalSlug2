@@ -25,6 +25,7 @@ namespace sb
 		void SetOffset(Vector2 offset) { mOffset = offset; }
 		Vector2 GetPosition() { return mPosition; }
 		UINT GetCollisionNumber() { return mCollisionNumber; }
+		void SetPosition(Vector2 position) { mPosition = position; }
 
 	private:
 		static UINT mCollisionCount;

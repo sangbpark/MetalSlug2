@@ -18,6 +18,7 @@ namespace sb::enums
 	enum class eLayerType
 	{
 		Backgroud,
+		Floor,
 		Monster,
 		Npc,
 		Player,
@@ -33,6 +34,7 @@ namespace sb::enums
 		Animation,
 		Animator,
 		Collider,
+		Rigidbody,
 		End,
 	};
 }

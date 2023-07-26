@@ -3,12 +3,17 @@
 #include "sbInput.h"
 #include "sbTime.h"
 #include "sbAnimator.h"
+#include "sbRigidbody.h"
+
 
 namespace sb
 {
 	math::Vector2 PlayerBottom::mPlayposition = {};
-
+	bool PlayerBottom::mGround = {};
+	bool state = false;
 	PlayerBottom::PlayerBottom()
+		:mDirect(true)
+
 	{
 	}
 	PlayerBottom::~PlayerBottom()
@@ -29,6 +34,21 @@ namespace sb
 		case sb::PlayerBottom::eState::Move:
 			Move();
 			break;
+		case sb::PlayerBottom::eState::Down:
+			Down();
+			break;
+		case sb::PlayerBottom::eState::attack:
+			Attack();
+			break;
+		case sb::PlayerBottom::eState::bomb:
+			Bomb();
+			break;
+		case sb::PlayerBottom::eState::jump:
+			Jump();
+			break;
+		case sb::PlayerBottom::eState::Death:
+			Death();
+			break;
 		case sb::PlayerBottom::eState::End:
 			break;
 		default:
@@ -37,7 +57,10 @@ namespace sb
 
 		Transform* tr = GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		mGround = rb->GetGround();
 		mPlayposition = pos;
+
 	}
 	void PlayerBottom::Render(HDC hdc)
 	{
@@ -45,6 +68,7 @@ namespace sb
 	}
 	void PlayerBottom::OnCollisionEnter(Collider* other)
 	{
+
 	}
 	void PlayerBottom::OnCollisionStay(Collider* other)
 	{
@@ -69,8 +93,16 @@ namespace sb
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
-			//animator->PlayAnimation(L"PlayerDownMove", true);
-			mState = eState::Move;
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightdownBAX");
+				mState = eState::Down;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerleftdownBAX");
+				mState = eState::Down;
+			}
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
@@ -79,76 +111,284 @@ namespace sb
 			mDirect = false;
 		}
 
-		if (Input::GetKey(eKeyCode::C))
+		if (Input::GetKey(eKeyCode::A))
 		{
-			//animator->PlayAnimation(L"PlayerDropWater", false);
-			mState = eState::Move;
+
 		}
-		if (Input::GetKey(eKeyCode::X))
+		if (Input::GetKeyDown(eKeyCode::S))
 		{
-			//animator->PlayAnimation(L"PlayerDropWater", false);
-			mState = eState::attack;
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightjumpBAX");
+				mState = eState::jump;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerleftjumpBAX");
+				mState = eState::jump;
+			}
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			Vector2 velocity = rb->GetVelocity();
+			velocity.y = -500.0f;
+			rb->SetVelocity(velocity);
+			rb->SetGround(false);
 		}
-		if (Input::GetKey(eKeyCode::Z))
-		{
-			//animator->PlayAnimation(L"PlayerDropWater", false);
-			mState = eState::bomb;
-		}
+
 	}
 	void PlayerBottom::Move()
 	{
 		Transform* tr = GetComponent<Transform>();
+		Animator* animator = GetComponent<Animator>();
 		Vector2 pos = tr->GetPosition();
 		if (Input::GetKey(eKeyCode::UP))
 		{
 
-			pos.y -= 1000.0f * Time::DeltaTime();
+		}
+
+		if (Input::GetKey(eKeyCode::LEFT))
+		{
+			pos.x -= 1000.0f * Time::DeltaTime();
+			mDirect = false;
+		}
+		if (Input::GetKey(eKeyCode::RIGHT))
+		{
+			pos.x += 1000.0f * Time::DeltaTime();
+			mDirect = true;
+		}
+
+
+		tr->SetPosition(pos);
+
+		if (Input::GetKeyUp(eKeyCode::LEFT)
+			|| Input::GetKeyUp(eKeyCode::RIGHT))
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+				mState = eState::Idle;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+				mState = eState::Idle;
+			}
+		}
+		else if (Input::GetKeyDown(eKeyCode::S))
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightrunjumpBAX");
+				mState = eState::jump;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerleftrunjumpBAX");
+				mState = eState::jump;
+			}
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			Vector2 velocity = rb->GetVelocity();
+			velocity.y = -500.0f;
+			rb->SetVelocity(velocity);
+			rb->SetGround(false);
+		}
+	}
+
+	void PlayerBottom::Death()
+	{
+	}
+	void PlayerBottom::Attack()
+	{
+		Animator* animator = GetComponent<Animator>();
+		if (Input::GetKeyUp(eKeyCode::DOWN))
+		{
+			state = true;
+		}
+		if (state && animator->Getcomplete())
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+				mState = eState::Idle;
+				state = false;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+				mState = eState::Idle;
+				state = false;
+			}
+		}
+		else if (!state && animator->Getcomplete())
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightdownidleBAX", true);
+				mState = eState::Down;
+				state = false;
+			}
+			else if (!mDirect)
+			{
+				animator->PlayAnimation(L"PlayerleftdownidleBAX", true);
+				mState = eState::Down;
+				state = false;
+			}
+		}
+	}
+	void PlayerBottom::Bomb()
+	{	
+		
+		Animator* animator = GetComponent<Animator>();
+		if (Input::GetKeyUp(eKeyCode::DOWN))
+		{
+			state = true;
+		}
+		if (state && animator->Getcomplete())
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+				mState = eState::Idle;
+				state = false;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+				mState = eState::Idle;
+				state = false;
+			}
+		}
+		else if (!state && animator->Getcomplete())
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightdownidleBAX", true);
+				mState = eState::Down;
+				state = false;
+			}
+			else if(!mDirect)
+			{
+				animator->PlayAnimation(L"PlayerleftdownidleBAX", true);
+				mState = eState::Down;
+				state = false;
+			}
+		}
+
+	}
+	void PlayerBottom::Jump()
+	{
+		Transform* tr = GetComponent<Transform>();
+		Animator* animator = GetComponent<Animator>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		Vector2 pos = tr->GetPosition();
+		if (Input::GetKey(eKeyCode::LEFT))
+		{
+			pos.x -= 1000.0f * Time::DeltaTime();
+			mDirect = false;
+
+		}
+		if (Input::GetKey(eKeyCode::RIGHT))
+		{
+			pos.x += 1000.0f * Time::DeltaTime();
+			mDirect = true;
+
+		}
+		tr->SetPosition(pos);
+
+		if (rb->GetGround())
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+				mState = eState::Idle;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+				mState = eState::Idle;
+
+			}
+		}
+	}
+	void PlayerBottom::Down()
+	{
+		Transform* tr = GetComponent<Transform>();
+		Animator* animator = GetComponent<Animator>();
+		Vector2 pos = tr->GetPosition();
+		if (Input::GetKeyDown(eKeyCode::LEFT))
+		{
+			animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
+			mDirect = false;
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
 			pos.x -= 1000.0f * Time::DeltaTime();
 
 		}
-		if (Input::GetKey(eKeyCode::DOWN))
+		if (Input::GetKeyDown(eKeyCode::RIGHT))
 		{
-			pos.y += 1000.0f * Time::DeltaTime();
-
+			animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
+			mDirect = true;
 		}
 		if (Input::GetKey(eKeyCode::RIGHT))
 		{
 			pos.x += 1000.0f * Time::DeltaTime();
-
 		}
-		tr->SetPosition(pos);
-
-		if (Input::GetKeyUp(eKeyCode::UP)
-			|| Input::GetKeyUp(eKeyCode::LEFT)
-			|| Input::GetKeyUp(eKeyCode::DOWN)
-			|| Input::GetKeyUp(eKeyCode::RIGHT))
+		if (Input::GetKeyDown(eKeyCode::D))
 		{
 			if (mDirect)
 			{
-				Animator* animator = GetComponent<Animator>();
+				animator->PlayAnimation(L"PlayerrightdownbombBAX");
+				mState = eState::bomb;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerleftdownbombBAX");
+				mState = eState::bomb;			
+			}
+		}
+		tr->SetPosition(pos);
+		if (Input::GetKeyDown(eKeyCode::A))
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightdowngunBAX");
+				mState = eState::attack;
+
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerleftdowngunBAX");
+				mState = eState::attack;
+			}
+
+		}
+		if (Input::GetKeyUp(eKeyCode::LEFT)
+			|| Input::GetKeyUp(eKeyCode::RIGHT)
+			|| Input::GetKeyUp(eKeyCode::A))
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerrightdownidleBAX",true);
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerleftdownidleBAX",true);
+			}
+		}
+
+		if (Input::GetKeyUp(eKeyCode::DOWN))
+		{
+			if (mDirect)
+			{
 				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
 				mState = eState::Idle;
 			}
 			else
 			{
-				Animator* animator = GetComponent<Animator>();
 				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
 				mState = eState::Idle;
 			}
 		}
 
-	}
-
-	void PlayerBottom::Dead()
-	{
-	}
-	void PlayerBottom::Attack()
-	{
-	}
-	void PlayerBottom::Bomb()
-	{
 	}
 }

@@ -142,6 +142,7 @@
     <ClInclude Include="sbCollider.h" />
     <ClInclude Include="sbCollisionManager.h" />
     <ClInclude Include="sbDev.h" />
+    <ClInclude Include="sbFloor.h" />
     <ClInclude Include="sbFrontBackGround.h" />
     <ClInclude Include="sbMiddleBoss.h" />
     <ClInclude Include="sbMonster.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="sbOldMan.h" />
     <ClInclude Include="sbPlayerBottom.h" />
     <ClInclude Include="sbPlayerTop.h" />
+    <ClInclude Include="sbRigidbody.h" />
     <ClInclude Include="sbTexture.h" />
     <ClInclude Include="sbObject.h" />
     <ClInclude Include="Resource.h" />
@@ -192,6 +194,7 @@
     <ClCompile Include="sbComponent.cpp" />
     <ClCompile Include="sbDev.cpp" />
     <ClCompile Include="sbEntity.cpp" />
+    <ClCompile Include="sbFloor.cpp" />
     <ClCompile Include="sbFrontBackGround.cpp" />
     <ClCompile Include="sbGameObject.cpp" />
     <ClCompile Include="sbMath.cpp" />
@@ -201,6 +204,7 @@
     <ClCompile Include="sbOldMan.cpp" />
     <ClCompile Include="sbPlayerBottom.cpp" />
     <ClCompile Include="sbPlayerTop.cpp" />
+    <ClCompile Include="sbRigidbody.cpp" />
     <ClCompile Include="sbTexture.cpp" />
     <ClCompile Include="sbInput.cpp" />
     <ClCompile Include="sbLayer.cpp" />
