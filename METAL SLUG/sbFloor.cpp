@@ -47,9 +47,7 @@ namespace sb
 
 	void Floor::OnCollisionStay(Collider* other)
 	{
-<<<<<<< HEAD
-	
-=======
+
 		PlayerBottom* playerb = dynamic_cast<PlayerBottom*>(other->GetOwner());
 		Transform* tr = playerb->GetComponent<Transform>();
 		Rigidbody* rb = playerb->GetComponent<Rigidbody>();
@@ -66,7 +64,7 @@ namespace sb
 			tr->SetPosition(playerPos);
 		}
 
->>>>>>> cdee4dc92013b8598fc7d8f8add74dd9f523ec77
+
 	}
 	void Floor::OnCollisionExit(Collider* other)
 	{
