@@ -107,6 +107,10 @@ namespace sb::math
             return (x == other.x && y == other.y);
         }
 
+        bool operator !=(const Vector2& other) const
+        {
+            return (x != other.x && y != other.y);
+        }
         void clear()
         {
             x = 0.0f;

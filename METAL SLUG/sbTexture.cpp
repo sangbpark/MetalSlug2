@@ -181,5 +181,12 @@ namespace sb
 		Rectangle(hdc
 			, pos.x, pos.y
 			, pos.x + 10, pos.y + 10);
+
+	}
+	COLORREF Texture::GetTexturePixel(int x, int y)
+	{
+		COLORREF rgb = GetPixel(mHdc, x, y);
+
+		return rgb;
 	}
 }

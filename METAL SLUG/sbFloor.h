@@ -3,6 +3,7 @@
 
 namespace sb
 {
+#define Size_Error 40.0f
 	class Floor :public GameObject
 	{
 	public:

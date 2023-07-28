@@ -5,6 +5,8 @@
 #include "sbAnimator.h"
 #include "sbRigidbody.h"
 #include "sbPlayerTop.h"
+#include "sbTexture.h"
+#include "sbResources.h"
 
 namespace sb
 {
@@ -25,6 +27,25 @@ namespace sb
 	void PlayerBottom::Update()
 	{
 		GameObject::Update();
+		Transform* tr = GetComponent<Transform>();
+		///pixel Ãæµ¹
+	/*	COLORREF rgb = mFloorTexture->GetTexturePixel(tr->GetPosition().x, tr->GetPosition().y - 200 );*/
+
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		//if (rgb == RGB(0, 0, 255))
+		//{
+		//	Transform* tr = GetComponent<Transform>();
+
+		//	Vector2 pos = tr->GetPosition();
+		//	pos.y -= 1;
+		//	tr->SetPosition(pos);
+
+		//	rb->SetGround(true);
+		//}
+		//else
+		//{
+		//	rb->SetGround(false);
+		//}
 
 		switch (mState)
 		{
@@ -43,6 +64,9 @@ namespace sb
 		case sb::PlayerBottom::eState::Downattack:
 			DownAttack();
 			break;
+		case sb::PlayerBottom::eState::DownBomb:
+			DownBomb();
+			break;
 		case sb::PlayerBottom::eState::bomb:
 			Bomb();
 			break;
@@ -58,9 +82,8 @@ namespace sb
 			break;
 		}
 
-		Transform* tr = GetComponent<Transform>();
+	
 		Vector2 pos = tr->GetPosition();
-		Rigidbody* rb = GetComponent<Rigidbody>();
 		mGround = rb->GetGround();
 		mPlayposition = pos;
 

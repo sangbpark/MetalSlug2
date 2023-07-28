@@ -65,6 +65,7 @@ namespace sb
 			, pos.x + mSize.x, pos.y + mSize.y);
 
 
+
 		SelectObject(hdc, oldBrush);
 		DeleteObject(transparentBrush);
 

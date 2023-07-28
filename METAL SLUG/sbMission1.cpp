@@ -32,6 +32,7 @@ namespace sb
 	}
 	void Mission1::Initialize()
 	{
+	
 		Texture* imagesky = Resources::Load<Texture>(L"Mission1BackGroundSky"
 			, L"..\\Resource\\Map\\Neo Geo NGCD - Metal Slug 2 Metal Slug X - Mission sky.bmp");
 		BackGround* M1BackGroundSky = object::Instantiate<BackGround>(enums::eLayerType::Backgroud);
@@ -218,8 +219,6 @@ namespace sb
 		tr = playerbottom->GetComponent<Transform>();
 		tr->SetPosition(Vector2(600.0f, 200.0f));
 
-		tr->SetPosition(Vector2(600.0f, 500.0f));
-
 		at = playerbottom->AddComponent<Animator>();
 		at->CreateAnimation(L"PlayerIdlerightBAX", imagePlayer, Vector2(176.0f, 258.0f), Vector2(44.0f, 36.0f), 1);
 		at->CreateAnimation(L"PlayerIdleleftBAX", imagePlayer, Vector2(0.0f, 299.0f), Vector2(44.0f, 36.0f), 1,Vector2(-35.0f, 0.0f));
@@ -246,6 +245,13 @@ namespace sb
 		at->CreateAnimation(L"PlayerleftdownBAX", imagePlayer, Vector2(0.0f, 1188.0f), Vector2(44.0f, 44.0f), 7, Vector2(-25.0f, -18.0f), 0.000001f);
 		at->SetScale(Vector2(4.5f, 4.5f));
 		at->PlayAnimation(L"PlayerIdlerightBAX", true);
+
+		Collider* col = playerbottom->AddComponent<Collider>();
+		col->SetSize(Vector2(100.0f, 160.0f));
+		Vector2 pbpos = tr->GetPosition();
+		col->SetPosition(pbpos);
+	
+
 
 
 		playerbottom->AddComponent<Rigidbody>();
@@ -298,9 +304,6 @@ namespace sb
 		tr->SetPosition(Vector2(600.0f, 400.0f));
 		sr->SetImage(imageCameraPlayer);
 		sr->SetAlpha(0.0f);
-
-		Collider* col = playerbottom->AddComponent<Collider>();
-		col->SetSize(Vector2(100.0f, 160.0f));
 	
 	
 		
@@ -309,12 +312,16 @@ namespace sb
 		tr = floor->AddComponent<Transform>();
 		col->SetSize(Vector2(1500.0f, 100.0f));
 		tr = floor->GetComponent<Transform>();
-
 		tr->SetPosition(Vector2(600.0f, 600.0f));
 
-		tr->SetPosition(Vector2(600.0f, 800.0f));
-		
+		Floor* floor2 = object::Instantiate<Floor>(eLayerType::Floor);
+		col = floor2->AddComponent<Collider>();
+		tr = floor2->AddComponent<Transform>();
+		col->SetSize(Vector2(16000.0f, 100.0f));
+		tr = floor2->GetComponent<Transform>();
 
+		tr->SetPosition(Vector2(9200.0f, 720.0f));
+		
 		Camera::SetTarget(cameraplayer);
 
 		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Npc, true);

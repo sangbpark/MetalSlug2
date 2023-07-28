@@ -29,40 +29,32 @@ namespace sb
 		PlayerBottom* playerb = dynamic_cast<PlayerBottom*>(other->GetOwner());
 		Transform* tr = playerb->GetComponent<Transform>();
 		Rigidbody* rb = playerb->GetComponent<Rigidbody>();
+		float underothery = (other->GetPosition().y + other->GetSize().y/ 2.0f - Size_Error);
+		float overthisy = (this->GetComponent<Collider>()->GetPosition().y - this->GetComponent<Collider>()->GetSize().y/2.0f);
 
-
-		float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
-		float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
-
-
-		if (len < scale)
+		if (underothery - overthisy > 1)
 		{
-			Vector2 playerPos = tr->GetPosition();
-			playerPos.y -= (scale - len) - 1.0f;
-			tr->SetPosition(playerPos);
+	
+		}
+		else
+		{
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+			if (len < scale)
+			{
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
+			}
+			rb->SetGround(true);
 		}
 
-		rb->SetGround(true);
 	}
 
 	void Floor::OnCollisionStay(Collider* other)
 	{
-
-		PlayerBottom* playerb = dynamic_cast<PlayerBottom*>(other->GetOwner());
-		Transform* tr = playerb->GetComponent<Transform>();
-		Rigidbody* rb = playerb->GetComponent<Rigidbody>();
-
-
-		float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
-		float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
-
-
-		if (len < scale)
-		{
-			Vector2 playerPos = tr->GetPosition();
-			playerPos.y -= (scale - len) - 1.0f;
-			tr->SetPosition(playerPos);
-		}
 
 
 	}

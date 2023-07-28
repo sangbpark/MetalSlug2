@@ -46,7 +46,7 @@ namespace sb
 		static math::Vector2 GetPlayerPosition() { return mPlayposition; }
 		static bool Getground() { return mGround; }
 
-		
+		class Texture* mFloorTexture;
 	
 
 	private:

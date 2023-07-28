@@ -8,10 +8,17 @@
 #include <filesystem>
 #include <bitset>
 
+#include <assert.h>
+
+
 #include "framework.h"
 #include "sbMath.h"
 
 #pragma comment(lib, "Msimg32.lib")
+
+
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dsound.lib")
 
 namespace sb::enums
 {
