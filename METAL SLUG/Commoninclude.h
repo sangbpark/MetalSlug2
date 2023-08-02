@@ -29,7 +29,7 @@ namespace sb::enums
 		Monster,
 		Npc,
 		Player,
-		Effect,
+		Effects,
 		FrontBackGround,
 		UI,
 		End,

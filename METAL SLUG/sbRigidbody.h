@@ -20,7 +20,7 @@ namespace sb
 		Vector2 GetVelocity() { return mVelocity; }
 		void SetVelocity(Vector2 velocity) { mVelocity = velocity; }
 		bool GetGround() { return mbGround; }
-
+		void SetGravity(Vector2 Gravity) {mGravity = Gravity;}
 	private:
 		float mMass;
 

@@ -3,7 +3,8 @@
 
 namespace sb
 {
-	
+#define Player_Speed 400.0f
+#define Player_DownSpeed 200.0f
 	class PlayerBottom : public GameObject
 	{
 	public:
@@ -14,6 +15,9 @@ namespace sb
 			Down,
 			Death,
 			attack,
+			jumpattack,
+			jumpdownattack,
+			jumpdown,
 			bomb,
 			jump,
 			Downattack,
@@ -42,10 +46,15 @@ namespace sb
 		void Down();
 		void DownAttack();
 		void DownBomb();
+		void JumpAttack();
+		void JumpDownAttack();
+		void JumpDown();
+
+		void ResourceLoad();
 
 		static math::Vector2 GetPlayerPosition() { return mPlayposition; }
 		static bool Getground() { return mGround; }
-
+		static bool GetComplete() { return mComplete; }
 		class Texture* mFloorTexture;
 	
 
@@ -53,7 +62,12 @@ namespace sb
 		static math::Vector2 mPlayposition;
 		eState mState;
 		bool mDirect;
+		bool mKeyUp;
+		bool mFree;
+		bool mRun;
+		bool mLateDirect;
 
+		static bool mComplete;
 		static bool mGround;
 
 	};

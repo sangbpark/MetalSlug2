@@ -29,7 +29,6 @@ namespace sb
 		if (mSpriteSheet[mIndex].duration < mTime)
 		{
 			mTime = 0.0f;
-
 			if (mIndex < mSpriteSheet.size() - 1)
 				mIndex++;
 			else

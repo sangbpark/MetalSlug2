@@ -9,10 +9,18 @@ namespace sb
 		enum class eState
 		{
 			Idle,
+			Up,
 			Move,
 			Down,
 			Death,
 			attack,
+			Jumpattack,
+			jumpdownattack,
+			Upattack,
+			jumpbomb,
+			jumpdown,
+			jumpupattack,
+			jumpup,
 			bomb,
 			jump,
 			stay,
@@ -40,14 +48,28 @@ namespace sb
 		void Jump();
 		void Down();
 		void Stay();
+		void Up();
+		void UpAttack();
+		void JumpDown();
+		void JumpAttack();
+		void JumpBomb();
+		void JumpDownAttack();
+		void JumpUpAttack();
+		void JumpUp();
+	
+		void ResourceLoad();
 
 		static math::Vector2 GetPlayerPosition() { return mPlayposition; }
+		static bool GetComplete() { return mComplete; }
 
 	private:
 		static math::Vector2 mPlayposition;
 		eState mState;
 		bool mDirect;
 		bool mbGround;
+		bool mKeyUp;
+		bool mLateDirect;
 
+		static bool mComplete;
 	};
 }

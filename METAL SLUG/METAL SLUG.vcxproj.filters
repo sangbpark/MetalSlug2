@@ -133,6 +133,18 @@
     <Filter Include="Content\GameObejct\Floor">
       <UniqueIdentifier>{3cbcb364-7e75-464b-9275-9b325fda0be3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\GameObejct\Effects">
+      <UniqueIdentifier>{fc00bafd-5f1a-473f-b17f-2af82466e5f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\NormalBullet">
+      <UniqueIdentifier>{ec89817c-8bff-406f-bd2e-276d3b73ed8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\EfBomb">
+      <UniqueIdentifier>{8b0573f3-6ce2-471a-9457-7700fd74b289}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Monster\Arabian">
+      <UniqueIdentifier>{3dc4b413-4bca-48e6-815d-b6f3de68116a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -270,6 +282,21 @@
     <ClInclude Include="sbFloor.h">
       <Filter>Content\GameObejct\Floor</Filter>
     </ClInclude>
+    <ClInclude Include="sbEffects.h">
+      <Filter>Content\GameObejct\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="sbNormalBullet.h">
+      <Filter>Content\GameObejct\Effects\NormalBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="sbEfBomb.h">
+      <Filter>Content\GameObejct\Effects\EfBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="sbEfBombExplosion.h">
+      <Filter>Content\GameObejct\Effects\EfBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="sbArabian.h">
+      <Filter>Content\GameObejct\Monster\Arabian</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="METAL SLUG.ico">
@@ -397,6 +424,21 @@
     </ClCompile>
     <ClCompile Include="sbFloor.cpp">
       <Filter>Content\GameObejct\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="sbEffects.cpp">
+      <Filter>Content\GameObejct\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="sbNormalBullet.cpp">
+      <Filter>Content\GameObejct\Effects\NormalBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="sbEfBomb.cpp">
+      <Filter>Content\GameObejct\Effects\EfBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="sbEfBombExplosion.cpp">
+      <Filter>Content\GameObejct\Effects\EfBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="sbArabian.cpp">
+      <Filter>Content\GameObejct\Monster\Arabian</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,16 @@ namespace sb
 	class GameObject : public Entity
 	{
 	public:
+		enum class eState
+		{
+			Active,
+			Pause,
+			Dead,
+			End,
+		};
+
+		friend static __forceinline void Destroy(GameObject* gameObject);
+
 		GameObject();
 		virtual ~GameObject();
 
@@ -42,8 +52,21 @@ namespace sb
 		virtual void OnCollisionStay(class Collider* other);
 		virtual void OnCollisionExit(class Collider* other);
 
+
+		eState GetState() { return mState; }
+		void Pause() { mState = eState::Pause; }
+
+	private:
+		void death() { mState = eState::Dead; }
+
 	private:
 		std::vector<Component*> mComponents;
+		eState mState;
 	};
+
+	static __forceinline void Destroy(GameObject* gameObject)
+	{
+		gameObject->death();
+	}
 }
 

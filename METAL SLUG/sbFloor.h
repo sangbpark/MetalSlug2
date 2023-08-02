@@ -19,6 +19,16 @@ namespace sb
 		virtual void OnCollisionStay(class Collider* other) override;
 		virtual void OnCollisionExit(class Collider* other) override;
 
+		void ResourceLoad();
+
+		void PlayerColliderEnter(Collider* other);
+		void PlayerColliderExit(Collider* other);
+		void EfBombColliderEnter(Collider* other);
+		void EfBombColliderExit(Collider* other);
+		void ArabianColliderEnter(Collider* other);
+		void ArabianColliderExit(Collider* other);
+
+
 	};
 }
 

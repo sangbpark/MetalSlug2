@@ -19,4 +19,13 @@ namespace sb
 	{
 		GameObject::Render(hdc);
 	}
+	void Monster::OnCollisionEnter(Collider* other)
+	{
+	}
+	void Monster::OnCollisionStay(Collider* other)
+	{
+	}
+	void Monster::OnCollisionExit(Collider* other)
+	{
+	}
 }

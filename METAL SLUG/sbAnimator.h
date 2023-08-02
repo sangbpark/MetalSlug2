@@ -35,7 +35,11 @@ namespace sb
 		Vector2 GetScale() { return mScale; }
 		void SetScale(Vector2 scale) { mScale = scale; }
 		bool Getcomplete() { return mActiveAnimation->IsComplete(); }
-
+		int GetIndex() {return mActiveAnimation->IsIndex();}
+		void SetIndex(int Index)
+		{
+			mActiveAnimation->SetIndex(Index);
+		}
 	private:
 		std::map<std::wstring, Animation*> mAnimations;
 

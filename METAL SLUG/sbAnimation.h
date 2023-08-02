@@ -40,6 +40,8 @@ namespace sb
 		void Reset();
 
 		bool IsComplete() { return mbComplete; }
+		int IsIndex() { return mIndex; }
+		void SetIndex(int Index) { mIndex = Index; }
 		void SetAnimator(Animator* animator) { mAnimator = animator; }
 
 	private:
