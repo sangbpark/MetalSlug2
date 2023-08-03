@@ -136,15 +136,18 @@ namespace sb
 		}
 		if (Input::GetKeyDown(eKeyCode::DOWN))
 		{
-			if (mDirect)
+			if (PlayerBottom::Getground())
 			{
-				animator->PlayAnimation(L"PlayerrightdownTAX");
-				mState = eState::Down;
-			}
-			else
-			{
-				animator->PlayAnimation(L"PlayerleftdownTAX");
-				mState = eState::Down;
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightdownTAX");
+					mState = eState::Down;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerleftdownTAX");
+					mState = eState::Down;
+				}
 			}
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
@@ -675,12 +678,14 @@ namespace sb
 		{
 			animator->PlayAnimation(L"PlayerrightdowngunTAX");
 			mState = eState::stay;
+			return;
 		}
 
 		if (Input::GetKeyDown(eKeyCode::D))
 		{
 			animator->PlayAnimation(L"PlayerleftdownbombTAX");
 			mState = eState::stay;
+			return;
 		}
 		if (Input::GetKeyUp(eKeyCode::DOWN))
 		{
@@ -770,6 +775,7 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftUPdownTAX");
 				mState = eState::Idle;
 			}
+			return;
 		}
 		if (Input::GetKey(eKeyCode::UP)
 			&& Input::GetKeyDown(eKeyCode::S))

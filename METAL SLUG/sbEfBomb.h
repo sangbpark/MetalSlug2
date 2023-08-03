@@ -16,6 +16,7 @@ namespace sb
 			move,
 			second,
 			secondMove,
+			death,
 
 		};
 		EfBomb();

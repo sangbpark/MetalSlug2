@@ -134,12 +134,14 @@ namespace sb
 		{
 			//animator->PlayAnimation(L"PlayerUpMove", true);
 			mState = eState::Move;
+			return;
 		}
 		if (Input::GetKey(eKeyCode::RIGHT))
 		{
 			animator->PlayAnimation(L"PlayerrightBAX", true);
 			mState = eState::Move;
 			mDirect = true;
+			return;
 		}
 		if (Input::GetKeyDown(eKeyCode::DOWN))
 		{
@@ -153,13 +155,14 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftdownBAX");
 				mState = eState::Down;
 			}
+			return;
 		}
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
 			animator->PlayAnimation(L"PlayerleftBAX", true);				
 			mState = eState::Move;
 			mDirect = false;
-
+			return;
 		}
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
@@ -186,6 +189,7 @@ namespace sb
 			velocity.y = -500.0f;
 			rb->SetVelocity(velocity);
 			rb->SetGround(false);
+			return;
 		}
 
 	}
@@ -208,7 +212,7 @@ namespace sb
 				mState = eState::Idle;
 			}
 			mRun = false;
-
+			return;
 		}
 	
 		if (Input::GetKeyDown(eKeyCode::RIGHT))
@@ -216,6 +220,7 @@ namespace sb
 			animator->PlayAnimation(L"PlayerrightBAX", true);
 			mState = eState::Move;
 			mDirect = true;
+			return;
 		}
 
 		if (Input::GetKeyDown(eKeyCode::LEFT))
@@ -223,6 +228,7 @@ namespace sb
 			animator->PlayAnimation(L"PlayerleftBAX", true);
 			mState = eState::Move;
 			mDirect = false;
+			return;
 		}
 
 		if (Input::GetKey(eKeyCode::RIGHT))
@@ -249,6 +255,7 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
 				mState = eState::Down;
 			}
+			return;
 		}
 
 		if (Input::GetKeyDown(eKeyCode::S))
@@ -269,6 +276,7 @@ namespace sb
 			rb->SetVelocity(velocity);
 			rb->SetGround(false);
 			mRun = true;
+			return;
 		}
 		tr->SetPosition(pos);
 	}
@@ -305,6 +313,7 @@ namespace sb
 				}
 			}
 			mRun = false;
+			return;
 		}
 		if (PlayerTop::GetComplete())
 		{
@@ -321,6 +330,7 @@ namespace sb
 				animator->SetIndex(Index);
 				mState = eState::Move;
 			}
+			return;
 		}
 	}
 	void PlayerBottom::Bomb()
@@ -354,8 +364,10 @@ namespace sb
 		}
 		tr->SetPosition(pos);
 		if (Input::GetKeyDown(eKeyCode::DOWN))
+		{
 			mState = eState::jumpdown;
-
+			return;
+		}
 		if (Input::GetKeyDown(eKeyCode::A)
 			|| Input::GetKeyDown(eKeyCode::D))
 		{
@@ -393,6 +405,7 @@ namespace sb
 					mState = eState::jumpattack;
 				}
 			}
+			return;
 		}
 		
 
@@ -438,6 +451,7 @@ namespace sb
 		{
 			pos.x += Player_DownSpeed * Time::DeltaTime();
 		}
+		tr->SetPosition(pos);
 		if (Input::GetKeyUp(eKeyCode::LEFT)
 			|| Input::GetKeyUp(eKeyCode::RIGHT))
 		{
@@ -451,8 +465,9 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftdownidleBAX", true);
 				mState = eState::Down;
 			}
+			return;
 		}
-		tr->SetPosition(pos);
+
 
 		if (Input::GetKeyDown(eKeyCode::D))
 		{
@@ -478,6 +493,7 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftdownbombBAX");
 				mState = eState::DownBomb;
 			}
+			return;
 		}
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
@@ -501,7 +517,7 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftdowngunBAX");
 				mState = eState::Downattack;
 			}
-		
+			return;
 		}
 	
 		if (Input::GetKeyUp(eKeyCode::DOWN))
@@ -523,6 +539,21 @@ namespace sb
 	void PlayerBottom::DownAttack()
 	{
 		Animator* animator = GetComponent<Animator>();
+		if (Input::GetKeyUp(eKeyCode::DOWN))
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+				mState = eState::Idle;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+				mState = eState::Idle;
+
+			}
+			return;
+		}
 
 		if (Input::GetKeyDown(eKeyCode::RIGHT))
 		{
@@ -584,6 +615,7 @@ namespace sb
 				animator->PlayAnimation(L"PlayerleftdownbombBAX");
 				mState = eState::DownBomb;
 			}
+			return;
 		}
 
 		if (Input::GetKey(eKeyCode::LEFT))
@@ -635,20 +667,7 @@ namespace sb
 
 				}
 			}
-		}
-		if (Input::GetKeyUp(eKeyCode::DOWN))
-		{
-			if (mDirect)
-			{
-				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
-				mState = eState::Idle;
-			}
-			else
-			{
-				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
-				mState = eState::Idle;
-
-			}
+			return;
 		}
 
 	}
@@ -668,6 +687,7 @@ namespace sb
 				mState = eState::Idle;
 
 			}
+			return;
 		}
 
 		if (Input::GetKey(eKeyCode::LEFT))
@@ -718,6 +738,7 @@ namespace sb
 					mState = eState::Down;
 				}
 			}
+			return;
 		}
 	}
 	void PlayerBottom::JumpAttack()
@@ -740,88 +761,93 @@ namespace sb
 			mDirect = true;
 		if (Input::GetKey(eKeyCode::LEFT))
 			mDirect = false;
-		if (PBtimecheck >= 0.2f
-			&& PBtimecheck < 0.3f)
+		if (Input::GetKey(eKeyCode::A) || Input::GetKey(eKeyCode::D))
+			
 		{
-			int Index = (animator->GetIndex());
-			if (mRun)
+			if (PBtimecheck >= 0.2f
+				&& PBtimecheck < 0.3f)
 			{
-				if (mDirect)
+				int Index = (animator->GetIndex());
+				if (mRun)
 				{
-					animator->PlayAnimation(L"PlayerrightrunjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jumpattack;
-					PBtimecheck = 0.0f;
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightrunjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jumpattack;
+						PBtimecheck = 0.0f;
+					}
+					else
+					{
+
+						animator->PlayAnimation(L"PlayerleftrunjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jumpattack;
+						PBtimecheck = 0.0f;
+					}
 				}
+
 				else
 				{
-
-					animator->PlayAnimation(L"PlayerleftrunjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jumpattack;
-					PBtimecheck = 0.0f;
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jumpattack;
+						PBtimecheck = 0.0f;
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jumpattack;
+						PBtimecheck = 0.0f;
+					}
 				}
 			}
-
-			else
+			else 
 			{
-				if (mDirect)
+				int Index = (animator->GetIndex());
+				if (mRun)
 				{
-					animator->PlayAnimation(L"PlayerrightjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jumpattack;
-					PBtimecheck = 0.0f;
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightrunjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jump;
+						PBtimecheck = 0.0f;
+					}
+					else
+					{
+
+						animator->PlayAnimation(L"PlayerleftrunjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jump;
+						PBtimecheck = 0.0f;
+					}
 				}
+
 				else
 				{
-					animator->PlayAnimation(L"PlayerleftjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jumpattack;
-					PBtimecheck = 0.0f;
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jump;
+						PBtimecheck = 0.0f;
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jump;
+						PBtimecheck = 0.0f;
+					}
 				}
 			}
+			return;
 		}
-		if (PBtimecheck >= 0.3f)
-		{
-			int Index = (animator->GetIndex());
-			if (mRun)
-			{
-				if (mDirect)
-				{
-					animator->PlayAnimation(L"PlayerrightrunjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jump;
-					PBtimecheck = 0.0f;
-				}
-				else
-				{
 
-					animator->PlayAnimation(L"PlayerleftrunjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jump;
-					PBtimecheck = 0.0f;
-				}
-			}
-
-			else
-			{
-				if (mDirect)
-				{
-					animator->PlayAnimation(L"PlayerrightjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jump;
-					PBtimecheck = 0.0f;
-				}
-				else
-				{
-					animator->PlayAnimation(L"PlayerleftjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jump;
-					PBtimecheck = 0.0f;
-				}
-			}
-			PBtimecheck = 0.0f;
-		}
 		if (rb->GetGround())
 		{
 			if (mDirect)
@@ -859,87 +885,92 @@ namespace sb
 			mDirect = true;
 		if (Input::GetKey(eKeyCode::LEFT))
 			mDirect = false;
-		if (PBtimecheck >= 0.05f
-			&& PBtimecheck < 0.2f)
+
+		if (Input::GetKey(eKeyCode::A) || Input::GetKey(eKeyCode::D))
 		{
-			int Index = (animator->GetIndex());
-			if (mRun)
+			if (PBtimecheck >= 0.05f
+				&& PBtimecheck < 0.2f)
 			{
-				if (mDirect)
+				int Index = (animator->GetIndex());
+				if (mRun)
 				{
-					animator->PlayAnimation(L"PlayerrightrunjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jumpdownattack;
-					PBtimecheck = 0.0f;
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightrunjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jumpdownattack;
+						PBtimecheck = 0.0f;
+					}
+					else
+					{
+
+						animator->PlayAnimation(L"PlayerleftrunjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jumpdownattack;
+						PBtimecheck = 0.0f;
+					}
 				}
+
 				else
 				{
-
-					animator->PlayAnimation(L"PlayerleftrunjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jumpdownattack;
-					PBtimecheck = 0.0f;
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jumpdownattack;
+						PBtimecheck = 0.0f;
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jumpdownattack;
+						PBtimecheck = 0.0f;
+					}
 				}
 			}
-
 			else
 			{
-				if (mDirect)
+				int Index = (animator->GetIndex());
+				if (mRun)
 				{
-					animator->PlayAnimation(L"PlayerrightjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jumpdownattack;
-					PBtimecheck = 0.0f;
-				}
-				else
-				{
-					animator->PlayAnimation(L"PlayerleftjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jumpdownattack;
-					PBtimecheck = 0.0f;
-				}
-			}
-		}
-		if (PBtimecheck >= 0.2f)
-		{
-			int Index = (animator->GetIndex());
-			if (mRun)
-			{
-				if (mDirect)
-				{
-					animator->PlayAnimation(L"PlayerrightrunjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jump;
-					PBtimecheck = 0.0f;
-				}
-				else
-				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightrunjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jump;
+						PBtimecheck = 0.0f;
+					}
+					else
+					{
 
-					animator->PlayAnimation(L"PlayerleftrunjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jump;
-					PBtimecheck = 0.0f;
+						animator->PlayAnimation(L"PlayerleftrunjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jump;
+						PBtimecheck = 0.0f;
+					}
 				}
-			}
 
-			else
-			{
-				if (mDirect)
-				{
-					animator->PlayAnimation(L"PlayerrightjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jump;
-					PBtimecheck = 0.0f;
-				}
 				else
 				{
-					animator->PlayAnimation(L"PlayerleftjumpBAX");
-					animator->SetIndex(Index);
-					mState = eState::jump;
-					PBtimecheck = 0.0f;
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jump;
+						PBtimecheck = 0.0f;
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftjumpBAX");
+						animator->SetIndex(Index);
+						mState = eState::jump;
+						PBtimecheck = 0.0f;
+					}
 				}
+			
 			}
-			PBtimecheck = 0.0f;
+			return;
 		}
 		if (rb->GetGround())
 		{
@@ -1019,10 +1050,12 @@ namespace sb
 					PBtimecheck = 0.0f;
 				}
 			}
+			return;
 		}
 		if (Input::GetKeyUp(eKeyCode::DOWN))
 		{
 			mState = eState::jump;
+			return;
 		}
 
 		if (rb->GetGround())

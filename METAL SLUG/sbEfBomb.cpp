@@ -56,6 +56,9 @@ namespace sb
 		case sb::EfBomb::BombState::secondMove:
 			SecondMove();
 			break;
+		case sb::EfBomb::BombState::death:
+			Death();
+			break;
 
 		default:
 			break;
@@ -150,7 +153,8 @@ namespace sb
 		if (!(fl == nullptr)
 			&& mCount == 1)
 		{
-			Death();
+			mState = BombState::death;
+			return;
 		}
 		if (!(fl == nullptr))
 		{

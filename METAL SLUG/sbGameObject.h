@@ -46,7 +46,7 @@ namespace sb
 			comp->SetOwner(this);
 
 			return comp;
-
+			
 		}
 		virtual void OnCollisionEnter(class Collider* other);
 		virtual void OnCollisionStay(class Collider* other);

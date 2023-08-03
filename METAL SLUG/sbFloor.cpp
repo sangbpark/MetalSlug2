@@ -7,6 +7,7 @@
 #include "sbEfBomb.h"
 #include "sbArabian.h"
 #include "sbObject.h"
+
 namespace sb
 {
 	Floor::Floor()

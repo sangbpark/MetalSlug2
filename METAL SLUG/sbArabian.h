@@ -38,12 +38,15 @@ namespace sb
 
 		void NormalBulletCollsionEnter(Collider* other);
 		void EfBombCollsionEnter(Collider* other);
+
+		Arabianstate GetArabianState() {return mState;}
 	private:
 		bool mDirect;
 		float mMoveDistance;
 		float mTimecheck;
 		float mPlayerDistance;
 		int mPatrolCount;
+
 		Arabianstate mState;
 	};
 }

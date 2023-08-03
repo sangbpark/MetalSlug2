@@ -35,6 +35,9 @@ namespace sb
 		GameObject::Update();
 		switch (mState)
 		{
+		case sb::Arabian::Arabianstate::death:
+			Death();
+			break;
 		case sb::Arabian::Arabianstate::idle:
 			Idle();
 			break;
@@ -46,9 +49,6 @@ namespace sb
 			break;
 		case sb::Arabian::Arabianstate::prepare:
 			Prepare();
-			break;
-		case sb::Arabian::Arabianstate::death:
-			Death();
 			break;
 		case sb::Arabian::Arabianstate::patrol:
 			Patrol();
@@ -103,7 +103,7 @@ namespace sb
 
 	void Arabian::Death()
 	{
-		Animator* ar = this->GetComponent<Animator>();
+		Animator* ar = GetComponent<Animator>();
 		if (ar->Getcomplete())
 		{
 			Destroy(this);
@@ -116,17 +116,7 @@ namespace sb
 		Vector2 pos = tr->GetPosition();
 		Animator* ar = GetComponent<Animator>();
 		mPlayerDistance = pos.x - PlayerBottom::GetPlayerPosition().x;
-
-		if (mDirect)
-		{
-			pos.x += 300 * Time::DeltaTime();
-		}
-		else
-		{
-			pos.x -= 300 * Time::DeltaTime();
-		}
-
-
+	
 		if (fabs(mPlayerDistance) <= Scale)
 		{
 			if (mDirect)
@@ -139,6 +129,16 @@ namespace sb
 			}
 			mState = Arabianstate::prepare;
 			mTimecheck = 0.0f;
+			return;
+		}
+
+		if (mDirect)
+		{
+			pos.x += 300 * Time::DeltaTime();
+		}
+		else
+		{
+			pos.x -= 300 * Time::DeltaTime();
 		}
 		
 		tr->SetPosition(pos);
@@ -215,6 +215,7 @@ namespace sb
 			{
 				ar->PlayAnimation(L"arabianleftidleAX", true);
 			}
+			return;
 		}
 
 		tr->SetPosition(pos);
@@ -235,6 +236,7 @@ namespace sb
 			mTimecheck = 0.0f;
 			mMoveDistance = 0.0f;
 			mPatrolCount = 0;
+			return;
 		}
 	}
 
@@ -254,13 +256,14 @@ namespace sb
 			}
 			mTimecheck = 0.0f;
 			mState = Arabianstate::attack;
+			return;
 		}
 	}
 
 	void Arabian::Attack()
 	{
-		Animator* ar = GetComponent<Animator>();
 
+		Animator* ar = GetComponent<Animator>();
 		if (ar->Getcomplete())
 		{
 			if (mDirect)
@@ -294,12 +297,11 @@ namespace sb
 			return;
 		else
 		{
+			this->mState = Arabianstate::death;
 			if (mDirect)
 				ar->PlayAnimation(L"arabianrightdeadAX");
 			else
 				ar->PlayAnimation(L"arabianleftdeadAX");
-
-			mState = Arabianstate::death;
 		}
 			
 	}
@@ -330,11 +332,11 @@ namespace sb
 		Transform* tr = this->AddComponent<Transform>();
 		ar->CreateAnimation(L"arabianleftidleAX", image, Vector2(0.0f, 352.0f), Vector2(88.0f, 88.0f), 4, Vector2(0.0f, -10.0f));
 		ar->CreateAnimation(L"arabianrightidleAX", image, Vector2(352.0f, 352.0f), Vector2(88.0f, 88.0f), 4,Vector2(0.0f,-10.0f));
-		ar->CreateAnimation(L"arabianlefdeadAX", image, Vector2(0.0f, 616.0f), Vector2(88.0f, 88.0f), 11, Vector2(0.0f, -10.0f));
+		ar->CreateAnimation(L"arabianleftdeadAX", image, Vector2(0.0f, 616.0f), Vector2(88.0f, 88.0f), 11, Vector2(0.0f, -10.0f));
 		ar->CreateAnimation(L"arabianrightdeadAX", image, Vector2(.0f, 704.0f), Vector2(88.0f, 88.0f), 11, Vector2(0.0f, -10.0f));
 		ar->CreateAnimation(L"arabianleftmoveAX", image, Vector2(0.0f, 88.0f), Vector2(88.0f, 88.0f), 11, Vector2(20.0f, -10.0f));
 		ar->CreateAnimation(L"arabianrightmoveAX", image, Vector2(.0f, 176.0f), Vector2(88.0f, 88.0f), 11, Vector2(-20.0f, -10.0f));
-		ar->CreateAnimation(L"arabianlefattackAX", image, Vector2(0.0f, 440.0f), Vector2(88.0f, 88.0f), 8, Vector2(-55.0f, -10.0f));
+		ar->CreateAnimation(L"arabianleftattackAX", image, Vector2(0.0f, 440.0f), Vector2(88.0f, 88.0f), 8, Vector2(-55.0f, -10.0f));
 		ar->CreateAnimation(L"arabianrightattackAX", image, Vector2(.0f, 528.0f), Vector2(88.0f, 88.0f), 8, Vector2(55.0f, -10.0f));
 		ar->PlayAnimation(L"arabianleftidleAX",true);
 		ar->SetScale(Vector2(4.0f, 4.0f));
