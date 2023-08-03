@@ -141,8 +141,8 @@ namespace sb
 	}
 	void EfBomb::Death()
 	{
-		Transform* tr = GetComponent<Transform>();
-		EfBombExplosion* ebe = object::Instantiate<EfBombExplosion>(eLayerType::Effects, tr->GetPosition());
+		//Transform* tr = GetComponent<Transform>();
+		//EfBombExplosion* ebe = object::Instantiate<EfBombExplosion>(eLayerType::Effects, tr->GetPosition());
 		Destroy(this);
 	}
 	void EfBomb::FloorCollisionEnter(Collider* other)

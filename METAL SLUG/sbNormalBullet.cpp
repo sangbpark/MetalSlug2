@@ -7,6 +7,7 @@
 #include "sbResources.h"
 #include "sbCollider.h"
 
+
 namespace sb
 {
 	sbNormalBullet::sbNormalBullet()
@@ -78,6 +79,7 @@ namespace sb
 
 	void sbNormalBullet::OnCollisionEnter(Collider* other)
 	{
+		Collider* col = GetComponent<Collider>();
 		Destroy(this);
 	}
 	void sbNormalBullet::OnCollisionStay(Collider* other)
