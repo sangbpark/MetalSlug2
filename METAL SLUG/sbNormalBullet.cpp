@@ -6,7 +6,8 @@
 #include "sbSpriteRenderer.h"
 #include "sbResources.h"
 #include "sbCollider.h"
-
+#include "sbArabian.h"
+#include "sbFloor.h"
 
 namespace sb
 {
@@ -28,7 +29,8 @@ namespace sb
 		Vector2 pos = tr->GetPosition();
 		if (mState == eBulletState::Right)
 		{
-			pos.x += 1000.0f * Time::DeltaTime();
+			pos = BulletRotate(pos, 220, 1000.0f * Time::DeltaTime());
+		/*	pos.x = 1000.0f * Time::DeltaTime();*/
 			tr->SetPosition(pos);
 
 			mDeathTime -= Time::DeltaTime();
@@ -79,8 +81,8 @@ namespace sb
 
 	void sbNormalBullet::OnCollisionEnter(Collider* other)
 	{
-		Collider* col = GetComponent<Collider>();
-		Destroy(this);
+		ArabianDeath(other);
+		FloorEnter(other);
 	}
 	void sbNormalBullet::OnCollisionStay(Collider* other)
 	{
@@ -89,6 +91,24 @@ namespace sb
 	void sbNormalBullet::OnCollisionExit(Collider* other)
 	{
 	
+	}
+	void sbNormalBullet::ArabianDeath(Collider* other)
+	{
+		Arabian* ab = dynamic_cast<Arabian*>(other->GetOwner());
+		if (ab == nullptr || ab->GetArabianState() == Arabian::Arabianstate::death)
+			return;
+		else
+		{
+			Destroy(this);
+		}
+	}
+	void sbNormalBullet::FloorEnter(Collider* other)
+	{
+		Floor* fl = dynamic_cast<Floor*>(other->GetOwner());
+		if (fl == nullptr)
+			return;
+		else
+			Destroy(this);
 	}
 	void sbNormalBullet::ResourceLoad()
 	{

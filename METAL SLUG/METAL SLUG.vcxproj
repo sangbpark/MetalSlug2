@@ -144,7 +144,6 @@
     <ClInclude Include="sbCollider.h" />
     <ClInclude Include="sbCollisionManager.h" />
     <ClInclude Include="sbDev.h" />
-    <ClInclude Include="sbEfBombExplosion.h" />
     <ClInclude Include="sbEffects.h" />
     <ClInclude Include="sbFloor.h" />
     <ClInclude Include="sbFrontBackGround.h" />
@@ -156,6 +155,8 @@
     <ClInclude Include="sbPlayerBottom.h" />
     <ClInclude Include="sbPlayerTop.h" />
     <ClInclude Include="sbRigidbody.h" />
+    <ClInclude Include="sbSound.h" />
+    <ClInclude Include="sbSoundManager.h" />
     <ClInclude Include="sbTexture.h" />
     <ClInclude Include="sbObject.h" />
     <ClInclude Include="Resource.h" />
@@ -200,7 +201,6 @@
     <ClCompile Include="sbCollisionManager.cpp" />
     <ClCompile Include="sbComponent.cpp" />
     <ClCompile Include="sbDev.cpp" />
-    <ClCompile Include="sbEfBombExplosion.cpp" />
     <ClCompile Include="sbEffects.cpp" />
     <ClCompile Include="sbEntity.cpp" />
     <ClCompile Include="sbFloor.cpp" />
@@ -215,6 +215,8 @@
     <ClCompile Include="sbPlayerBottom.cpp" />
     <ClCompile Include="sbPlayerTop.cpp" />
     <ClCompile Include="sbRigidbody.cpp" />
+    <ClCompile Include="sbSound.cpp" />
+    <ClCompile Include="sbSoundManager.cpp" />
     <ClCompile Include="sbTexture.cpp" />
     <ClCompile Include="sbInput.cpp" />
     <ClCompile Include="sbLayer.cpp" />

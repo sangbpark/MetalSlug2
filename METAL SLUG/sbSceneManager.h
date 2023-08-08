@@ -11,13 +11,14 @@ namespace sb
 		static void Initialize();
 		static void Update();
 		static void Render(HDC hdc);
+		static void Release();
 
 		template <typename T>
 		static T* CreateScene(const std::wstring& name)
 		{
 			T* scene = new T();
 			scene->SetName(name);
-			mScene.insert(std::make_pair(name, scene));
+			mScenes.insert(std::make_pair(name, scene));
 			mActiveScene = scene;
 			scene->Initialize();
 		
@@ -30,7 +31,7 @@ namespace sb
 
 
 	private:
-		static std::map<std::wstring, Scene* > mScene;
+		static std::map<std::wstring, Scene* > mScenes;
 		static Scene* mActiveScene;
 	};
 }

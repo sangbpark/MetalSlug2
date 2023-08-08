@@ -145,6 +145,9 @@
     <Filter Include="Content\GameObejct\Monster\Arabian">
       <UniqueIdentifier>{3dc4b413-4bca-48e6-815d-b6f3de68116a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Sound">
+      <UniqueIdentifier>{d0131f68-44d9-458e-ad69-9dc81f170c1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -291,11 +294,14 @@
     <ClInclude Include="sbEfBomb.h">
       <Filter>Content\GameObejct\Effects\EfBomb</Filter>
     </ClInclude>
-    <ClInclude Include="sbEfBombExplosion.h">
-      <Filter>Content\GameObejct\Effects\EfBomb</Filter>
-    </ClInclude>
     <ClInclude Include="sbArabian.h">
       <Filter>Content\GameObejct\Monster\Arabian</Filter>
+    </ClInclude>
+    <ClInclude Include="sbSound.h">
+      <Filter>Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sbSoundManager.h">
+      <Filter>Engine\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -434,11 +440,14 @@
     <ClCompile Include="sbEfBomb.cpp">
       <Filter>Content\GameObejct\Effects\EfBomb</Filter>
     </ClCompile>
-    <ClCompile Include="sbEfBombExplosion.cpp">
-      <Filter>Content\GameObejct\Effects\EfBomb</Filter>
-    </ClCompile>
     <ClCompile Include="sbArabian.cpp">
       <Filter>Content\GameObejct\Monster\Arabian</Filter>
+    </ClCompile>
+    <ClCompile Include="sbSound.cpp">
+      <Filter>Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sbSoundManager.cpp">
+      <Filter>Engine\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

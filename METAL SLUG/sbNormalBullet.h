@@ -11,7 +11,8 @@ namespace sb
 			Up,
 			Down,
 			Left,
-			Right
+			Right,
+			death,
 		};
 		sbNormalBullet();
 		virtual ~sbNormalBullet();
@@ -28,6 +29,8 @@ namespace sb
 		virtual void OnCollisionStay(class Collider* other);
 		virtual void OnCollisionExit(class Collider* other);
 
+		void ArabianDeath(Collider* other);
+		void FloorEnter(Collider* other);
 	private:
 		eBulletState mState;
 		float mDeathTime;

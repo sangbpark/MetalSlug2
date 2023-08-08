@@ -155,7 +155,7 @@ namespace sb
 		{
 			pos.x += 200.0f * Time::DeltaTime();
 			mMoveDistance += 200.0f * Time::DeltaTime();
-			if (mPatrolCount == 0)
+			if (mPatrolCount == 0 || mPatrolCount == 3)
 			{
 				if (mMoveDistance > 250.0f)
 				{
@@ -180,7 +180,7 @@ namespace sb
 		{
 			pos.x -= 200.0f * Time::DeltaTime();
 			mMoveDistance -= 200.0f * Time::DeltaTime();
-			if (mPatrolCount == 0)
+			if (mPatrolCount == 0 || mPatrolCount ==3)
 			{
 				if (mMoveDistance < -250.0f)
 				{
@@ -280,8 +280,11 @@ namespace sb
 
 	void Arabian::OnCollisionEnter(Collider* other)
 	{
-		NormalBulletCollsionEnter(other);
-		EfBombCollsionEnter(other);
+		if (!(mState == Arabianstate::death))
+		{
+			NormalBulletCollsionEnter(other);
+			EfBombCollsionEnter(other);
+		}
 	}
 	void Arabian::OnCollisionStay(Collider* other)
 	{

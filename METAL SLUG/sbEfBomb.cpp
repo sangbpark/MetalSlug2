@@ -9,7 +9,6 @@
 #include "sbCollider.h"
 #include "sbRigidbody.h"
 #include "sbFloor.h"
-#include "sbEfBombExplosion.h"
 #include "sbArabian.h"
 
 namespace sb
@@ -22,10 +21,12 @@ namespace sb
 	{
 		Texture* image = Resources::Load<Texture>(L"PlayerBomb", 
 			L"..\\Resource\\effect\\Bomb.bmp");
-
+		Texture* images = Resources::Load<Texture>(L"PlayerBombDeath",
+			L"..\\Resource\\effect\\Bombexplosion.bmp");
 		Animator* ar = this->AddComponent<Animator>();
 		ar->CreateAnimation(L"RightBombAX", image, Vector2(0.0f, 0.0f), Vector2(22.0f, 22.0f), 32);
 		ar->CreateAnimation(L"LeftBombAX", image, Vector2(0.0f, 22.0f), Vector2(22.0f, 22.0f), 32);
+		ar->CreateAnimation(L"BombDeathAX", images, Vector2(0.0f, 0.0f), Vector2(88.0f, 122.0f), 20, Vector2(0.0f, -100.0f), 0.05f);
 		ar->SetScale(Vector2::One);
 		ar->SetScale(Vector2(2.5f, 2.5f));
 		Rigidbody* rb = this->AddComponent<Rigidbody>();
@@ -77,8 +78,11 @@ namespace sb
 	}
 	void EfBomb::OnCollisionEnter(Collider* other)
 	{
-		FloorCollisionEnter(other);
-		ArabianCollisionEnter(other);
+		if (!(mState == BombState::death))
+		{
+			FloorCollisionEnter(other);
+			ArabianCollisionEnter(other);
+		}
 	}
 	void EfBomb::OnCollisionStay(Collider* other)
 	{
@@ -141,9 +145,13 @@ namespace sb
 	}
 	void EfBomb::Death()
 	{
-		//Transform* tr = GetComponent<Transform>();
-		//EfBombExplosion* ebe = object::Instantiate<EfBombExplosion>(eLayerType::Effects, tr->GetPosition());
-		Destroy(this);
+		Animator* ar = GetComponent<Animator>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		rb->SetGround(true);
+		if (ar->Getcomplete())
+		{
+			Destroy(this);
+		}
 	}
 	void EfBomb::FloorCollisionEnter(Collider* other)
 	{
@@ -153,6 +161,8 @@ namespace sb
 		if (!(fl == nullptr)
 			&& mCount == 1)
 		{
+			Animator* ar = GetComponent<Animator>();
+			ar->PlayAnimation(L"BombDeathAX");
 			mState = BombState::death;
 			return;
 		}
@@ -168,7 +178,12 @@ namespace sb
 		if (arabian == nullptr)
 			return;
 		else
-			Death();
-
+		{
+			Animator* ar = GetComponent<Animator>();
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			ar->PlayAnimation(L"BombDeathAX");
+			mState = BombState::death;
+		}
+		
 	}
 }

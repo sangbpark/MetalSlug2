@@ -7,6 +7,11 @@ namespace sb
 	}
 	Layer::~Layer()
 	{
+		for (GameObject* obj : mGameObjects)
+		{
+			delete obj;
+			obj = nullptr;
+		}
 	}
 	void Layer::Initialize()
 	{
@@ -38,6 +43,9 @@ namespace sb
 		{
 			if ((*iter)->GetState() == GameObject::eState::Dead)
 			{
+				GameObject* deadObj = *iter;
+				delete deadObj;
+				deadObj = nullptr;
 				iter = mGameObjects.erase(iter);
 			}
 			else

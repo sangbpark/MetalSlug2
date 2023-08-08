@@ -83,4 +83,8 @@ namespace sb
 			, mBackHdc, 0, 0, SRCCOPY);
 
 	}
+	void Application::Release()
+	{
+
+	}
 }

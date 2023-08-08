@@ -6,7 +6,7 @@
 
 namespace sb
 {
-	std::map<std::wstring, Scene* > SceneManager::mScene = {};
+	std::map<std::wstring, Scene* > SceneManager::mScenes = {};
 	Scene* SceneManager::mActiveScene = nullptr;
 
 
@@ -29,12 +29,21 @@ namespace sb
 		mActiveScene->Render(hdc);
 	}
 
+	void SceneManager::Release()
+	{
+		for (auto iter : mScenes)
+		{
+			delete iter.second;
+			iter.second = nullptr;
+		}
+	}
+
 	Scene* SceneManager::LoadScene(const std::wstring& name)
 	{
 		std::map<std::wstring, Scene*>::iterator iter
-			= mScene.find(name);
+			= mScenes.find(name);
 
-		if (iter == mScene.end())
+		if (iter == mScenes.end())
 			return nullptr;
 
 		mActiveScene = iter->second;
