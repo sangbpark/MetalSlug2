@@ -27,7 +27,18 @@ namespace sb
 		void EfBombColliderExit(Collider* other);
 		void ArabianColliderEnter(Collider* other);
 		void ArabianColliderExit(Collider* other);
+		void HoldManColliderEnter(Collider* other);
+		void HoldManColliderExit(Collider* other);
+		void BerserkerColliderEnter(Collider* other);
+		void BerserkerColliderExit(Collider* other);
+		void TruckColliderEnter(Collider* other);
+		void TruckColliderExit(Collider* other);
 
+		void HeavyMachineGunColliderEnter(Collider* other);
+		void HeavyMachineGunColliderExit(Collider* other);
+
+		void SupplyColliderEnter(Collider* other);
+		void SupplyColliderExit(Collider* other);
 
 	};
 }

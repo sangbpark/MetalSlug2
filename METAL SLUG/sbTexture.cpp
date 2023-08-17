@@ -110,7 +110,8 @@ namespace sb
 		, Vector2 offset
 		, Vector2 scale
 		, float alpha
-		, float rotate)
+		, float rotate
+		, bool AffectCamera)
 	{
 		if (mBitmap == nullptr && mImage == nullptr)
 			return;
@@ -135,7 +136,6 @@ namespace sb
 			func.BlendFlags = 0;
 			func.AlphaFormat = AC_SRC_ALPHA;
 			// 0.0f ~ 1.0f -> 0 ~ 255
-			int alpha = 1.0f;
 			alpha = (int)(alpha * 255.0f);
 
 			if (alpha <= 0)
@@ -178,9 +178,6 @@ namespace sb
 				, Gdiplus::UnitPixel
 				, nullptr);
 		}
-		Rectangle(hdc
-			, pos.x, pos.y
-			, pos.x + 10, pos.y + 10);
 
 	}
 	COLORREF Texture::GetTexturePixel(int x, int y)

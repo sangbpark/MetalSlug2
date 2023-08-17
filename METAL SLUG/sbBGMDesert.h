@@ -14,9 +14,7 @@ namespace sb
 		virtual void Render(HDC hdc) override;
 
 	private:
+		float mPlayerDistance;
 	};
 }
 
-class BGMDesert
-{
-};

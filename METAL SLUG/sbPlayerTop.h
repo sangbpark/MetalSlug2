@@ -1,6 +1,8 @@
 #pragma once
 #include "sbGameObject.h"
 
+
+
 namespace sb
 {
 	class PlayerTop : public GameObject
@@ -17,16 +19,28 @@ namespace sb
 			Jumpattack,
 			jumpdownattack,
 			Upattack,
+			huping,
+			hupdowning,
+			hjumpdownuping,
 			jumpbomb,
 			jumpdown,
+			hjumpdowning,
 			jumpupattack,
 			jumpup,
 			bomb,
 			jump,
 			stay,
+			revive,
+			StopAnimator,
+			Stop,
 			End,
 		};
-
+		enum class eWeaponState
+		{
+			normal,
+			heavy,
+			End,
+		};
 
 		PlayerTop();
 		virtual ~PlayerTop();
@@ -56,19 +70,54 @@ namespace sb
 		void JumpDownAttack();
 		void JumpUpAttack();
 		void JumpUp();
-	
+
+		void HIdle();
+		void HMove();
+		void HBomb();
+		void HJump();
+		void HDown();
+		void HStay();
+		void HUp();
+		void HUping();
+		void HUpDowning();
+		void HJumpDown();
+		void HJumpDowning();
+		void HJumpDownUping();
+		void HJumpAttack();
+		void HJumpBomb();
+		void HJumpDownAttack();
+		void HJumpUpAttack();
+		void HJumpUp();
+
+		void StopAnimator();
+		void Stop();
+
+		void GetPlayerBottomState();
+		void Revive();
+		void Clear();
+
+		void CreatHeavyBullet(bool Direct ,float mheavybullet, math::Vector2 offset = math::Vector2::Zero, bool Down = false);
+		void CreatEfBomb(eState state);
+		void CreatHEfBomb(eState state);
 		void ResourceLoad();
 
-		static math::Vector2 GetPlayerPosition() { return mPlayposition; }
+		void SetPlayerBottomOnwer(GameObject* Owner) { mPlayerBottomOwner = Owner; }
 		static bool GetComplete() { return mComplete; }
 
 	private:
-		static math::Vector2 mPlayposition;
 		eState mState;
 		bool mDirect;
 		bool mbGround;
 		bool mKeyUp;
 		bool mLateDirect;
+		bool mHeavyBulletCount;
+		float ptTimecheck;
+		float mHeavyBullet;
+		float mHeavyBullettime;
+
+		GameObject* mPlayerBottomOwner;
+
+		eWeaponState mWeaponState;
 
 		static bool mComplete;
 	};

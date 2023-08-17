@@ -5,6 +5,14 @@ namespace sb
 {
 	class Npc : public GameObject
 	{
+		enum class eState
+		{
+			Idle,
+			Free,
+			Item,
+			death,
+			End,
+		};
 	public:
 		Npc();
 		virtual ~Npc();
@@ -14,5 +22,7 @@ namespace sb
 		virtual void Render(HDC hdc) override;
 
 	private:
+
+		eState mState;
 	};
 }

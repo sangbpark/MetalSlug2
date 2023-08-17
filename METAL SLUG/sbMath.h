@@ -142,10 +142,13 @@ namespace sb::math
         return Vector2(x, y);
     }
 
-    inline Vector2 BulletRotate(Vector2 vector, float degree, float speed)
+    inline Vector2 BulletRotate(Vector2 vector, float degree, float speed, bool direct)
     {
         vector.x += speed * cos(degree * (PI / 180));
+        if (direct == true)
         vector.y -= speed * sin(degree * (PI / 180));
+        else
+        vector.y += speed * sin(degree * (PI / 180));
 
         return vector;
     }

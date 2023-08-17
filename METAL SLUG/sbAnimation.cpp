@@ -54,7 +54,8 @@ namespace sb
 			, sprite.offset
 			, animator->GetScale()
 			, animator->GetAlpha()
-			, tr->GetRotation());
+			, tr->GetRotation()
+			, animator->GetAffectedCamera());
 
 	}
 	void Animation::Create(const std::wstring& name

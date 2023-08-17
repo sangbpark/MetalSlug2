@@ -30,7 +30,8 @@ namespace sb
 			, Vector2 offset = Vector2::Zero
 			, Vector2 scale = Vector2::One
 			, float alpha = 1.0f
-			, float rotate = 0.0f);
+			, float rotate = 0.0f
+			, bool AffectCamera = true);
 
 		COLORREF GetTexturePixel(int x, int y);
 

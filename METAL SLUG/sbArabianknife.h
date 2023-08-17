@@ -18,5 +18,6 @@ namespace sb
 		virtual void OnCollisionExit(class Collider* other);
 
 	private:
+		float mDeathTime;
 	};
 }

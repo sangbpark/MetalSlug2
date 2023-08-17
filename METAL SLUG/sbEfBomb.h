@@ -39,7 +39,11 @@ namespace sb
 		void Death();
 
 		void FloorCollisionEnter(Collider* other);
+		void HOldManCollisionEnter(Collider* other);
 		void ArabianCollisionEnter(Collider* other);
+		void MiddleBossRocketCollisionEnter(Collider* other);
+		void TruckCollisionEnter(Collider* other);
+
 	private:
 		bool mBombDirect;
 		float mEfBomb1Speed;

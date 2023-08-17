@@ -27,7 +27,7 @@ namespace sb
 		mHwnd = hWnd;
 		mHdc = GetDC(mHwnd);
 
-		mWidth = 1280;
+		mWidth = 1440;
 		mHeight = 960;
 
 		RECT rect = { 0,0,mWidth,mHeight };

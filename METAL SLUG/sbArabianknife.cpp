@@ -4,13 +4,15 @@
 #include "sbArabian.h"
 #include "sbTime.h"
 
+
 namespace sb
 {
 	Arabianknife::Arabianknife()
+		:mDeathTime(0.000001f)
 	{
 		Transform* tr = this->AddComponent<Transform>();
 		Collider* col = this->AddComponent<Collider>();
-		col->SetSize(Vector2(50.0f, 10.0f));
+		col->SetSize(Vector2(120.0f, 200.0f));
 	}
 	Arabianknife::~Arabianknife()
 	{
@@ -21,12 +23,12 @@ namespace sb
 	void Arabianknife::Update()
 	{
 		GameObject::Update();
+		mDeathTime -= Time::DeltaTime();
 
-		Transform* tr = GetComponent<Transform>();
-		Vector2 pos = tr->GetPosition();
-
-		pos.y += 20.0f * Time::DeltaTime();
-
+		if (mDeathTime <= 0.0f)
+		{
+			Destroy(this);
+		}
 
 	}
 	void Arabianknife::Render(HDC hdc)
@@ -37,12 +39,7 @@ namespace sb
 
 	void Arabianknife::OnCollisionEnter(Collider* other)
 	{
-		Arabian* ab = dynamic_cast<Arabian*>(other->GetOwner());
-		if (ab->GetArabianState() == Arabian::Arabianstate::death
-			|| !(ab->GetArabianState() == Arabian::Arabianstate::attack))
-		{
-			Destroy(this);
-		}
+	
 	}
 	void Arabianknife::OnCollisionStay(Collider* other)
 	{

@@ -14,10 +14,9 @@ namespace sb
 		virtual void Render(HDC hdc) override;
 
 
-		static math::Vector2 GetPlayerPosition() { return mPlayposition; }
 
 	private:
-		static math::Vector2 mPlayposition;
+
 	};
 }
 

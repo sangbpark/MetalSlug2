@@ -30,6 +30,7 @@ namespace sb
 		void Prepare();
 		void Attack();
 
+
 		void ResourceLoad();
 
 		virtual void OnCollisionEnter(class Collider* other) override;
@@ -37,6 +38,7 @@ namespace sb
 		virtual void OnCollisionExit(class Collider* other) override;
 
 		void NormalBulletCollsionEnter(Collider* other);
+		void HeavyBulletCollsionEnter(Collider* other);
 		void EfBombCollsionEnter(Collider* other);
 
 		Arabianstate GetArabianState() {return mState;}

@@ -13,18 +13,29 @@ namespace sb
 			Idle,
 			Move,
 			Down,
+			Downmove,
 			Death,
 			attack,
 			jumpattack,
+			jumpbomb,
 			jumpdownattack,
 			jumpdown,
 			bomb,
 			jump,
 			Downattack,
 			DownBomb,
+			revive,
+			Stopanimator,
+			Stop,
 			End,
 		};
 
+		enum class eWeaponState
+		{
+			normal,
+			heavy,
+			End
+		};
 
 		PlayerBottom();
 		virtual ~PlayerBottom();
@@ -37,6 +48,10 @@ namespace sb
 		virtual void OnCollisionStay(class Collider* other) override;
 		virtual void OnCollisionExit(class Collider* other) override;
 
+		void ArabianKnifeColliderEnter(Collider* other);
+		void MiddleRocketColliderEnter(Collider* other);
+		void BerserkerKnifeColliderEnter(Collider* other);
+
 		void Idle();
 		void Move();
 		void Death();
@@ -44,31 +59,62 @@ namespace sb
 		void Attack();
 		void Bomb();
 		void Down();
+		void DownMove();
 		void DownAttack();
 		void DownBomb();
 		void JumpAttack();
+		void JumpBomb();
 		void JumpDownAttack();
 		void JumpDown();
+		void Stop();
+		void StopAnimator();
 
+
+		void Revive();
+		void Clear();
 		void ResourceLoad();
+		
+
+
 
 		static math::Vector2 GetPlayerPosition() { return mPlayposition; }
-		static bool Getground() { return mGround; }
-		static bool GetComplete() { return mComplete; }
-		class Texture* mFloorTexture;
+		bool Getground() { return mGround; }
+		bool GetComplete() { return mComplete; }
+		bool GetDirect() { return mDirect; }
+		eState GetState() { return mState; }
+		eWeaponState GetWeaponState() { return mWeaponState; }
+		bool GetChange() {return mChange;}
+		void SetChange(bool change) { mChange = change; }
+		void SetWeaponState(eWeaponState weaponsatate) { mWeaponState = weaponsatate; }
+		void SetHeavyBulletCount(int bullet) { mHeavyBulletCount += bullet; }
+		void SetEfBombCount(int count) { mEfBombCount += count; }
+		int GetHeavyBulletCount() { return mHeavyBulletCount; }
+		int GetEfBombCount() { return mEfBombCount; }
+		void SetCameraTransform(math::Vector2 value) { mCameraTransform = value; }
+		bool GetStopState() { return mStop; }
+		void SetStopState(bool stop) { mStop = stop; }
+		//class Texture* mFloorTexture;
 	
-
+		math::Vector2 CameraOut(math::Vector2 value);
 	private:
 		static math::Vector2 mPlayposition;
 		eState mState;
 		bool mDirect;
+		bool mChange;
 		bool mKeyUp;
 		bool mFree;
 		bool mRun;
 		bool mLateDirect;
+		int mHeavyBulletCount;
+		int mEfBombCount;
+		float PBtimecheck;
+		float mInvincible;
+		eWeaponState mWeaponState;
+		bool mComplete;
+		bool mGround;
+		bool mStop;
 
-		static bool mComplete;
-		static bool mGround;
+		math::Vector2 mCameraTransform;
 
 	};
 }

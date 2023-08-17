@@ -7,6 +7,11 @@
 #include "sbEfBomb.h"
 #include "sbArabian.h"
 #include "sbObject.h"
+#include "sbHOldMan.h"
+#include "sbHeavyMachineGun.h"
+#include "sbSupply.h"
+#include "sbBerserker.h"
+#include "sbTruck.h"
 
 namespace sb
 {
@@ -32,11 +37,15 @@ namespace sb
 		PlayerColliderEnter(other);
 		EfBombColliderEnter(other);
 		ArabianColliderEnter(other);
+		HoldManColliderEnter(other);
+		HeavyMachineGunColliderEnter(other);
+		SupplyColliderEnter(other);
+		BerserkerColliderEnter(other);
+		TruckColliderEnter(other);
 	}
 
 	void Floor::OnCollisionStay(Collider* other)
 	{
-
 
 	}
 	void Floor::OnCollisionExit(Collider* other)
@@ -44,40 +53,35 @@ namespace sb
 		PlayerColliderExit(other);
 		EfBombColliderExit(other);
 		ArabianColliderExit(other);
+		HoldManColliderExit(other);
+		HeavyMachineGunColliderExit(other);
+		SupplyColliderExit(other);
+		BerserkerColliderExit(other);
+		TruckColliderExit(other);
 	}
 
 	void Floor::PlayerColliderEnter(Collider* other)
 	{
 		PlayerBottom* playerb = dynamic_cast<PlayerBottom*>(other->GetOwner());
-	
 		if (playerb == nullptr)
 			return;	
 		else
 		{
 			Transform* tr = playerb->GetComponent<Transform>();
-
 			Rigidbody* rb = playerb->GetComponent<Rigidbody>();
-			float underothery = (other->GetPosition().y + other->GetSize().y / 2.0f - Size_Error);
-			float overthisy = (this->GetComponent<Collider>()->GetPosition().y - this->GetComponent<Collider>()->GetSize().y / 2.0f);
 
-			if (underothery - overthisy > 1)
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+			if (len < scale)
 			{
-
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
 			}
-			else
-			{
-				float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
-				float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
-
-
-				if (len < scale)
-				{
-					Vector2 playerPos = tr->GetPosition();
-					playerPos.y -= (scale - len) - 1.0f;
-					tr->SetPosition(playerPos);
-				}
-				rb->SetGround(true);
-			}
+			rb->SetGround(true);
+			
 		}
 
 	}
@@ -104,27 +108,18 @@ namespace sb
 			Transform* tr = eb->GetComponent<Transform>();
 
 			Rigidbody* rb = eb->GetComponent<Rigidbody>();
-			float underothery = (other->GetPosition().y + other->GetSize().y / 2.0f - Size_Error);
-			float overthisy = (this->GetComponent<Collider>()->GetPosition().y - this->GetComponent<Collider>()->GetSize().y / 2.0f);
+		
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
 
-			if (underothery - overthisy > 1)
+			if (len < scale)
 			{
-
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
 			}
-			else
-			{
-				float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
-				float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
-
-
-				if (len < scale)
-				{
-					Vector2 playerPos = tr->GetPosition();
-					playerPos.y -= (scale - len) - 1.0f;
-					tr->SetPosition(playerPos);
-				}
-				rb->SetGround(true);
-			}
+			rb->SetGround(true);
+			
 		}
 	}
 
@@ -151,27 +146,17 @@ namespace sb
 			Transform* tr = arabian->GetComponent<Transform>();
 
 			Rigidbody* rb = arabian->GetComponent<Rigidbody>();
-			float underothery = (other->GetPosition().y + other->GetSize().y / 2.0f - Size_Error);
-			float overthisy = (this->GetComponent<Collider>()->GetPosition().y - this->GetComponent<Collider>()->GetSize().y / 2.0f);
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
 
-			if (underothery - overthisy > 1)
+			if (len < scale)
 			{
-
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
 			}
-			else
-			{
-				float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
-				float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
-
-
-				if (len < scale)
-				{
-					Vector2 playerPos = tr->GetPosition();
-					playerPos.y -= (scale - len) - 1.0f;
-					tr->SetPosition(playerPos);
-				}
-				rb->SetGround(true);
-			}
+			rb->SetGround(true);
+		
 		}
 	}
 
@@ -183,6 +168,196 @@ namespace sb
 		else
 		{
 			Rigidbody* rb = arabian->GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
+	}
+
+	void Floor::HoldManColliderEnter(Collider* other)
+	{
+		HOldMan* holdman = dynamic_cast<HOldMan*>(other->GetOwner());
+
+		if (holdman == nullptr)
+			return;
+		else
+		{
+			Transform* tr = holdman->GetComponent<Transform>();
+			Rigidbody* rb = holdman->GetComponent<Rigidbody>();
+
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+			if (len < scale)
+			{
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
+			}
+			rb->SetGround(true);
+			
+		}
+	}
+
+	void Floor::HoldManColliderExit(Collider* other)
+	{
+		HOldMan* holdman = dynamic_cast<HOldMan*>(other->GetOwner());
+		if (holdman == nullptr)
+			return;
+		else
+		{
+			Rigidbody* rb = holdman->GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
+	}
+
+	void Floor::BerserkerColliderEnter(Collider* other)
+	{
+		Berserker* berserker = dynamic_cast<Berserker*>(other->GetOwner());
+
+		if (berserker == nullptr)
+			return;
+		else
+		{
+			Transform* tr = berserker->GetComponent<Transform>();
+			Rigidbody* rb = berserker->GetComponent<Rigidbody>();
+
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+			if (len < scale)
+			{
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
+			}
+			rb->SetGround(true);
+
+		}
+	}
+
+	void Floor::BerserkerColliderExit(Collider* other)
+	{
+		Berserker* berserker = dynamic_cast<Berserker*>(other->GetOwner());
+		if (berserker == nullptr)
+			return;
+		else
+		{
+			Rigidbody* rb = berserker->GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
+	}
+
+	void Floor::TruckColliderEnter(Collider* other)
+	{
+		Truck* truck = dynamic_cast<Truck*>(other->GetOwner());
+
+		if (truck == nullptr)
+			return;
+		else
+		{
+			Transform* tr = truck->GetComponent<Transform>();
+			Rigidbody* rb = truck->GetComponent<Rigidbody>();
+
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+			if (len < scale)
+			{
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
+			}
+			rb->SetGround(true);
+
+		}
+	}
+
+	void Floor::TruckColliderExit(Collider* other)
+	{
+		Truck* truck = dynamic_cast<Truck*>(other->GetOwner());
+		if (truck == nullptr)
+			return;
+		else
+		{
+			Rigidbody* rb = truck->GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
+	}
+
+	void Floor::HeavyMachineGunColliderEnter(Collider* other)
+	{
+		HeavyMachineGun* hmg = dynamic_cast<HeavyMachineGun*>(other->GetOwner());
+
+		if (hmg == nullptr)
+			return;
+		else
+		{
+			Transform* tr = hmg->GetComponent<Transform>();
+			Rigidbody* rb = hmg->GetComponent<Rigidbody>();
+
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+			if (len < scale)
+			{
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
+			}
+			rb->SetGround(true);
+
+		}
+	}
+
+	void Floor::HeavyMachineGunColliderExit(Collider* other)
+	{
+		HeavyMachineGun* hmg = dynamic_cast<HeavyMachineGun*>(other->GetOwner());
+		if (hmg == nullptr)
+			return;
+		else
+		{
+			Rigidbody* rb = hmg->GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
+	}
+
+	void Floor::SupplyColliderEnter(Collider* other)
+	{
+		Supply* sy = dynamic_cast<Supply*>(other->GetOwner());
+
+		if (sy == nullptr)
+			return;
+		else
+		{
+			Transform* tr = sy->GetComponent<Transform>();
+			Rigidbody* rb = sy->GetComponent<Rigidbody>();
+
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+			if (len < scale)
+			{
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
+			}
+			rb->SetGround(true);
+
+		}
+	}
+
+	void Floor::SupplyColliderExit(Collider* other)
+	{
+		Supply* sy = dynamic_cast<Supply*>(other->GetOwner());
+		if (sy == nullptr)
+			return;
+		else
+		{
+			Rigidbody* rb = sy->GetComponent<Rigidbody>();
 			rb->SetGround(false);
 		}
 	}

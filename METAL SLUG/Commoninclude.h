@@ -29,12 +29,14 @@ namespace sb::enums
 	{
 		Backgroud,
 		Floor,
+		BossMonster,
 		Monster,
 		Npc,
 		Player,
 		Effects,
 		FrontBackGround,
 		UI,
+		ControlTower,
 		End,
 	};
 	enum class eComponentType

@@ -120,6 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -134,10 +135,13 @@
     <ClInclude Include="sbAnimation.h" />
     <ClInclude Include="sbAnimator.h" />
     <ClInclude Include="sbArabian.h" />
+    <ClInclude Include="sbArabianKnife.h" />
     <ClInclude Include="sbBackGround.h" />
+    <ClInclude Include="sbBerserker.h" />
+    <ClInclude Include="sbBerserkerKnife.h" />
+    <ClInclude Include="sbBGBackGround.h" />
     <ClInclude Include="sbBGbossCanopi.h" />
-    <ClInclude Include="sbBGDesert.h" />
-    <ClInclude Include="sbBGMDesert.h" />
+    <ClInclude Include="sbControlTower.h" />
     <ClInclude Include="sbEfBomb.h" />
     <ClInclude Include="sbCamera.h" />
     <ClInclude Include="sbCameraPlayer.h" />
@@ -147,16 +151,23 @@
     <ClInclude Include="sbEffects.h" />
     <ClInclude Include="sbFloor.h" />
     <ClInclude Include="sbFrontBackGround.h" />
+    <ClInclude Include="sbHeavyBullet.h" />
+    <ClInclude Include="sbHeavyMachineGun.h" />
     <ClInclude Include="sbMiddleBoss.h" />
+    <ClInclude Include="sbMiddleBossColumn.h" />
+    <ClInclude Include="sbMiddleBossLauncher.h" />
+    <ClInclude Include="sbMiddleBossRocket.h" />
+    <ClInclude Include="sbMiddleBossSmoke.h" />
     <ClInclude Include="sbMonster.h" />
     <ClInclude Include="sbNormalBullet.h" />
     <ClInclude Include="sbNpc.h" />
-    <ClInclude Include="sbOldMan.h" />
+    <ClInclude Include="sbHOldMan.h" />
     <ClInclude Include="sbPlayerBottom.h" />
     <ClInclude Include="sbPlayerTop.h" />
     <ClInclude Include="sbRigidbody.h" />
     <ClInclude Include="sbSound.h" />
     <ClInclude Include="sbSoundManager.h" />
+    <ClInclude Include="sbSupply.h" />
     <ClInclude Include="sbTexture.h" />
     <ClInclude Include="sbObject.h" />
     <ClInclude Include="Resource.h" />
@@ -177,6 +188,8 @@
     <ClInclude Include="sbTime.h" />
     <ClInclude Include="sbTitleScene.h" />
     <ClInclude Include="sbTransform.h" />
+    <ClInclude Include="sbTruck.h" />
+    <ClInclude Include="sbUi.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Commoninclude.h" />
     <ClInclude Include="sbMath.h" />
@@ -189,11 +202,14 @@
     <ClCompile Include="sbAnimator.cpp" />
     <ClCompile Include="sbApplication.cpp" />
     <ClCompile Include="sbArabian.cpp" />
+    <ClCompile Include="sbArabianKnife.cpp" />
     <ClCompile Include="sbAuto.cpp" />
     <ClCompile Include="sbBackGround.cpp" />
+    <ClCompile Include="sbBerserker.cpp" />
+    <ClCompile Include="sbBerserkerKnife.cpp" />
+    <ClCompile Include="sbBGBackGround.cpp" />
     <ClCompile Include="sbBGbossCanopi.cpp" />
-    <ClCompile Include="sbBGDesert.cpp" />
-    <ClCompile Include="sbBGMDesert.cpp" />
+    <ClCompile Include="sbControlTower.cpp" />
     <ClCompile Include="sbEfBomb.cpp" />
     <ClCompile Include="sbCamera.cpp" />
     <ClCompile Include="sbCameraPlayer.cpp" />
@@ -206,17 +222,24 @@
     <ClCompile Include="sbFloor.cpp" />
     <ClCompile Include="sbFrontBackGround.cpp" />
     <ClCompile Include="sbGameObject.cpp" />
+    <ClCompile Include="sbHeavyBullet.cpp" />
+    <ClCompile Include="sbHeavyMachineGun.cpp" />
     <ClCompile Include="sbMath.cpp" />
     <ClCompile Include="sbMiddleBoss.cpp" />
+    <ClCompile Include="sbMiddleBossColumn.cpp" />
+    <ClCompile Include="sbMiddleBossLauncher.cpp" />
+    <ClCompile Include="sbMiddleBossRocket.cpp" />
+    <ClCompile Include="sbMiddleBossSmoke.cpp" />
     <ClCompile Include="sbMonster.cpp" />
     <ClCompile Include="sbNormalBullet.cpp" />
     <ClCompile Include="sbNpc.cpp" />
-    <ClCompile Include="sbOldMan.cpp" />
+    <ClCompile Include="sbHOldMan.cpp" />
     <ClCompile Include="sbPlayerBottom.cpp" />
     <ClCompile Include="sbPlayerTop.cpp" />
     <ClCompile Include="sbRigidbody.cpp" />
     <ClCompile Include="sbSound.cpp" />
     <ClCompile Include="sbSoundManager.cpp" />
+    <ClCompile Include="sbSupply.cpp" />
     <ClCompile Include="sbTexture.cpp" />
     <ClCompile Include="sbInput.cpp" />
     <ClCompile Include="sbLayer.cpp" />
@@ -230,6 +253,8 @@
     <ClCompile Include="sbTime.cpp" />
     <ClCompile Include="sbTitleScene.cpp" />
     <ClCompile Include="sbTransform.cpp" />
+    <ClCompile Include="sbTruck.cpp" />
+    <ClCompile Include="sbUi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="METAL SLUG.rc" />

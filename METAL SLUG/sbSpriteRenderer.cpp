@@ -37,6 +37,7 @@ namespace sb
 			, Vector2::Zero
 			, mScale
 			, mAlpha
-			, tr->GetRotation());
+			, tr->GetRotation()
+			, mbAffectCamera);
 	}
 }

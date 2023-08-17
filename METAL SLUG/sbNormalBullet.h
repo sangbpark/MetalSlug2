@@ -30,9 +30,14 @@ namespace sb
 		virtual void OnCollisionExit(class Collider* other);
 
 		void ArabianDeath(Collider* other);
+		void MiddleBossLauncherEnter(Collider* other);
 		void FloorEnter(Collider* other);
+		void HOldManEnter(Collider* other);
+		void TruckCollisionEnter(Collider* other);
+		void BerserkerCollisionEnter(Collider* other);
 	private:
 		eBulletState mState;
 		float mDeathTime;
+		bool mCreat;
 	};
 }

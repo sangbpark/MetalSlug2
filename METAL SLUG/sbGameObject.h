@@ -55,6 +55,7 @@ namespace sb
 
 		eState GetState() { return mState; }
 		void Pause() { mState = eState::Pause; }
+		void Active() { mState = eState::Active; }
 
 	private:
 		void death() { mState = eState::Dead; }

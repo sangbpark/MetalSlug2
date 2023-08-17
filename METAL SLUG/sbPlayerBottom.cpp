@@ -12,20 +12,28 @@
 #include "sbCollider.h"
 #include "sbNormalBullet.h"
 #include "sbEfBomb.h"
+#include "sbHeavyBullet.h"
+#include "sbArabianknife.h"
+#include "sbMiddleBossRocket.h"
+#include "sbBerserkerKnife.h"
 
 namespace sb
 {
 	math::Vector2 PlayerBottom::mPlayposition = {};
-	bool PlayerBottom::mGround = {};
-	bool PlayerBottom::mComplete = {};
-	
-	float PBtimecheck = 0.0f;
 	PlayerBottom::PlayerBottom()
-		:mDirect(true)	
-		,mKeyUp(false)
+		:mKeyUp(false)
 		,mRun(false)
 		,mFree(false)
 		,mLateDirect(true)
+		,PBtimecheck(0.0f)
+		,mInvincible(0.0f)
+		,mDirect(true)
+		,mChange(false)
+		,mState(eState::Idle)
+		,mWeaponState(eWeaponState::normal)
+		, mHeavyBulletCount(0)
+		, mEfBombCount(10)
+		,mStop(false)
 	{
 		ResourceLoad();
 	}
@@ -71,6 +79,15 @@ namespace sb
 		case sb::PlayerBottom::eState::Down:
 			Down();
 			break;
+		case sb::PlayerBottom::eState::Stopanimator:
+			StopAnimator();
+			break;
+		case sb::PlayerBottom::eState::Stop:
+			Stop();
+			break;
+		case sb::PlayerBottom::eState::Downmove:
+			DownMove();
+			break;
 		case sb::PlayerBottom::eState::jumpdown:
 			JumpDown();
 			break;
@@ -79,6 +96,9 @@ namespace sb
 			break;
 		case sb::PlayerBottom::eState::jumpattack:
 			JumpAttack();
+			break;
+		case sb::PlayerBottom::eState::jumpbomb:
+			JumpBomb();
 			break;
 		case sb::PlayerBottom::eState::jumpdownattack:
 			JumpDownAttack();
@@ -98,17 +118,40 @@ namespace sb
 		case sb::PlayerBottom::eState::Death:
 			Death();
 			break;
+		case sb::PlayerBottom::eState::revive:
+			Revive();
+			break;
 		case sb::PlayerBottom::eState::End:
 			break;
 		default:
 			break;
 		}
-
+		if (mInvincible != 0.0f)
+		{
+			mInvincible -= Time::DeltaTime();
+			if (mInvincible < 0.0f)
+				mInvincible = 0.0f;
+		}
 	
 		Vector2 pos = tr->GetPosition();
 		mGround = rb->GetGround();
 		mPlayposition = pos;
 		mComplete = animator->Getcomplete();
+		if(mWeaponState ==eWeaponState::heavy)
+		{
+			if (mHeavyBulletCount == 0)
+			{
+				mWeaponState = eWeaponState::normal;
+				mChange = true;
+			}
+		}
+		if (mState != eState::Stop
+			&& mState != eState::Stopanimator)
+		{
+			if (mStop == true)
+				mState = eState::Stopanimator;
+		}
+
 	}
 	void PlayerBottom::Render(HDC hdc)
 	{
@@ -117,7 +160,12 @@ namespace sb
 
 	void PlayerBottom::OnCollisionEnter(Collider* other)
 	{
-
+		if(mInvincible==0.0f)
+		{
+			ArabianKnifeColliderEnter(other);
+			MiddleRocketColliderEnter(other);
+			BerserkerKnifeColliderEnter(other);
+		}
 	}
 	void PlayerBottom::OnCollisionStay(Collider* other)
 	{
@@ -126,16 +174,51 @@ namespace sb
 	{
 	}
 
+	void PlayerBottom::ArabianKnifeColliderEnter(Collider* other)
+	{
+		Arabianknife* af = dynamic_cast<Arabianknife*>(other->GetOwner());
+		if (af == nullptr)
+			return;
+		if (mState == eState::Death
+			|| mState == eState::revive)
+			return;
+		Animator* animator = this->GetComponent<Animator>();
+		animator->PlayAnimation(L"PlayerdeadBAX");
+		this->mState = eState::Death;
+	}
+
+	void PlayerBottom::MiddleRocketColliderEnter(Collider* other)
+	{
+		MiddleBossRocket* mr = dynamic_cast<MiddleBossRocket*>(other->GetOwner());
+		if (mr == nullptr
+			|| mState == eState::Death
+			|| mState == eState::revive
+			|| mr->GetMiddleRocketDeath() == true )
+			return;
+
+		Animator* animator = this->GetComponent<Animator>();
+		animator->PlayAnimation(L"PlayerdeadBAX");
+		this->mState = eState::Death;
+	}
+
+	void PlayerBottom::BerserkerKnifeColliderEnter(Collider* other)
+	{
+		BerserkerKnife* bf = dynamic_cast<BerserkerKnife*>(other->GetOwner());
+		if (bf == nullptr)
+			return;
+		if (mState == eState::Death
+			|| mState == eState::revive)
+			return;
+		Animator* animator = this->GetComponent<Animator>();
+		animator->PlayAnimation(L"PlayerdeadBAX");
+		this->mState = eState::Death;
+	}
+
 	void PlayerBottom::Idle()
 	{
 		Animator* animator = GetComponent<Animator>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
 
-		if (Input::GetKeyDown(eKeyCode::UP))
-		{
-			//animator->PlayAnimation(L"PlayerUpMove", true);
-			mState = eState::Move;
-			return;
-		}
 		if (Input::GetKey(eKeyCode::RIGHT))
 		{
 			animator->PlayAnimation(L"PlayerrightBAX", true);
@@ -143,34 +226,50 @@ namespace sb
 			mDirect = true;
 			return;
 		}
-		if (Input::GetKeyDown(eKeyCode::DOWN))
-		{
-			if (mDirect)
-			{
-				animator->PlayAnimation(L"PlayerrightdownBAX");
-				mState = eState::Down;
-			}
-			else
-			{
-				animator->PlayAnimation(L"PlayerleftdownBAX");
-				mState = eState::Down;
-			}
-			return;
-		}
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
-			animator->PlayAnimation(L"PlayerleftBAX", true);				
+			animator->PlayAnimation(L"PlayerleftBAX", true);
 			mState = eState::Move;
 			mDirect = false;
 			return;
 		}
+		if (Input::GetKey(eKeyCode::DOWN))
+		{
+			if (rb->GetGround())
+			{
+				if (mWeaponState == eWeaponState::normal)
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightdownBAX");
+						mState = eState::Down;
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftdownBAX");
+						mState = eState::Down;
+					}
+				}
+				else if (mWeaponState == eWeaponState::heavy)
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"hPlayerrightdownBAX");
+						mState = eState::Down;
+					}
+					else
+					{
+						animator->PlayAnimation(L"hPlayerleftdownBAX");
+						mState = eState::Down;
+					}
+				}
+				return;
+			}
+		}
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
 		}
-		if (Input::GetKeyDown(eKeyCode::Z))
-		{
 
-		}
 		if (Input::GetKeyDown(eKeyCode::S))
 		{
 			if (mDirect)
@@ -197,6 +296,7 @@ namespace sb
 	{
 		Transform* tr = GetComponent<Transform>();
 		Animator* animator = GetComponent<Animator>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
 		Vector2 pos = tr->GetPosition();
 		if (Input::GetKeyUp(eKeyCode::LEFT)
 			|| Input::GetKeyUp(eKeyCode::RIGHT))
@@ -234,28 +334,45 @@ namespace sb
 		if (Input::GetKey(eKeyCode::RIGHT))
 			{
 				pos.x += Player_Speed * Time::DeltaTime();
-				mDirect = true;
 			}
 
 		if (Input::GetKey(eKeyCode::LEFT))
 			{
 				pos.x -= Player_Speed * Time::DeltaTime();
-				mDirect = false;
 			}
 
-		if (Input::GetKeyDown(eKeyCode::DOWN))
+		if (Input::GetKey(eKeyCode::DOWN))
 		{
-			if (mDirect)
+			if (rb->GetGround())
 			{
-				animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
-				mState = eState::Down;
+				if (mWeaponState == eWeaponState::normal)
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightdownBAX");
+						mState = eState::Down;
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftdownBAX");
+						mState = eState::Down;
+					}
+				}
+				else if (mWeaponState == eWeaponState::heavy)
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"hPlayerrightdownBAX");
+						mState = eState::Down;
+					}
+					else
+					{
+						animator->PlayAnimation(L"hPlayerleftdownBAX");
+						mState = eState::Down;
+					}
+				}
+				return;
 			}
-			else
-			{
-				animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
-				mState = eState::Down;
-			}
-			return;
 		}
 
 		if (Input::GetKeyDown(eKeyCode::S))
@@ -278,6 +395,7 @@ namespace sb
 			mRun = true;
 			return;
 		}
+		pos = CameraOut(pos);
 		tr->SetPosition(pos);
 	}
 	void PlayerBottom::Attack()
@@ -295,6 +413,7 @@ namespace sb
 			pos.x += Player_Speed * Time::DeltaTime();
 			mDirect = true;
 		}
+		pos = CameraOut(pos);
 		tr->SetPosition(pos);
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
@@ -362,14 +481,14 @@ namespace sb
 			mDirect = true;
 
 		}
+		pos = CameraOut(pos);
 		tr->SetPosition(pos);
 		if (Input::GetKeyDown(eKeyCode::DOWN))
 		{
 			mState = eState::jumpdown;
 			return;
 		}
-		if (Input::GetKeyDown(eKeyCode::A)
-			|| Input::GetKeyDown(eKeyCode::D))
+		if (Input::GetKeyDown(eKeyCode::A))
 		{
 			PBtimecheck = 0.0f;
 			int Index = (animator->GetIndex());
@@ -407,7 +526,44 @@ namespace sb
 			}
 			return;
 		}
-		
+		if (Input::GetKeyDown(eKeyCode::D))
+		{
+			PBtimecheck = 0.0f;
+			int Index = (animator->GetIndex());
+			if (mRun)
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightrunjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jumpbomb;
+				}
+				else
+				{
+
+					animator->PlayAnimation(L"PlayerleftrunjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jumpbomb;
+				}
+			}
+
+			else
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jumpbomb;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerleftjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jumpbomb;
+				}
+			}
+			return;
+		}
 
 		if (rb->GetGround())
 		{
@@ -431,314 +587,874 @@ namespace sb
 		Transform* tr = GetComponent<Transform>();
 		Animator* animator = GetComponent<Animator>();
 		Vector2 pos = tr->GetPosition();
-		if (Input::GetKeyDown(eKeyCode::LEFT))
+		if (mWeaponState == eWeaponState::normal)
 		{
-			animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
-			mDirect = false;
-		}
-		if (Input::GetKeyDown(eKeyCode::RIGHT))
-		{
-			animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
-			mDirect = true;
-		}
-		if (Input::GetKey(eKeyCode::LEFT))
-		{
-			pos.x -= Player_DownSpeed * Time::DeltaTime();
-
-		}
-
-		if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			pos.x += Player_DownSpeed * Time::DeltaTime();
-		}
-		tr->SetPosition(pos);
-		if (Input::GetKeyUp(eKeyCode::LEFT)
-			|| Input::GetKeyUp(eKeyCode::RIGHT))
-		{
-			if (mDirect)
+			if (Input::GetKeyUp(eKeyCode::DOWN))
 			{
-				animator->PlayAnimation(L"PlayerrightdownidleBAX", true);
-				mState = eState::Down;
-			}
-			else
-			{
-				animator->PlayAnimation(L"PlayerleftdownidleBAX", true);
-				mState = eState::Down;
-			}
-			return;
-		}
-
-
-		if (Input::GetKeyDown(eKeyCode::D))
-		{
-			if (mDirect)
-			{
-				Transform* tr = GetComponent<Transform>();
-				Vector2 pos = tr->GetPosition();
-				pos.x += 30.0f;
-				EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos);
-				efbomb->SetDirect(mDirect);
-				animator->PlayAnimation(L"PlayerrightbombTAX");
-				animator->PlayAnimation(L"PlayerrightdownbombBAX");
-				mState = eState::DownBomb;
-			}
-			else
-			{
-				Transform* tr = GetComponent<Transform>();
-				Vector2 pos = tr->GetPosition();
-				pos.x -= 50.0f;
-				EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos);
-				efbomb->SetDirect(mDirect);
-				animator->PlayAnimation(L"PlayerrightbombTAX");
-				animator->PlayAnimation(L"PlayerleftdownbombBAX");
-				mState = eState::DownBomb;
-			}
-			return;
-		}
-		if (Input::GetKeyDown(eKeyCode::A))
-		{
-			if (mDirect)
-			{
-				Transform* tr = GetComponent<Transform>();
-				Vector2 pos = tr->GetPosition();
-				pos.x += 30.0f;
-				sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos);
-				normalbullet->SetState(sbNormalBullet::eBulletState::Right);
-				animator->PlayAnimation(L"PlayerrightdowngunBAX");
-				mState = eState::Downattack;
-			}
-			else
-			{
-				Transform* tr = GetComponent<Transform>();
-				Vector2 pos = tr->GetPosition();
-				pos.x -= 40.0f;
-				sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos);
-				normalbullet->SetState(sbNormalBullet::eBulletState::Left);
-				animator->PlayAnimation(L"PlayerleftdowngunBAX");
-				mState = eState::Downattack;
-			}
-			return;
-		}
-	
-		if (Input::GetKeyUp(eKeyCode::DOWN))
-		{
-			if (mDirect)
-			{
-				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
-				mState = eState::Idle;
-			}
-			else
-			{
-				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
-				mState = eState::Idle;
-			}
-		}
-
-
-	}
-	void PlayerBottom::DownAttack()
-	{
-		Animator* animator = GetComponent<Animator>();
-		if (Input::GetKeyUp(eKeyCode::DOWN))
-		{
-			if (mDirect)
-			{
-				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
-				mState = eState::Idle;
-			}
-			else
-			{
-				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
-				mState = eState::Idle;
-
-			}
-			return;
-		}
-
-		if (Input::GetKeyDown(eKeyCode::RIGHT))
-		{
-			animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
-			mState = eState::Down;
-			mDirect = true;
-
-		}
-		if (Input::GetKeyDown(eKeyCode::LEFT))
-		{
-			animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
-			mState = eState::Down;
-			mDirect = false;
-		}
-		
-		if (Input::GetKeyDown(eKeyCode::A)
-			&& animator->GetIndex() > 4)
-		{
-			if (mDirect)
-			{
-				Transform* tr = GetComponent<Transform>();
-				Vector2 pos = tr->GetPosition();
-				pos.x += 30.0f;
-				sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos);
-				normalbullet->SetState(sbNormalBullet::eBulletState::Right);
-				animator->PlayAnimation(L"PlayerrightdowngunBAX");
-				mState = eState::Downattack;
-			}
-			else
-			{
-				Transform* tr = GetComponent<Transform>();
-				Vector2 pos = tr->GetPosition();
-				pos.x -= 40.0f;
-				sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos);
-				normalbullet->SetState(sbNormalBullet::eBulletState::Left);
-				animator->PlayAnimation(L"PlayerleftdowngunBAX");
-				mState = eState::Downattack;
-			}
-		}
-		if (Input::GetKeyDown(eKeyCode::D))
-		{
-			if (mDirect)
-			{
-				Transform* tr = GetComponent<Transform>();
-				Vector2 pos = tr->GetPosition();
-				pos.x += 30.0f;
-				EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos);
-				efbomb->SetDirect(mDirect);
-				animator->PlayAnimation(L"PlayerrightdownbombBAX");
-				mState = eState::DownBomb;
-			}
-			else
-			{
-				Transform* tr = GetComponent<Transform>();
-				Vector2 pos = tr->GetPosition();
-				pos.x -= 50.0f;
-				EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos);
-				efbomb->SetDirect(mDirect);
-				animator->PlayAnimation(L"PlayerleftdownbombBAX");
-				mState = eState::DownBomb;
-			}
-			return;
-		}
-
-		if (Input::GetKey(eKeyCode::LEFT))
-		{
-			mDirect = false;
-			mRun = true;
-		}
-		if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			mDirect = true;
-			mRun = true;
-		}
-
-		if (Input::GetKeyUp(eKeyCode::LEFT)
-			|| Input::GetKeyUp(eKeyCode::RIGHT))
-		{
-			mRun = false;
-		}
-		if (animator->Getcomplete())
-		{
-			if (mRun)
-			{
-				if(mDirect)
+				if (mDirect)
 				{
-					animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
-					mState = eState::Down;
-					mDirect = true;
+					animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+					mState = eState::Idle;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+					mState = eState::Idle;
+				}
+				return;
+			}
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
+				mState = eState::Downmove;
+				mDirect = false;
+				return;
+			}
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
+				mState = eState::Downmove;
+				mDirect = true;
+				return;
+			}
+
+			if (Input::GetKeyDown(eKeyCode::D))
+			{
+		
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x += 30.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos2);
+					efbomb->SetDirect(mDirect);
 				
 				}
 				else
 				{
-					animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
-					mState = eState::Down;
-					mDirect = false;
+					animator->PlayAnimation(L"PlayerleftdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x -= 50.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos2);
+					efbomb->SetDirect(mDirect);
+				}
+				return;
+			}
+			if (Input::GetKeyDown(eKeyCode::A))
+			{
+				if (mDirect)
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x += 30.0f;
+					sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos2);
+					normalbullet->SetState(sbNormalBullet::eBulletState::Right);
+					animator->PlayAnimation(L"PlayerrightdowngunBAX");
+					mState = eState::Downattack;
+				}
+				else
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x -= 40.0f;
+					sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos2);
+					normalbullet->SetState(sbNormalBullet::eBulletState::Left);
+					animator->PlayAnimation(L"PlayerleftdowngunBAX");
+					mState = eState::Downattack;
+				}
+				return;
+			}
+		}
+		else if (mWeaponState == eWeaponState::heavy)
+		{
+			if (Input::GetKeyUp(eKeyCode::DOWN))
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+					mState = eState::Idle;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+					mState = eState::Idle;
+				}
+				return;
+			}
+			if (animator->Getcomplete())
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"hPlayerrightdownidleBAX", true);
+				}
+				else
+				{
+					animator->PlayAnimation(L"hPlayerleftdownidleBAX", true);
 				}
 			}
-			else
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				animator->PlayAnimation(L"hPlayerleftdownwalkBAX", true);
+				mState = eState::Downmove;
+				mDirect = false;
+				return;
+			}
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				animator->PlayAnimation(L"hPlayerrightdownwalkBAX", true);
+				mState = eState::Downmove;
+				mDirect = true;
+				return;
+			}
+
+			if (Input::GetKeyDown(eKeyCode::D))
+			{
+		
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"hPlayerrightdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x += 30.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos2);
+					efbomb->SetDirect(mDirect);
+		
+				}
+				else
+				{
+					animator->PlayAnimation(L"hPlayerleftdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x -= 50.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos2);
+					efbomb->SetDirect(mDirect);
+				}
+				return;
+			}
+			if (Input::GetKeyDown(eKeyCode::A))
+			{
+				if (mHeavyBulletCount <= 0)
+					return;		
+				mHeavyBulletCount -= 1;
+				if (mDirect)
+				{
+				
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x += 30.0f;
+					HeavyBullet* heavybullet = object::Instantiate<HeavyBullet>(eLayerType::Effects, pos2);
+					heavybullet->SetDirect(mDirect);
+					animator->PlayAnimation(L"hPlayerrightdowngunBAX");
+				}
+				else
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x -= 40.0f;
+					HeavyBullet* heavybullet = object::Instantiate<HeavyBullet>(eLayerType::Effects, pos2);
+					heavybullet->SetDirect(mDirect);
+					animator->PlayAnimation(L"hPlayerleftdowngunBAX");
+				}
+				return;
+			}
+		}
+	
+	}
+	void PlayerBottom::DownMove()
+	{
+		Transform* tr = GetComponent<Transform>();
+		Animator* animator = GetComponent<Animator>();
+		Vector2 pos = tr->GetPosition();
+		if (mWeaponState == eWeaponState::normal)
+		{
+			if (Input::GetKeyUp(eKeyCode::DOWN))
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+					mState = eState::Idle;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+					mState = eState::Idle;
+				}
+				return;
+			}
+			if (Input::GetKeyUp(eKeyCode::LEFT)
+				|| Input::GetKeyUp(eKeyCode::RIGHT))
 			{
 				if (mDirect)
 				{
 					animator->PlayAnimation(L"PlayerrightdownidleBAX", true);
 					mState = eState::Down;
-
 				}
 				else
 				{
 					animator->PlayAnimation(L"PlayerleftdownidleBAX", true);
 					mState = eState::Down;
+				}
+				return;
+			}
+
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				pos.x -= Player_DownSpeed * Time::DeltaTime();
+
+			}
+
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				pos.x += Player_DownSpeed * Time::DeltaTime();
+			}
+			pos = CameraOut(pos);
+			tr->SetPosition(pos);
+
+			if (Input::GetKeyDown(eKeyCode::D))
+			{
+				
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x += 30.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos2);
+					efbomb->SetDirect(mDirect);
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerleftdownbombBAX");
+					mState = eState::DownBomb;
+					animator->PlayAnimation(L"PlayerrightdownbombBAX");
+					mState = eState::DownBomb;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x -= 50.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos2);
+					efbomb->SetDirect(mDirect);
+				}
+				return;
+			}
+			if (Input::GetKeyDown(eKeyCode::A))
+			{
+				if (mDirect)
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x += 30.0f;
+					sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos2);
+					normalbullet->SetState(sbNormalBullet::eBulletState::Right);
+					animator->PlayAnimation(L"PlayerrightdowngunBAX");
+					mState = eState::Downattack;
+				}
+				else
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x -= 40.0f;
+					sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos2);
+					normalbullet->SetState(sbNormalBullet::eBulletState::Left);
+					animator->PlayAnimation(L"PlayerleftdowngunBAX");
+					mState = eState::Downattack;
+				}
+				return;
+			}
+		}
+		else if (mWeaponState == eWeaponState::heavy)
+		{
+			if (Input::GetKeyUp(eKeyCode::DOWN))
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+					mState = eState::Idle;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+					mState = eState::Idle;
+				}
+				return;
+			}
+			if (Input::GetKeyDown(eKeyCode::A))
+			{
+				if (mHeavyBulletCount <= 0)
+					return;
+				mHeavyBulletCount -= 1;
+				if (mDirect)
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x += 30.0f;
+					HeavyBullet* heavybullet = object::Instantiate<HeavyBullet>(eLayerType::Effects, pos2);
+					heavybullet->SetDirect(mDirect);
+					animator->PlayAnimation(L"hPlayerrightdowngunBAX");
+					mState = eState::Down;
+				}
+				else
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x -= 40.0f;
+					HeavyBullet* heavybullet = object::Instantiate<HeavyBullet>(eLayerType::Effects, pos2);
+					heavybullet->SetDirect(mDirect);
+					animator->PlayAnimation(L"hPlayerleftdowngunBAX");
+					mState = eState::Down;
+				}
+				return;
+			}
+			if (Input::GetKeyUp(eKeyCode::LEFT)
+				|| Input::GetKeyUp(eKeyCode::RIGHT))
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"hPlayerrightdownidleBAX", true);
+					mState = eState::Down;
+				}
+				else
+				{
+					animator->PlayAnimation(L"hPlayerleftdownidleBAX", true);
+					mState = eState::Down;
+				}
+				return;
+			}
+
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				pos.x -= Player_DownSpeed * Time::DeltaTime();
+
+			}
+
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				pos.x += Player_DownSpeed * Time::DeltaTime();
+			}
+			pos = CameraOut(pos);
+			tr->SetPosition(pos);
+
+			if (Input::GetKeyDown(eKeyCode::D))
+			{
+	
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"hPlayerrightdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x += 30.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos2);
+					efbomb->SetDirect(mDirect);
+	
+				}
+				else
+				{
+					animator->PlayAnimation(L"hPlayerleftdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos2 = tr->GetPosition();
+					pos2.x -= 50.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos2);
+					efbomb->SetDirect(mDirect);
+			
+				}
+				return;
+			}
+
+		}
+	}
+	void PlayerBottom::DownAttack()
+	{
+		Animator* animator = GetComponent<Animator>();
+		if (mWeaponState== eWeaponState::normal)
+		{
+			if (Input::GetKeyUp(eKeyCode::DOWN))
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+					mState = eState::Idle;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+					mState = eState::Idle;
 
 				}
+				return;
 			}
-			return;
+
+			if (Input::GetKeyDown(eKeyCode::RIGHT))
+			{
+				animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
+				mState = eState::Down;
+				mDirect = true;
+				return;
+			}
+			if (Input::GetKeyDown(eKeyCode::LEFT))
+			{
+				animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
+				mState = eState::Down;
+				mDirect = false;
+				return;
+			}
+
+			if (Input::GetKeyDown(eKeyCode::A)
+				&& animator->GetIndex() > 4)
+			{
+				if (mDirect)
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos = tr->GetPosition();
+					pos.x += 30.0f;
+					sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos);
+					normalbullet->SetState(sbNormalBullet::eBulletState::Right);
+					animator->PlayAnimation(L"PlayerrightdowngunBAX");
+					mState = eState::Downattack;
+				}
+				else
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos = tr->GetPosition();
+					pos.x -= 40.0f;
+					sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos);
+					normalbullet->SetState(sbNormalBullet::eBulletState::Left);
+					animator->PlayAnimation(L"PlayerleftdowngunBAX");
+					mState = eState::Downattack;
+				}
+				return;
+			}
+			if (Input::GetKeyDown(eKeyCode::D))
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos = tr->GetPosition();
+					pos.x += 30.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos);
+					efbomb->SetDirect(mDirect);
+		
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerleftdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos = tr->GetPosition();
+					pos.x -= 50.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos);
+					efbomb->SetDirect(mDirect);
+			
+				}
+				return;
+			}
+			if (Input::GetKeyUp(eKeyCode::LEFT)
+				|| Input::GetKeyUp(eKeyCode::RIGHT))
+			{
+				mRun = false;
+			}
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				mDirect = false;
+				mRun = true;
+			}
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				mDirect = true;
+				mRun = true;
+			}
+
+			if (animator->Getcomplete())
+			{
+				if (mRun)
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
+						mState = eState::Down;
+						mDirect = true;
+
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
+						mState = eState::Down;
+						mDirect = false;
+					}
+				}
+				else
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightdownidleBAX", true);
+						mState = eState::Down;
+
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftdownidleBAX", true);
+						mState = eState::Down;
+
+					}
+				}
+				return;
+			}
+		}
+		else if (mWeaponState == eWeaponState::heavy)
+		{
+			if (Input::GetKeyUp(eKeyCode::DOWN))
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+					mState = eState::Idle;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+					mState = eState::Idle;
+
+				}
+				return;
+			}
+
+			if (Input::GetKeyDown(eKeyCode::RIGHT))
+			{
+				animator->PlayAnimation(L"hPlayerrightdownwalkBAX", true);
+				mState = eState::Down;
+				mDirect = true;
+				return;
+			}
+			if (Input::GetKeyDown(eKeyCode::LEFT))
+			{
+				animator->PlayAnimation(L"hPlayerleftdownwalkBAX", true);
+				mState = eState::Down;
+				mDirect = false;
+				return;
+			}
+
+			if (Input::GetKeyDown(eKeyCode::A)
+				&& animator->GetIndex() > 4)
+			{
+				if (mHeavyBulletCount <= 0)
+					return;
+				mHeavyBulletCount -= 1;
+				if (mDirect)
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos = tr->GetPosition();
+					pos.x += 30.0f;
+					sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos);
+					normalbullet->SetState(sbNormalBullet::eBulletState::Right);
+					animator->PlayAnimation(L"hPlayerrightdowngunBAX");
+					mState = eState::Downattack;
+				}
+				else
+				{
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos = tr->GetPosition();
+					pos.x -= 40.0f;
+					sbNormalBullet* normalbullet = object::Instantiate<sbNormalBullet>(eLayerType::Effects, pos);
+					normalbullet->SetState(sbNormalBullet::eBulletState::Left);
+					animator->PlayAnimation(L"hPlayerleftdowngunBAX");
+					mState = eState::Downattack;
+				}
+				return;
+			}
+			if (Input::GetKeyDown(eKeyCode::D))
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"hPlayerrightdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos = tr->GetPosition();
+					pos.x += 30.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos);
+					efbomb->SetDirect(mDirect);
+				}
+				else
+				{
+					animator->PlayAnimation(L"hPlayerleftdownbombBAX");
+					mState = eState::DownBomb;
+					if (mEfBombCount <= 0)
+					{
+						mEfBombCount = 0;
+						return;
+					}
+					mEfBombCount -= 1;
+					Transform* tr = GetComponent<Transform>();
+					Vector2 pos = tr->GetPosition();
+					pos.x -= 50.0f;
+					EfBomb* efbomb = object::Instantiate<EfBomb>(eLayerType::Effects, pos);
+					efbomb->SetDirect(mDirect);
+
+				}
+				return;
+			}
+			if (Input::GetKeyUp(eKeyCode::LEFT)
+				|| Input::GetKeyUp(eKeyCode::RIGHT))
+			{
+				mRun = false;
+			}
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				mDirect = false;
+				mRun = true;
+			}
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				mDirect = true;
+				mRun = true;
+			}
+
+			if (animator->Getcomplete())
+			{
+				if (mRun)
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"hPlayerrightdownwalkBAX", true);
+						mState = eState::Down;
+						mDirect = true;
+
+					}
+					else
+					{
+						animator->PlayAnimation(L"hPlayerleftdownwalkBAX", true);
+						mState = eState::Down;
+						mDirect = false;
+					}
+				}
+				else
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"hPlayerrightdownidleBAX", true);
+						mState = eState::Down;
+
+					}
+					else
+					{
+						animator->PlayAnimation(L"hPlayerleftdownidleBAX", true);
+						mState = eState::Down;
+
+					}
+				}
+				return;
+			}
 		}
 
 	}
 	void PlayerBottom::DownBomb()
 	{
 		Animator* animator = GetComponent<Animator>();
-		if (Input::GetKeyUp(eKeyCode::DOWN))
+		if (mWeaponState == eWeaponState::normal)
 		{
-			if (mDirect)
-			{
-				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
-				mState = eState::Idle;
-			}
-			else
-			{
-				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
-				mState = eState::Idle;
-
-			}
-			return;
-		}
-
-		if (Input::GetKey(eKeyCode::LEFT))
-		{
-			mDirect = false;
-			mRun = true;
-		}
-		if (Input::GetKey(eKeyCode::RIGHT))
-		{
-			mDirect = true;
-			mRun = true;
-		}
-
-		if (Input::GetKeyUp(eKeyCode::LEFT)
-			|| Input::GetKeyUp(eKeyCode::RIGHT))
-		{
-			mRun = false;
-		}
-
-		if ( animator->Getcomplete())
-		{
-			if (mRun)
+			if (Input::GetKeyUp(eKeyCode::DOWN))
 			{
 				if (mDirect)
 				{
-					animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
-					mState = eState::Down;
-					mDirect = true;
+					animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+					mState = eState::Idle;
 				}
 				else
 				{
-					animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
-					mState = eState::Down;
-					mDirect = false;
+					animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+					mState = eState::Idle;
+
 				}
+				return;
+			}
+
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				mDirect = false;
+				mRun = true;
+			}
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				mDirect = true;
+				mRun = true;
+			}
+
+			if (Input::GetKeyUp(eKeyCode::LEFT)
+				|| Input::GetKeyUp(eKeyCode::RIGHT))
+			{
 				mRun = false;
 			}
-			else
+
+			if (animator->Getcomplete())
+			{
+				if (mRun)
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightdownwalkBAX", true);
+						mState = eState::Down;
+						mDirect = true;
+					}
+					else
+					{
+						animator->PlayAnimation(L"PlayerleftdownwalkBAX", true);
+						mState = eState::Down;
+						mDirect = false;
+					}
+					mRun = false;
+				}
+				else
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"PlayerrightdownidleBAX", true);
+						mState = eState::Down;
+					}
+					else if (!mDirect)
+					{
+						animator->PlayAnimation(L"PlayerleftdownidleBAX", true);
+						mState = eState::Down;
+					}
+				}
+				return;
+			}
+		}
+		else if (mWeaponState == eWeaponState::heavy)
+		{
+			if (Input::GetKeyUp(eKeyCode::DOWN))
 			{
 				if (mDirect)
 				{
-					animator->PlayAnimation(L"PlayerrightdownidleBAX", true);
-					mState = eState::Down;
+					animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+					mState = eState::Idle;
 				}
-				else if (!mDirect)
+				else
 				{
-					animator->PlayAnimation(L"PlayerleftdownidleBAX", true);
-					mState = eState::Down;
+					animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+					mState = eState::Idle;
+
 				}
+				return;
 			}
-			return;
+
+			if (Input::GetKey(eKeyCode::LEFT))
+			{
+				mDirect = false;
+				mRun = true;
+			}
+			if (Input::GetKey(eKeyCode::RIGHT))
+			{
+				mDirect = true;
+				mRun = true;
+			}
+
+			if (Input::GetKeyUp(eKeyCode::LEFT)
+				|| Input::GetKeyUp(eKeyCode::RIGHT))
+			{
+				mRun = false;
+			}
+
+			if (animator->Getcomplete())
+			{
+				if (mRun)
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"hPlayerrightdownwalkBAX", true);
+						mState = eState::Down;
+						mDirect = true;
+					}
+					else
+					{
+						animator->PlayAnimation(L"hPlayerleftdownwalkBAX", true);
+						mState = eState::Down;
+						mDirect = false;
+					}
+					mRun = false;
+				}
+				else
+				{
+					if (mDirect)
+					{
+						animator->PlayAnimation(L"hPlayerrightdownidleBAX", true);
+						mState = eState::Down;
+					}
+					else if (!mDirect)
+					{
+						animator->PlayAnimation(L"hPlayerleftdownidleBAX", true);
+						mState = eState::Down;
+					}
+				}
+				return;
+			}
 		}
 	}
 	void PlayerBottom::JumpAttack()
@@ -756,17 +1472,20 @@ namespace sb
 		{
 			pos.x += Player_Speed * Time::DeltaTime();
 		}
+		pos = CameraOut(pos);
 		tr->SetPosition(pos);
+
 		if (Input::GetKey(eKeyCode::RIGHT))
 			mDirect = true;
 		if (Input::GetKey(eKeyCode::LEFT))
 			mDirect = false;
-		if (Input::GetKey(eKeyCode::A) || Input::GetKey(eKeyCode::D))
-			
+
+		if (PBtimecheck > 0.17f)
 		{
-			if (PBtimecheck >= 0.2f
-				&& PBtimecheck < 0.3f)
+			if (Input::GetKey(eKeyCode::A))
+
 			{
+
 				int Index = (animator->GetIndex());
 				if (mRun)
 				{
@@ -779,7 +1498,6 @@ namespace sb
 					}
 					else
 					{
-
 						animator->PlayAnimation(L"PlayerleftrunjumpBAX");
 						animator->SetIndex(Index);
 						mState = eState::jumpattack;
@@ -804,50 +1522,130 @@ namespace sb
 						PBtimecheck = 0.0f;
 					}
 				}
-			}
-			else 
-			{
-				int Index = (animator->GetIndex());
-				if (mRun)
-				{
-					if (mDirect)
-					{
-						animator->PlayAnimation(L"PlayerrightrunjumpBAX");
-						animator->SetIndex(Index);
-						mState = eState::jump;
-						PBtimecheck = 0.0f;
-					}
-					else
-					{
 
-						animator->PlayAnimation(L"PlayerleftrunjumpBAX");
-						animator->SetIndex(Index);
-						mState = eState::jump;
-						PBtimecheck = 0.0f;
-					}
-				}
-
-				else
-				{
-					if (mDirect)
-					{
-						animator->PlayAnimation(L"PlayerrightjumpBAX");
-						animator->SetIndex(Index);
-						mState = eState::jump;
-						PBtimecheck = 0.0f;
-					}
-					else
-					{
-						animator->PlayAnimation(L"PlayerleftjumpBAX");
-						animator->SetIndex(Index);
-						mState = eState::jump;
-						PBtimecheck = 0.0f;
-					}
-				}
+				return;
 			}
-			return;
 		}
+		if (PBtimecheck >= 0.358)
+		{
+			int Index = (animator->GetIndex());
+			if (mRun)
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightrunjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jump;
+					PBtimecheck = 0.0f;
+				}
+				else
+				{
 
+					animator->PlayAnimation(L"PlayerleftrunjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jump;
+					PBtimecheck = 0.0f;
+				}
+			}
+
+			else
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jump;
+					PBtimecheck = 0.0f;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerleftjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jump;
+					PBtimecheck = 0.0f;
+				}
+			}
+		}
+		if (rb->GetGround())
+		{
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"PlayerIdlerightBAX", true);
+				mState = eState::Idle;
+			}
+			else
+			{
+				animator->PlayAnimation(L"PlayerIdleleftBAX", true);
+				mState = eState::Idle;
+
+			}
+			mRun = false;
+			mFree = false;
+		}
+	}
+	void PlayerBottom::JumpBomb()
+	{
+		Transform* tr = GetComponent<Transform>();
+		Animator* animator = GetComponent<Animator>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		Vector2 pos = tr->GetPosition();
+		PBtimecheck += Time::DeltaTime();
+		if (Input::GetKey(eKeyCode::LEFT))
+		{
+			pos.x -= Player_Speed * Time::DeltaTime();
+		}
+		else if (Input::GetKey(eKeyCode::RIGHT))
+		{
+			pos.x += Player_Speed * Time::DeltaTime();
+		}
+		pos = CameraOut(pos);
+		tr->SetPosition(pos);
+
+		if (Input::GetKey(eKeyCode::RIGHT))
+			mDirect = true;
+		if (Input::GetKey(eKeyCode::LEFT))
+			mDirect = false;
+
+		if (PBtimecheck >= 0.21)
+		{
+			int Index = (animator->GetIndex());
+			if (mRun)
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightrunjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jump;
+					PBtimecheck = 0.0f;
+				}
+				else
+				{
+
+					animator->PlayAnimation(L"PlayerleftrunjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jump;
+					PBtimecheck = 0.0f;
+				}
+			}
+
+			else
+			{
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"PlayerrightjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jump;
+					PBtimecheck = 0.0f;
+				}
+				else
+				{
+					animator->PlayAnimation(L"PlayerleftjumpBAX");
+					animator->SetIndex(Index);
+					mState = eState::jump;
+					PBtimecheck = 0.0f;
+				}
+			}
+		}
 		if (rb->GetGround())
 		{
 			if (mDirect)
@@ -874,12 +1672,13 @@ namespace sb
 		PBtimecheck += Time::DeltaTime();
 		if (Input::GetKey(eKeyCode::LEFT))
 		{
-			pos.x -= 1000.0f * Time::DeltaTime();
+			pos.x -= Player_Speed * Time::DeltaTime();
 		}
 		else if (Input::GetKey(eKeyCode::RIGHT))
 		{
-			pos.x += 1000.0f * Time::DeltaTime();
+			pos.x += Player_Speed * Time::DeltaTime();
 		}
+		pos = CameraOut(pos);
 		tr->SetPosition(pos);
 		if (Input::GetKey(eKeyCode::RIGHT))
 			mDirect = true;
@@ -1073,11 +1872,77 @@ namespace sb
 				mDirect = false;
 			}
 		}
+		pos = CameraOut(pos);
 		tr->SetPosition(pos);
+	}
+
+	void PlayerBottom::Stop()
+	{
+		if (mStop == false)
+			mState = eState::Idle;
+	}
+
+	void PlayerBottom::StopAnimator()
+	{
+		Animator* at = GetComponent<Animator>();
+		if (mWeaponState == eWeaponState::normal)
+		{
+			if (mDirect)
+			{
+				at->PlayAnimation(L"PlayerIdlerightBAX", true);
+			}
+			else
+			{
+				at->PlayAnimation(L"PlayerIdleleftBAX", true);
+			}
+		}
+		else if (mWeaponState == eWeaponState::heavy)
+		{
+			if (mDirect)
+			{
+				at->PlayAnimation(L"PlayerIdlerightBAX", true);
+			}
+			else
+			{
+				at->PlayAnimation(L"PlayerIdleleftBAX", true);
+			}
+		}
+		mState = eState::Stop;
+	}
+
+	void PlayerBottom::Revive()
+	{
+		Animator* at = GetComponent<Animator>();
+		if (at->Getcomplete())
+		{
+			at->PlayAnimation(L"PlayerIdlerightBAX");
+			Clear();
+			mInvincible = 5.0f;
+		}
+	
+	}
+
+	void PlayerBottom::Clear()
+	{
+		mKeyUp = false;
+		mRun = false;
+		mFree = false;
+		mLateDirect = true;
+		PBtimecheck = 0.0f;
+		mDirect = true;
+		mState = eState::Idle;
+		mHeavyBulletCount = 0;
+		mWeaponState = eWeaponState::normal;
 	}
 	
 	void PlayerBottom::Death()
 	{
+		Animator* at = GetComponent<Animator>();
+		if (at->Getcomplete())
+		{
+			at->PlayAnimation(L"PlayerreviveBAX");
+			mState = eState::revive;
+		}
 	}
 	void PlayerBottom::ResourceLoad()
 	{
@@ -1100,8 +1965,8 @@ namespace sb
 		at->CreateAnimation(L"PlayerleftdownwalkBAX", imagePlayer, Vector2(0.0f, 1276.0f), Vector2(44.0f, 44.0f), 7, Vector2(-7.0f, -18.0f));
 		at->CreateAnimation(L"PlayerrightdownidleBAX", imagePlayer, Vector2(132.0f, 1144.0f), Vector2(44.0f, 44.0f), 4, Vector2(13.0f, -18.0f));
 		at->CreateAnimation(L"PlayerleftdownidleBAX", imagePlayer, Vector2(132.0f, 1188.0f), Vector2(44.0f, 44.0f), 4, Vector2(-7.0f, -18.0f));
-		at->CreateAnimation(L"PlayerrightrunjumpBAX", imagePlayer, Vector2(308.0f, 836.0f), Vector2(44.0f, 44.0f), 6, Vector2(-15.0f, -5.0f));
-		at->CreateAnimation(L"PlayerleftrunjumpBAX", imagePlayer, Vector2(308.0f, 924.0f), Vector2(44.0f, 44.0f), 6, Vector2(0.0f, -5.0f));
+		at->CreateAnimation(L"PlayerrightrunjumpBAX", imagePlayer, Vector2(308.0f, 836.0f), Vector2(44.0f, 44.0f), 6, Vector2(-25.0f, -5.0f));
+		at->CreateAnimation(L"PlayerleftrunjumpBAX", imagePlayer, Vector2(308.0f, 924.0f), Vector2(44.0f, 44.0f), 6, Vector2(10.0f, -5.0f));
 		at->CreateAnimation(L"PlayerrightdowngunBAX", imagePlayer, Vector2(0.0f, 1320.0f), Vector2(88.0f, 44.0f), 10, Vector2(0.0f, -18.0f), 0.000001f);
 		at->CreateAnimation(L"PlayerleftdowngunBAX", imagePlayer, Vector2(0.0f, 1364.0f), Vector2(88.0f, 44.0f), 10, Vector2(0.0f, -18.0f), 0.000001f);
 		at->CreateAnimation(L"PlayerrightdownbombBAX", imagePlayer, Vector2(0.0f, 1408.0f), Vector2(44.0f, 44.0f), 6, Vector2(0.0f, -18.0f), 0.001f);
@@ -1118,10 +1983,26 @@ namespace sb
 		at->CreateAnimation(L"hPlayerleftdownbombBAX", imagePlayer, Vector2(528.0f, 3124.0f), Vector2(88.0f, 44.0f), 6, Vector2(-60.0f, -18.0f), 0.001f);
 		at->CreateAnimation(L"hPlayerrightdownknifeBAX", imagePlayer, Vector2(0.0f, 3168.0f), Vector2(88.0f, 44.0f), 7, Vector2(35.0f, -18.0f), 0.001f);
 		at->CreateAnimation(L"hPlayerleftdownknifeBAX", imagePlayer, Vector2(616.0f, 3168.0f), Vector2(88.0f, 44.0f), 7, Vector2(-60.0f, -18.0f), 0.001f);
+		at->CreateAnimation(L"PlayerreviveBAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(44.0f, 264.0f), 7,Vector2(-15.0f, -460.0f));
 		at->SetScale(Vector2(4.5f, 4.5f));
 		at->PlayAnimation(L"PlayerIdlerightBAX", true);
 		col->SetSize(Vector2(100.0f, 160.0f));
 		Vector2 pbpos = tr->GetPosition();
 		col->SetPosition(pbpos);
+	}
+	math::Vector2 PlayerBottom::CameraOut(math::Vector2 value)
+	{
+		float distance = fabs(value.x - mCameraTransform.x);
+		float realdistance = value.x - mCameraTransform.x;
+		if (distance >= 670.0f)
+		{
+			if (realdistance > 0.0f)
+			{
+				value.x = mCameraTransform.x + 670.0f;
+			}
+			else
+				value.x = mCameraTransform.x - 670.0f;
+		}
+		return value;
 	}
 }

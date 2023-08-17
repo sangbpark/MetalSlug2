@@ -76,12 +76,6 @@
     <Filter Include="Content\Scene\Mission1">
       <UniqueIdentifier>{44282ea5-6802-4710-9c39-7732e37cd57c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Content\GameObejct\BackGround\BGDesert">
-      <UniqueIdentifier>{713910e5-0500-4530-9f6c-6b5b2105a1c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\GameObejct\BackGround\BGMDesert">
-      <UniqueIdentifier>{2ff87f37-c66e-4dbf-90fd-18f2a0d39613}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Camera">
       <UniqueIdentifier>{678ae7d1-d145-4557-9b02-cc497a837e31}</UniqueIdentifier>
     </Filter>
@@ -99,9 +93,6 @@
     </Filter>
     <Filter Include="Content\GameObejct\Npc">
       <UniqueIdentifier>{7a7cf869-6fad-4c76-b66a-27157a0b7223}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\GameObejct\Npc\OldMan">
-      <UniqueIdentifier>{6d9966b2-7f38-47a0-98de-a1d2e56126fe}</UniqueIdentifier>
     </Filter>
     <Filter Include="Content\GameObejct\CameraPlayer">
       <UniqueIdentifier>{de542601-548c-43ee-a87e-5e16f0c9f605}</UniqueIdentifier>
@@ -147,6 +138,51 @@
     </Filter>
     <Filter Include="Engine\Sound">
       <UniqueIdentifier>{d0131f68-44d9-458e-ad69-9dc81f170c1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\HeavyBullet">
+      <UniqueIdentifier>{d40ba662-8e79-40d8-aeda-3e54e2144e2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\ArabianKnife">
+      <UniqueIdentifier>{22b1a640-ec8e-4559-929d-0c2ff2a3f3dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\BackGround\BGBackGround">
+      <UniqueIdentifier>{84a50def-9626-4f21-bb0d-505a08db02ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Npc\HOldMan">
+      <UniqueIdentifier>{6d9966b2-7f38-47a0-98de-a1d2e56126fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\HeavyMachineGun">
+      <UniqueIdentifier>{f81eef86-5068-45d6-87c4-0285930522be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\Supply">
+      <UniqueIdentifier>{ced60b24-21f6-4404-b45c-b62a565aa6dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Monster\MiddleBoss\MiddleBossColumn">
+      <UniqueIdentifier>{84721ea2-1c48-4f67-85a4-0f5159449536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Monster\MiddleBoss\MiddleBossLauncher">
+      <UniqueIdentifier>{5cf05544-ce68-40a1-883e-344b04e7f0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\MiddleBossRocket">
+      <UniqueIdentifier>{072803a4-72f0-4a80-be81-02fa560106ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\MiddleBossSmoke">
+      <UniqueIdentifier>{5d07982a-8554-45e6-874a-e629a7ff22cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\UI">
+      <UniqueIdentifier>{7cdfa103-518d-4d11-8bac-84577db0d0f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Monster\Berserker">
+      <UniqueIdentifier>{0b9681b5-777e-4ba1-b955-9312f8c60ba5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\BerserkerKnife">
+      <UniqueIdentifier>{6b2f9211-d1cc-4b79-a1bd-6d1f9025258f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Monster\Truck">
+      <UniqueIdentifier>{8f360be7-aa1c-4989-8635-ceb35cd59e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\ControlTower">
+      <UniqueIdentifier>{832527d5-8d74-49ec-b44e-8f242b2693ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -228,12 +264,6 @@
     <ClInclude Include="sbBackGround.h">
       <Filter>Content\GameObejct\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="sbBGDesert.h">
-      <Filter>Content\GameObejct\BackGround\BGDesert</Filter>
-    </ClInclude>
-    <ClInclude Include="sbBGMDesert.h">
-      <Filter>Content\GameObejct\BackGround\BGMDesert</Filter>
-    </ClInclude>
     <ClInclude Include="sbCamera.h">
       <Filter>Engine\Camera</Filter>
     </ClInclude>
@@ -252,8 +282,8 @@
     <ClInclude Include="sbNpc.h">
       <Filter>Content\GameObejct\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="sbOldMan.h">
-      <Filter>Content\GameObejct\Npc\OldMan</Filter>
+    <ClInclude Include="sbHOldMan.h">
+      <Filter>Content\GameObejct\Npc\HOldMan</Filter>
     </ClInclude>
     <ClInclude Include="sbCameraPlayer.h">
       <Filter>Content\GameObejct\CameraPlayer</Filter>
@@ -302,6 +332,48 @@
     </ClInclude>
     <ClInclude Include="sbSoundManager.h">
       <Filter>Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="sbHeavyBullet.h">
+      <Filter>Content\GameObejct\Effects\HeavyBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="sbArabianKnife.h">
+      <Filter>Content\GameObejct\Effects\ArabianKnife</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBGBackGround.h">
+      <Filter>Content\GameObejct\BackGround\BGBackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="sbHeavyMachineGun.h">
+      <Filter>Content\GameObejct\Effects\HeavyMachineGun</Filter>
+    </ClInclude>
+    <ClInclude Include="sbSupply.h">
+      <Filter>Content\GameObejct\Effects\Supply</Filter>
+    </ClInclude>
+    <ClInclude Include="sbMiddleBossColumn.h">
+      <Filter>Content\GameObejct\Monster\MiddleBoss\MiddleBossColumn</Filter>
+    </ClInclude>
+    <ClInclude Include="sbMiddleBossLauncher.h">
+      <Filter>Content\GameObejct\Monster\MiddleBoss\MiddleBossLauncher</Filter>
+    </ClInclude>
+    <ClInclude Include="sbMiddleBossRocket.h">
+      <Filter>Content\GameObejct\Effects\MiddleBossRocket</Filter>
+    </ClInclude>
+    <ClInclude Include="sbMiddleBossSmoke.h">
+      <Filter>Content\GameObejct\Effects\MiddleBossSmoke</Filter>
+    </ClInclude>
+    <ClInclude Include="sbUi.h">
+      <Filter>Content\GameObejct\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBerserker.h">
+      <Filter>Content\GameObejct\Monster\Berserker</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBerserkerKnife.h">
+      <Filter>Content\GameObejct\Effects\BerserkerKnife</Filter>
+    </ClInclude>
+    <ClInclude Include="sbTruck.h">
+      <Filter>Content\GameObejct\Monster\Truck</Filter>
+    </ClInclude>
+    <ClInclude Include="sbControlTower.h">
+      <Filter>Content\GameObejct\ControlTower</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -374,12 +446,6 @@
     <ClCompile Include="sbBackGround.cpp">
       <Filter>Content\GameObejct\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="sbBGDesert.cpp">
-      <Filter>Content\GameObejct\BackGround\BGDesert</Filter>
-    </ClCompile>
-    <ClCompile Include="sbBGMDesert.cpp">
-      <Filter>Content\GameObejct\BackGround\BGMDesert</Filter>
-    </ClCompile>
     <ClCompile Include="sbCamera.cpp">
       <Filter>Engine\Camera</Filter>
     </ClCompile>
@@ -398,8 +464,8 @@
     <ClCompile Include="sbNpc.cpp">
       <Filter>Content\GameObejct\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="sbOldMan.cpp">
-      <Filter>Content\GameObejct\Npc\OldMan</Filter>
+    <ClCompile Include="sbHOldMan.cpp">
+      <Filter>Content\GameObejct\Npc\HOldMan</Filter>
     </ClCompile>
     <ClCompile Include="sbCameraPlayer.cpp">
       <Filter>Content\GameObejct\CameraPlayer</Filter>
@@ -448,6 +514,48 @@
     </ClCompile>
     <ClCompile Include="sbSoundManager.cpp">
       <Filter>Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="sbHeavyBullet.cpp">
+      <Filter>Content\GameObejct\Effects\HeavyBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="sbArabianKnife.cpp">
+      <Filter>Content\GameObejct\Effects\ArabianKnife</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBGBackGround.cpp">
+      <Filter>Content\GameObejct\BackGround\BGBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="sbHeavyMachineGun.cpp">
+      <Filter>Content\GameObejct\Effects\HeavyMachineGun</Filter>
+    </ClCompile>
+    <ClCompile Include="sbSupply.cpp">
+      <Filter>Content\GameObejct\Effects\Supply</Filter>
+    </ClCompile>
+    <ClCompile Include="sbMiddleBossColumn.cpp">
+      <Filter>Content\GameObejct\Monster\MiddleBoss\MiddleBossColumn</Filter>
+    </ClCompile>
+    <ClCompile Include="sbMiddleBossLauncher.cpp">
+      <Filter>Content\GameObejct\Monster\MiddleBoss\MiddleBossLauncher</Filter>
+    </ClCompile>
+    <ClCompile Include="sbMiddleBossRocket.cpp">
+      <Filter>Content\GameObejct\Effects\MiddleBossRocket</Filter>
+    </ClCompile>
+    <ClCompile Include="sbMiddleBossSmoke.cpp">
+      <Filter>Content\GameObejct\Effects\MiddleBossSmoke</Filter>
+    </ClCompile>
+    <ClCompile Include="sbUi.cpp">
+      <Filter>Content\GameObejct\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBerserker.cpp">
+      <Filter>Content\GameObejct\Monster\Berserker</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBerserkerKnife.cpp">
+      <Filter>Content\GameObejct\Effects\BerserkerKnife</Filter>
+    </ClCompile>
+    <ClCompile Include="sbTruck.cpp">
+      <Filter>Content\GameObejct\Monster\Truck</Filter>
+    </ClCompile>
+    <ClCompile Include="sbControlTower.cpp">
+      <Filter>Content\GameObejct\ControlTower</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

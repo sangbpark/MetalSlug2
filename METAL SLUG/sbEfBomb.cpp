@@ -10,6 +10,9 @@
 #include "sbRigidbody.h"
 #include "sbFloor.h"
 #include "sbArabian.h"
+#include "sbHOldMan.h"
+#include "sbMiddleBossRocket.h"
+#include "sbTruck.h"
 
 namespace sb
 {
@@ -82,6 +85,9 @@ namespace sb
 		{
 			FloorCollisionEnter(other);
 			ArabianCollisionEnter(other);
+			HOldManCollisionEnter(other);
+			MiddleBossRocketCollisionEnter(other);
+			TruckCollisionEnter(other);
 		}
 	}
 	void EfBomb::OnCollisionStay(Collider* other)
@@ -172,10 +178,25 @@ namespace sb
 			mCount = 1;
 		}
 	}
+	void EfBomb::HOldManCollisionEnter(Collider* other)
+	{
+		HOldMan* oldman = dynamic_cast<HOldMan*>(other->GetOwner());
+		if (oldman == nullptr
+			|| !(oldman->GetHOldManState() == HOldMan::eState::Idle))
+			return;
+		else
+		{
+			Animator* ar = GetComponent<Animator>();
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			ar->PlayAnimation(L"BombDeathAX");
+			mState = BombState::death;
+		}
+	}
 	void EfBomb::ArabianCollisionEnter(Collider* other)
 	{
 		Arabian* arabian = dynamic_cast<Arabian*>(other->GetOwner());
-		if (arabian == nullptr)
+		if (arabian == nullptr
+			|| arabian->GetArabianState() == Arabian::Arabianstate::death)
 			return;
 		else
 		{
@@ -185,5 +206,33 @@ namespace sb
 			mState = BombState::death;
 		}
 		
+	}
+	void EfBomb::MiddleBossRocketCollisionEnter(Collider* other)
+	{
+		MiddleBossRocket* mr = dynamic_cast<MiddleBossRocket*>(other->GetOwner());
+		if (mr == nullptr
+			|| mr->GetMiddleRocketDeath() == true)
+			return;
+		else
+		{
+			Animator* ar = GetComponent<Animator>();
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			ar->PlayAnimation(L"BombDeathAX");
+			mState = BombState::death;
+		}
+	}
+	void EfBomb::TruckCollisionEnter(Collider* other)
+	{
+		Truck* tk = dynamic_cast<Truck*>(other->GetOwner());
+		if (tk == nullptr
+			|| tk->GetTruckState() != Truck::eState::Create)
+			return;
+		else
+		{
+			Animator* ar = GetComponent<Animator>();
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			ar->PlayAnimation(L"BombDeathAX");
+			mState = BombState::death;
+		}
 	}
 }

@@ -11,7 +11,8 @@
 #include "sbNormalBullet.h"
 #include "sbEfBomb.h"
 #include "sbPlayerBottom.h"
-
+#include "sbHeavyBullet.h"
+#include "sbArabianknife.h"
 namespace sb
 {
 	Arabian::Arabian()
@@ -32,7 +33,13 @@ namespace sb
 	}
 	void Arabian::Update()
 	{
+		Transform* tr = GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		mPlayerDistance = fabs(pos.x - PlayerBottom::GetPlayerPosition().x);
+		if (mPlayerDistance > 2000.0f)
+			return;
 		GameObject::Update();
+
 		switch (mState)
 		{
 		case sb::Arabian::Arabianstate::death:
@@ -59,6 +66,11 @@ namespace sb
 	}
 	void Arabian::Render(HDC hdc)
 	{
+		Transform* tr = GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		mPlayerDistance = fabs(pos.x - PlayerBottom::GetPlayerPosition().x);
+		if (mPlayerDistance > 2000.0f)
+			return;
 		GameObject::Render(hdc);
 	}
 
@@ -84,7 +96,7 @@ namespace sb
 			mTimecheck = 0.0f;
 		}
 
-		if (fabs(mPlayerDistance) < Scale + 250.0f)
+		if (fabs(mPlayerDistance) < Scale + 500.0f)
 		{
 			if (mPlayerDistance >= 0 )
 			{
@@ -220,7 +232,7 @@ namespace sb
 
 		tr->SetPosition(pos);
 
-		if (fabs(mPlayerDistance) < Scale + 250.0f)
+		if (fabs(mPlayerDistance) < Scale + 500.0f)
 		{
 			if (mPlayerDistance >= 0)
 			{
@@ -264,6 +276,18 @@ namespace sb
 	{
 
 		Animator* ar = GetComponent<Animator>();
+		Transform* tr = GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		if (mDirect)
+		{
+			pos.x += 95.0f;
+		}
+		else
+		{
+			pos.x -= 95.0f;
+		}
+
+		Arabianknife* ak = object::Instantiate<Arabianknife>(eLayerType::Floor, pos);
 		if (ar->Getcomplete())
 		{
 			if (mDirect)
@@ -278,12 +302,15 @@ namespace sb
 		}
 	}
 
+
+
 	void Arabian::OnCollisionEnter(Collider* other)
 	{
 		if (!(mState == Arabianstate::death))
 		{
 			NormalBulletCollsionEnter(other);
 			EfBombCollsionEnter(other);
+			HeavyBulletCollsionEnter(other);
 		}
 	}
 	void Arabian::OnCollisionStay(Collider* other)
@@ -307,6 +334,21 @@ namespace sb
 				ar->PlayAnimation(L"arabianleftdeadAX");
 		}
 			
+	}
+	void Arabian::HeavyBulletCollsionEnter(Collider* other)
+	{
+		HeavyBullet* heavybullet = dynamic_cast<HeavyBullet*>(other->GetOwner());
+		Animator* ar = this->GetComponent<Animator>();
+		if (heavybullet == nullptr)
+			return;
+		else
+		{
+			this->mState = Arabianstate::death;
+			if (mDirect)
+				ar->PlayAnimation(L"arabianrightdeadAX");
+			else
+				ar->PlayAnimation(L"arabianleftdeadAX");
+		}
 	}
 	void Arabian::EfBombCollsionEnter(Collider* other)
 	{

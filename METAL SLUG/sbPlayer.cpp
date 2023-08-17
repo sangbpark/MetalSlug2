@@ -5,7 +5,6 @@
 
 namespace sb
 {
-	math::Vector2 Player::mPlayposition = {};
 	Player::Player()
 	{
 	}
@@ -17,6 +16,8 @@ namespace sb
 	}
 	void Player::Update()
 	{
+
+
 		GameObject::Update();
 
 	}
