@@ -16,6 +16,7 @@
 #include "sbCamelBullet.h"
 #include "sbBossFloor.h"
 #include "sbArabian.h"
+#include "sbBossWingFire.h"
 
 namespace sb
 {
@@ -139,9 +140,9 @@ namespace sb
 		Transform* tr = GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();;
 		pos.y += 100.0f * Time::DeltaTime();
-		if (pos.y >= 200.0f)
+		if (pos.y >= 300.0f)
 		{
-			pos.y = 200.0f;
+			pos.y = 300.0f;
 			this->Pause();
 		}
 		tr->SetPosition(pos);
@@ -232,6 +233,12 @@ namespace sb
 				Animator* at = GetComponent<Animator>();
 				at->PlayAnimation(L"bossstage2AX");
 				mBossStage = eBossStage::Stage2;
+				BossWingFire* bwf = object::Instantiate<BossWingFire>(enums::eLayerType::Floor);
+				bwf->SetBossWingFirePosition(BossWingFire::eBossWingFirePosition::Left);
+				bwf->SetOwner(this);
+				BossWingFire* bwf2 = object::Instantiate<BossWingFire>(enums::eLayerType::Floor);
+				bwf2->SetBossWingFirePosition(BossWingFire::eBossWingFirePosition::Right);
+				bwf2->SetOwner(this);
 			}
 			else if (mBossStage == eBossStage::Stage2
 				&& mHp <= 50.0f
@@ -262,7 +269,7 @@ namespace sb
 		if(direct)
 		{
 			pos.x += 80.0f;
-			pos.y -= 50.0f;
+			pos.y -= 30.0f;
 			Arabian* arabian = object::Instantiate<Arabian>(enums::eLayerType::Monster,pos);
 			arabian->SetArabianDirecet(direct);
 			arabian->SetArabianCreate(Arabian::eArabianCreate::Boss);
@@ -270,7 +277,7 @@ namespace sb
 		else
 		{
 			pos.x -= 80.0f;
-			pos.y -= 50.0f;
+			pos.y -= 30.0f;
 			Arabian* arabian = object::Instantiate<Arabian>(enums::eLayerType::Monster, pos);
 			arabian->SetArabianDirecet(direct);
 			arabian->SetArabianCreate(Arabian::eArabianCreate::Boss);
@@ -363,5 +370,6 @@ namespace sb
 		floor->SetBossFloorOwner(this);
 		Collider* flcol = floor->AddComponent<Collider>();
 		flcol->SetSize(Vector2(600.0f, 25.0f));
+
 	}
 }

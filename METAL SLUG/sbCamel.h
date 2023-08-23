@@ -48,5 +48,6 @@ namespace sb
 		float mRotate;
 		float mBulletTime;
 		float mRideTime;
+		float mDeathTime;
 	};
 }

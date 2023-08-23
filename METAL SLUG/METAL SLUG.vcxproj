@@ -144,6 +144,7 @@
     <ClInclude Include="sbBoss.h" />
     <ClInclude Include="sbBossFloor.h" />
     <ClInclude Include="sbBossWing.h" />
+    <ClInclude Include="sbBossWingFire.h" />
     <ClInclude Include="sbCamel.h" />
     <ClInclude Include="sbCamelBullet.h" />
     <ClInclude Include="sbCamelGun.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="sbBoss.cpp" />
     <ClCompile Include="sbBossFloor.cpp" />
     <ClCompile Include="sbBossWing.cpp" />
+    <ClCompile Include="sbBossWingFire.cpp" />
     <ClCompile Include="sbCamel.cpp" />
     <ClCompile Include="sbCamelBullet.cpp" />
     <ClCompile Include="sbCamelGun.cpp" />

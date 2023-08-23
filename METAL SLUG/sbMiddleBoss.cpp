@@ -85,13 +85,13 @@ namespace sb
 		at->CreateAnimation(L"MiddleBossIdledeathAX", imagePlayer, Vector2(396.0f, 1232.0f), Vector2(396.0f, 175.0f), 1);
 		at->PlayAnimation(L"MiddleBossIdleAX");
 		at->SetScale(Vector2(4.5f, 4.5f));
-		MiddleBossColumn* middlebosscolumn1 = object::Instantiate<MiddleBossColumn>(eLayerType::BossMonster,Vector2(8835.0f, 150.0f));
+		MiddleBossColumn* middlebosscolumn1 = object::Instantiate<MiddleBossColumn>(eLayerType::MiddleBossMonster,Vector2(8835.0f, 150.0f));
 		middlebosscolumn1->SetColumnPositon(MiddleBossColumn::ePosition::Left);
 		mMiddleBossColumn.push_back(middlebosscolumn1);
-		MiddleBossColumn* middlebosscolumn2 = object::Instantiate<MiddleBossColumn>(eLayerType::BossMonster, Vector2(9254.0f, 150.0f));
+		MiddleBossColumn* middlebosscolumn2 = object::Instantiate<MiddleBossColumn>(eLayerType::MiddleBossMonster, Vector2(9254.0f, 150.0f));
 		middlebosscolumn2->SetColumnPositon(MiddleBossColumn::ePosition::Middle);
 		mMiddleBossColumn.push_back(middlebosscolumn2);
-		MiddleBossColumn* middlebosscolumn3 = object::Instantiate<MiddleBossColumn>(eLayerType::BossMonster, Vector2(9675.0f, 150.0f));
+		MiddleBossColumn* middlebosscolumn3 = object::Instantiate<MiddleBossColumn>(eLayerType::MiddleBossMonster, Vector2(9675.0f, 150.0f));
 		middlebosscolumn3->SetColumnPositon(MiddleBossColumn::ePosition::Right);
 		mMiddleBossColumn.push_back(middlebosscolumn3);
 	}

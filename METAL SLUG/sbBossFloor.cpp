@@ -47,8 +47,7 @@ namespace sb
 	{
 		Arabian* arabian = dynamic_cast<Arabian*>(other->GetOwner());
 
-		if (arabian == nullptr
-			|| arabian->GetArabianState() == Arabian::Arabianstate::jump)
+		if (arabian == nullptr)
 			return;
 		else
 		{

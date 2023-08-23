@@ -2,10 +2,12 @@
 #include "sbTransform.h"
 #include "sbGameObject.h"
 #include "sbCamera.h"
+#include "sbInput.h"
 
 namespace sb
 {
 	UINT Collider::mCollisionCount = 0;
+	bool Collider::mRenderoff = true;
 
 	Collider::Collider()
 		:Component(eComponentType::Collider)
@@ -60,9 +62,12 @@ namespace sb
 
 		HPEN oldPen = (HPEN)SelectObject(hdc, pen);
 
-		Rectangle(hdc
-			, pos.x, pos.y
-			, pos.x + mSize.x, pos.y + mSize.y);
+		if(!mRenderoff)
+		{
+			Rectangle(hdc
+				, pos.x, pos.y
+				, pos.x + mSize.x, pos.y + mSize.y);
+		}
 
 
 

@@ -48,7 +48,6 @@ namespace sb
 		void NormalBulletCollsionEnter(Collider* other);
 		void HeavyBulletCollsionEnter(Collider* other);
 		void EfBombCollsionEnter(Collider* other);
-		void BossFloorCollsionEnter(Collider* other);
 		void CamelBulletCollsionEnter(Collider* other);
 
 		void SetArabianDirecet(bool direct) { mDirect = direct; }
@@ -60,6 +59,7 @@ namespace sb
 		float mTimecheck;
 		float mPlayerDistance;
 		int mPatrolCount;
+
 
 		eArabianCreate mCreate;
 		Arabianstate mState;

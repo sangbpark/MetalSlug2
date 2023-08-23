@@ -63,6 +63,7 @@ namespace sb
 	private:
 		std::vector<Component*> mComponents;
 		eGameObjectState mState;
+		bool mCollideroff;
 	};
 
 	static __forceinline void Destroy(GameObject* gameObject)

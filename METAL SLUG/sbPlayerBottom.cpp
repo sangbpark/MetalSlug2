@@ -18,6 +18,7 @@
 #include "sbBerserkerKnife.h"
 #include "sbCamel.h"
 #include "sbCollisionManager.h"
+#include "sbBossWing.h"
 
 
 namespace sb
@@ -173,6 +174,7 @@ namespace sb
 			ArabianKnifeColliderEnter(other);
 			MiddleRocketColliderEnter(other);
 			BerserkerKnifeColliderEnter(other);
+			BossWingColliderEnter(other);
 		}
 	}
 	void PlayerBottom::OnCollisionStay(Collider* other)
@@ -191,6 +193,12 @@ namespace sb
 			|| mState == eState::revive)
 			return;
 		Animator* animator = this->GetComponent<Animator>();
+		if (mRide)
+		{
+			mRide = false;
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
 		animator->PlayAnimation(L"PlayerdeadBAX");
 		this->mState = eState::Death;
 	}
@@ -205,6 +213,12 @@ namespace sb
 			return;
 
 		Animator* animator = this->GetComponent<Animator>();
+		if (mRide)
+		{
+			mRide = false;
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
 		animator->PlayAnimation(L"PlayerdeadBAX");
 		this->mState = eState::Death;
 	}
@@ -218,6 +232,31 @@ namespace sb
 			|| mState == eState::revive)
 			return;
 		Animator* animator = this->GetComponent<Animator>();
+		if (mRide)
+		{
+			mRide = false;
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
+		animator->PlayAnimation(L"PlayerdeadBAX");
+		this->mState = eState::Death;
+	}
+
+	void PlayerBottom::BossWingColliderEnter(Collider* other)
+	{
+		BossWing* bw = dynamic_cast<BossWing*>(other->GetOwner());
+		if (bw == nullptr)
+			return;
+		if (mState == eState::Death
+			|| mState == eState::revive)
+			return;
+		Animator* animator = this->GetComponent<Animator>();
+		if (mRide)
+		{
+			mRide = false;
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
 		animator->PlayAnimation(L"PlayerdeadBAX");
 		this->mState = eState::Death;
 	}
@@ -1889,6 +1928,10 @@ namespace sb
 		if (mStop == false
 			&& mRide == false)
 			mState = eState::Idle;
+		else if (mRide)
+		{
+			mState = eState::RIde;
+		}
 	}
 
 	void PlayerBottom::StopAnimator()
@@ -1963,7 +2006,7 @@ namespace sb
 			at->PlayAnimation(L"PlayerrightjumpBAX");
 		else
 			at->PlayAnimation(L"PlayerleftjumpBAX");
-
+		mRide = false;
 		mState = eState::jump;
 	}
 

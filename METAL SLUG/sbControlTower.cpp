@@ -5,6 +5,7 @@
 #include "sbObject.h"
 #include "sbCameraPlayer.h"
 #include "sbMiddleBoss.h"
+#include "sbBoss.h"
 
 namespace sb
 {
@@ -68,6 +69,12 @@ namespace sb
 		{
 			MiddleBoss* middleboss = object::Instantiate<MiddleBoss>(eLayerType::BossMonster, Vector2(9070.0f, 310.0f));
 			mTarget = middleboss;
+			mState = eState::Detection;
+		}
+		else if (mStage == eStage::Boss)
+		{
+			Boss* boss = object::Instantiate<Boss>(enums::eLayerType::BossMonster, Vector2(16420.0f, -500.0f));
+			mTarget = boss;
 			mState = eState::Detection;
 		}
 	}

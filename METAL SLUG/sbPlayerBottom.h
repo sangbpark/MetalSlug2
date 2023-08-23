@@ -53,6 +53,7 @@ namespace sb
 		void ArabianKnifeColliderEnter(Collider* other);
 		void MiddleRocketColliderEnter(Collider* other);
 		void BerserkerKnifeColliderEnter(Collider* other);
+		void BossWingColliderEnter(Collider* other);
 
 		void Idle();
 		void Move();

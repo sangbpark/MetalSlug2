@@ -363,6 +363,27 @@ namespace sb
 			pos.x += 200.0f * Time::DeltaTime();
 		else
 			pos.x -= 200.0f * Time::DeltaTime();
+		if (pos.x<=16125.0f
+			||pos.x >=16695.0f)
+		{
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			Vector2 velocity = rb->GetVelocity();
+			velocity.y = -500.0f;
+			rb->SetVelocity(velocity);
+			rb->SetGround(false);
+			Animator* animator = GetComponent<Animator>();
+			if (mDirect)
+			{
+				animator->PlayAnimation(L"arabianrightjumpAX");
+				mState = Arabianstate::jump;
+			}
+			else
+			{
+				animator->PlayAnimation(L"arabianleftjumpAX");
+				mState = Arabianstate::jump;
+			}
+
+		}
 		tr->SetPosition(pos);
 		mCreate = eArabianCreate::Normal;
 	}
@@ -374,7 +395,7 @@ namespace sb
 			EfBombCollsionEnter(other);
 			HeavyBulletCollsionEnter(other);
 			CamelBulletCollsionEnter(other);		
-			BossFloorCollsionEnter(other);
+
 		}
 	}
 	void Arabian::OnCollisionStay(Collider* other)
@@ -430,38 +451,7 @@ namespace sb
 		}
 
 	}
-	void Arabian::BossFloorCollsionEnter(Collider* other)
-	{
-		BossFloor* floor = dynamic_cast<BossFloor*>(other->GetOwner());
-		if (floor == nullptr)
-			return;
-		else
-		{
-			float len = fabs(other->GetPosition().x - this->GetComponent<Collider>()->GetPosition().x);
-			float scale = fabs(other->GetSize().x /2.0f) - 100.0f;
 
-
-			if (len >= scale)
-			{
-				Rigidbody* rb = GetComponent<Rigidbody>();
-				Vector2 velocity = rb->GetVelocity();
-				velocity.y = -500.0f;
-				rb->SetVelocity(velocity);
-				rb->SetGround(false);
-				Animator* animator = GetComponent<Animator>();
-				if (mDirect)
-				{
-					animator->PlayAnimation(L"arabianrightjumpAX");
-					mState = Arabianstate::jump;
-				}
-				else
-				{
-					animator->PlayAnimation(L"arabianleftjumpAX");
-					mState = Arabianstate::jump;
-				}
-			}
-		}
-	}
 	void Arabian::CamelBulletCollsionEnter(Collider* other)
 	{
 		CamelBullet* camelbullet = dynamic_cast<CamelBullet*>(other->GetOwner());

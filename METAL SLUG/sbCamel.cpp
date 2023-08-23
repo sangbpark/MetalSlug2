@@ -21,6 +21,7 @@ namespace sb
 		, mRotate(0.0f)
 		, mBulletTime(0.0f)
 		, mRideTime(0.0f)
+		, mDeathTime(0.0f)
 	{
 		ResourceLoad();
 	}
@@ -39,6 +40,9 @@ namespace sb
 		mRideTime -= Time::DeltaTime();
 		if (mRideTime <= 0.0f)
 			mRideTime = 0.0f;
+		mDeathTime -= Time::DeltaTime();
+		if (mDeathTime <= 0.0f)
+			mDeathTime = 0.0f;
 		switch (mState)
 		{
 		case sb::Camel::eCamelState::Ready:
@@ -98,13 +102,13 @@ namespace sb
 		}
 		if (Input::GetKey(eKeyCode::UP))
 		{
-			mRotate -= 100.0f * Time::DeltaTime();
+			mRotate -= 300.0f * Time::DeltaTime();
 			if (mRotate <= -180.0f)
 				mRotate = 180.0f;
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
-			mRotate += 100.0f * Time::DeltaTime();
+			mRotate += 300.0f * Time::DeltaTime();
 			if (mRotate >= 180.0f)
 				mRotate = -180.0f;
 		}
@@ -342,8 +346,9 @@ namespace sb
 		if (pb->GetState() == PlayerBottom::eState::Death)
 		{
 			Animator* at = GetComponent<Animator>();
-			Rigidbody* rb = pb->GetComponent<Rigidbody>();
-			rb->SetGround(false);
+			mRideOn = false;
+			mRideTime = 0.0f;
+			mDeathTime = 2.0f;
 			at->PlayAnimation(L"CamelReadyAX");
 			mState = eCamelState::Ready;
 		}
@@ -351,13 +356,15 @@ namespace sb
 	void Camel::OnCollisionEnter(Collider* other)
 	{
 		if (!mRideOn
-			&& mRideTime == 0.0f)
+			&& mRideTime == 0.0f
+			&& mDeathTime == 0.0f)
 			PlayerCollisionEnter(other);
 	}
 	void Camel::OnCollisionStay(Collider* other)
 	{
 		if (!mRideOn
-			&& mRideTime == 0.0f)
+			&& mRideTime == 0.0f
+			&& mDeathTime == 0.0f)
 			PlayerCollisionEnter(other);
 		else
 			PlayerStateCheck(other);

@@ -205,6 +205,9 @@
     <Filter Include="Content\GameObejct\Floor\BossFloor">
       <UniqueIdentifier>{0426574c-acaa-4b6c-a90f-7799808ebcb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\GameObejct\Effects\BossWingFire">
+      <UniqueIdentifier>{95628bc9-8a91-4691-b4a1-d059fad4cd02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -414,6 +417,9 @@
     <ClInclude Include="sbBossFloor.h">
       <Filter>Content\GameObejct\Floor\BossFloor</Filter>
     </ClInclude>
+    <ClInclude Include="sbBossWingFire.h">
+      <Filter>Content\GameObejct\Effects\BossWingFire</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="METAL SLUG.ico">
@@ -613,6 +619,9 @@
     </ClCompile>
     <ClCompile Include="sbBossFloor.cpp">
       <Filter>Content\GameObejct\Floor\BossFloor</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBossWingFire.cpp">
+      <Filter>Content\GameObejct\Effects\BossWingFire</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

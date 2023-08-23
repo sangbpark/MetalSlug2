@@ -13,6 +13,7 @@ namespace sb
 		virtual void Render(HDC hdc) override;
 
 	private:
+		bool mColliderRender;
 	};
 }
 

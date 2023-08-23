@@ -26,7 +26,7 @@ namespace sb
 		Vector2 GetPosition() { return mPosition; }
 		UINT GetCollisionNumber() { return mCollisionNumber; }
 		void SetPosition(Vector2 position) { mPosition = position; }
-	
+		static void SetColliderRender(bool value) { mRenderoff = value; }
 
 	private:
 		static UINT mCollisionCount;
@@ -37,5 +37,6 @@ namespace sb
 
 		UINT mCollisionNumber;
 		bool mbIsCollision;
+		static bool mRenderoff;
 	};
 }

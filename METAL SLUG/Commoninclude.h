@@ -29,6 +29,7 @@ namespace sb::enums
 	{
 		Backgroud,
 		Floor,
+		MiddleBossMonster,
 		Monster,
 		BossMonster,
 		Vehicle,

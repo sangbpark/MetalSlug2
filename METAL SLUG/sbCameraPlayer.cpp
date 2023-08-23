@@ -23,6 +23,10 @@ namespace sb
 		ControlTower2->SetStage(ControlTower::eStage::MiddleBoss);
 		ControlTower2->SetControlTowerState(ControlTower::eState::Create);
 		mControlTower.push_back(ControlTower2);
+		ControlTower* ControlTower3 = object::Instantiate<ControlTower>(enums::eLayerType::ControlTower, Vector2(16420.0f, 700.0f));
+		ControlTower3->SetStage(ControlTower::eStage::Boss);
+		ControlTower3->SetControlTowerState(ControlTower::eState::Idle);
+		mControlTower.push_back(ControlTower3);
 	}
 	CameraPlayer::~CameraPlayer()
 	{
@@ -120,6 +124,10 @@ namespace sb
 			}
 			tr->SetPosition(pos);
 		}
+		else if (mStage == eStage::Boss)
+		{
+			mState = eState::Rock;
+		}
 	}
 	void CameraPlayer::Rock()
 	{
@@ -150,17 +158,31 @@ namespace sb
 			if ((*iter)->GetActive() == true)
 			{
 				if ((*iter)->GetStage() == ControlTower::eStage::Truck)
+				{
 					mStage = eStage::Truck;
+					mState = eState::Move;
+				}
 				else if ((*iter)->GetStage() == ControlTower::eStage::MiddleBoss)
+				{
 					mStage = eStage::MiddleBoss;
+					mState = eState::Move;
+				}
 				else if ((*iter)->GetStage() == ControlTower::eStage::Wall)
+				{
 					mStage = eStage::Wall;
+					mState = eState::Move;
+				}
 				else if ((*iter)->GetStage() == ControlTower::eStage::Helicopter)
+				{
 					mStage = eStage::Helicopter;
+					mState = eState::Move;
+				}
 				else if ((*iter)->GetStage() == ControlTower::eStage::Boss)
+				{
 					mStage = eStage::Boss;
+					mState = eState::Rock;
+				}
 
-				mState = eState::Move;
 				return;
 			}
 		}
