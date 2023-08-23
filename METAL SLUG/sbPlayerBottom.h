@@ -27,6 +27,7 @@ namespace sb
 			revive,
 			Stopanimator,
 			Stop,
+			RIde,
 			End,
 		};
 
@@ -36,6 +37,7 @@ namespace sb
 			heavy,
 			End
 		};
+
 
 		PlayerBottom();
 		virtual ~PlayerBottom();
@@ -68,7 +70,11 @@ namespace sb
 		void JumpDown();
 		void Stop();
 		void StopAnimator();
+		void Ride();
 
+
+		void RideOn();
+		void RideOff();
 
 		void Revive();
 		void Clear();
@@ -93,6 +99,10 @@ namespace sb
 		void SetCameraTransform(math::Vector2 value) { mCameraTransform = value; }
 		bool GetStopState() { return mStop; }
 		void SetStopState(bool stop) { mStop = stop; }
+		void SetPlayerRide(bool ride) { mRide = ride; }
+		bool GetRide() { return mRide; }
+		void SetInvincible(float value) { mInvincible = value; }
+		void SetVehicle(GameObject* vehicle) { mVehicle = vehicle; }
 		//class Texture* mFloorTexture;
 	
 		math::Vector2 CameraOut(math::Vector2 value);
@@ -113,7 +123,8 @@ namespace sb
 		bool mComplete;
 		bool mGround;
 		bool mStop;
-
+		bool mRide;
+		GameObject* mVehicle;
 		math::Vector2 mCameraTransform;
 
 	};

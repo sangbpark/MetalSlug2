@@ -33,6 +33,7 @@ namespace sb
 			revive,
 			StopAnimator,
 			Stop,
+			Ride,
 			End,
 		};
 		enum class eWeaponState
@@ -70,6 +71,7 @@ namespace sb
 		void JumpDownAttack();
 		void JumpUpAttack();
 		void JumpUp();
+		void Ride();
 
 		void HIdle();
 		void HMove();
@@ -111,6 +113,7 @@ namespace sb
 		bool mKeyUp;
 		bool mLateDirect;
 		bool mHeavyBulletCount;
+		bool mRide;
 		float ptTimecheck;
 		float mHeavyBullet;
 		float mHeavyBullettime;

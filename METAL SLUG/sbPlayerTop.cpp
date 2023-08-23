@@ -32,6 +32,7 @@ namespace sb
 		, mHeavyBullettime(0.0f)
 		, mHeavyBulletCount(false)
 		, mState(eState::Idle)
+		, mRide(false)
 	
 	{
 		ResourceLoad();
@@ -47,149 +48,158 @@ namespace sb
 		GameObject::Update();
 
 		GetPlayerBottomState();
-		if (mWeaponState == eWeaponState::heavy)
-			mHeavyBullettime += Time::DeltaTime();
-		else
-			mHeavyBullettime = 0.0f;
-	
-		if (mWeaponState == eWeaponState::normal)
+		if(!mRide)
 		{
-			switch (mState)
+			if (mWeaponState == eWeaponState::heavy)
+				mHeavyBullettime += Time::DeltaTime();
+			else
+				mHeavyBullettime = 0.0f;
+
+			if (mWeaponState == eWeaponState::normal)
 			{
-			case sb::PlayerTop::eState::Idle:
-				Idle();
-				break;
-			case sb::PlayerTop::eState::StopAnimator:
-				StopAnimator();
-				break;
-			case sb::PlayerTop::eState::Stop:
-				Stop();
-				break;
-			case sb::PlayerTop::eState::Up:
-				Up();
-				break;
-			case sb::PlayerTop::eState::Move:
-				Move();
-				break;
-			case sb::PlayerTop::eState::Down:
-				Down();
-				break;
-			case sb::PlayerTop::eState::attack:
-				Attack();
-				break;
-			case sb::PlayerTop::eState::jump:
-				Jump();
-				break;
-			case sb::PlayerTop::eState::jumpup:
-				JumpUp();
-				break;
-			case sb::PlayerTop::eState::jumpdown:
-				JumpDown();
-				break;
-			case sb::PlayerTop::eState::Jumpattack:
-				JumpAttack();
-				break;
-			case sb::PlayerTop::eState::Upattack:
-				UpAttack();
-				break;
-			case sb::PlayerTop::eState::jumpdownattack:
-				JumpDownAttack();
-				break;
-			case sb::PlayerTop::eState::jumpupattack:
-				JumpUpAttack();
-				break;
-			case sb::PlayerTop::eState::jumpbomb:
-				JumpBomb();
-				break;
-			case sb::PlayerTop::eState::Death:
-				Death();
-				break;
-			case sb::PlayerTop::eState::revive:
-				Revive();
-				break;
-			case sb::PlayerTop::eState::bomb:
-				Bomb();
-				break;
-			case sb::PlayerTop::eState::stay:
-				Stay();
-				break;
-			case sb::PlayerTop::eState::End:
-				break;
-			default:
-				break;
+				switch (mState)
+				{
+				case sb::PlayerTop::eState::Idle:
+					Idle();
+					break;
+				case sb::PlayerTop::eState::StopAnimator:
+					StopAnimator();
+					break;
+				case sb::PlayerTop::eState::Stop:
+					Stop();
+					break;
+				case sb::PlayerTop::eState::Up:
+					Up();
+					break;
+				case sb::PlayerTop::eState::Move:
+					Move();
+					break;
+				case sb::PlayerTop::eState::Down:
+					Down();
+					break;
+				case sb::PlayerTop::eState::attack:
+					Attack();
+					break;
+				case sb::PlayerTop::eState::jump:
+					Jump();
+					break;
+				case sb::PlayerTop::eState::jumpup:
+					JumpUp();
+					break;
+				case sb::PlayerTop::eState::jumpdown:
+					JumpDown();
+					break;
+				case sb::PlayerTop::eState::Jumpattack:
+					JumpAttack();
+					break;
+				case sb::PlayerTop::eState::Upattack:
+					UpAttack();
+					break;
+				case sb::PlayerTop::eState::jumpdownattack:
+					JumpDownAttack();
+					break;
+				case sb::PlayerTop::eState::jumpupattack:
+					JumpUpAttack();
+					break;
+				case sb::PlayerTop::eState::jumpbomb:
+					JumpBomb();
+					break;
+				case sb::PlayerTop::eState::Death:
+					Death();
+					break;
+				case sb::PlayerTop::eState::revive:
+					Revive();
+					break;
+				case sb::PlayerTop::eState::bomb:
+					Bomb();
+					break;
+				case sb::PlayerTop::eState::stay:
+					Stay();
+					break;
+				case sb::PlayerTop::eState::Ride:
+					Ride();
+					break;
+				case sb::PlayerTop::eState::End:
+					break;
+				default:
+					break;
+				}
 			}
-		}
-		else if (mWeaponState == eWeaponState::heavy)
-		{
-			switch (mState)
+			else if (mWeaponState == eWeaponState::heavy)
 			{
-			case sb::PlayerTop::eState::Idle:
-				HIdle();
-				break;
-			case sb::PlayerTop::eState::Up:
-				HUp();
-				break;
-			case sb::PlayerTop::eState::StopAnimator:
-				StopAnimator();
-				break;
-			case sb::PlayerTop::eState::Stop:
-				Stop();
-				break;
-			case sb::PlayerTop::eState::huping:
-				HUping();
-				break;
-			case sb::PlayerTop::eState::hupdowning:
-				HUpDowning();
-				break;
-			case sb::PlayerTop::eState::Move:
-				HMove();
-				break;
-			case sb::PlayerTop::eState::Down:
-				HDown();
-				break;
-			case sb::PlayerTop::eState::jump:
-				HJump();
-				break;
-			case sb::PlayerTop::eState::jumpup:
-				HJumpUp();
-				break;
-			case sb::PlayerTop::eState::jumpdown:
-				HJumpDown();
-				break;
-			case sb::PlayerTop::eState::hjumpdowning:
-				HJumpDowning();
-				break;
-			case sb::PlayerTop::eState::hjumpdownuping:
-				HJumpDownUping();
-				break;
-			case sb::PlayerTop::eState::Jumpattack:
-				HJumpAttack();
-				break;
-			case sb::PlayerTop::eState::jumpdownattack:
-				HJumpDownAttack();
-				break;
-			case sb::PlayerTop::eState::jumpupattack:
-				HJumpUpAttack();
-				break;
-			case sb::PlayerTop::eState::jumpbomb:
-				HJumpBomb();
-				break;
-			case sb::PlayerTop::eState::Death:
-				Death();
-				break;
-			case sb::PlayerTop::eState::revive:
-				Revive();
-				break;
-			case sb::PlayerTop::eState::bomb:
-				HBomb();
-				break;
-			case sb::PlayerTop::eState::stay:
-				HStay();
-				break;
-			case sb::PlayerTop::eState::End:
-				break;
-			default:
-				break;
+				switch (mState)
+				{
+				case sb::PlayerTop::eState::Idle:
+					HIdle();
+					break;
+				case sb::PlayerTop::eState::Up:
+					HUp();
+					break;
+				case sb::PlayerTop::eState::StopAnimator:
+					StopAnimator();
+					break;
+				case sb::PlayerTop::eState::Stop:
+					Stop();
+					break;
+				case sb::PlayerTop::eState::huping:
+					HUping();
+					break;
+				case sb::PlayerTop::eState::hupdowning:
+					HUpDowning();
+					break;
+				case sb::PlayerTop::eState::Move:
+					HMove();
+					break;
+				case sb::PlayerTop::eState::Down:
+					HDown();
+					break;
+				case sb::PlayerTop::eState::jump:
+					HJump();
+					break;
+				case sb::PlayerTop::eState::jumpup:
+					HJumpUp();
+					break;
+				case sb::PlayerTop::eState::jumpdown:
+					HJumpDown();
+					break;
+				case sb::PlayerTop::eState::hjumpdowning:
+					HJumpDowning();
+					break;
+				case sb::PlayerTop::eState::hjumpdownuping:
+					HJumpDownUping();
+					break;
+				case sb::PlayerTop::eState::Jumpattack:
+					HJumpAttack();
+					break;
+				case sb::PlayerTop::eState::jumpdownattack:
+					HJumpDownAttack();
+					break;
+				case sb::PlayerTop::eState::jumpupattack:
+					HJumpUpAttack();
+					break;
+				case sb::PlayerTop::eState::jumpbomb:
+					HJumpBomb();
+					break;
+				case sb::PlayerTop::eState::Death:
+					Death();
+					break;
+				case sb::PlayerTop::eState::revive:
+					Revive();
+					break;
+				case sb::PlayerTop::eState::bomb:
+					HBomb();
+					break;
+				case sb::PlayerTop::eState::stay:
+					HStay();
+					break;
+				case sb::PlayerTop::eState::Ride:
+					Ride();
+					break;
+				case sb::PlayerTop::eState::End:
+					break;
+				default:
+					break;
+				}
 			}
 		}
 
@@ -198,7 +208,8 @@ namespace sb
 	}
 	void PlayerTop::Render(HDC hdc)
 	{
-		GameObject::Render(hdc);
+		if(!mRide)
+			GameObject::Render(hdc);
 	}
 	void PlayerTop::OnCollisionEnter(Collider* other)
 	{
@@ -275,6 +286,8 @@ namespace sb
 		//}
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
+			if (mRide)
+				return;
 			if (mDirect)
 			{
 				Transform* tr = GetComponent<Transform>();
@@ -415,7 +428,8 @@ namespace sb
 		//}
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
-	
+			if (mRide)
+				return;
 			if (mDirect)
 			{
 				Transform* tr = GetComponent<Transform>();
@@ -632,6 +646,8 @@ namespace sb
 	
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
+			if (mRide)
+				return;
 			if (mDirect)
 			{
 				Transform* tr = GetComponent<Transform>();
@@ -724,6 +740,8 @@ namespace sb
 		}
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
+			if (mRide)
+				return;
 			animator->PlayAnimation(L"PlayerrightdowngunTAX");
 			mState = eState::stay;
 			return;
@@ -838,6 +856,8 @@ namespace sb
 
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
+			if (mRide)
+				return;
 			if (mDirect)
 			{
 				Transform* tr = GetComponent<Transform>();
@@ -934,6 +954,8 @@ namespace sb
 	
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
+			if (mRide)
+				return;
 			if (mDirect)
 			{
 				Transform* tr = GetComponent<Transform>();
@@ -1294,6 +1316,8 @@ namespace sb
 
 		if (Input::GetKeyDown(eKeyCode::A))
 		{
+			if (mRide)
+				return;
 			if (mDirect)
 			{
 				Transform* tr = GetComponent<Transform>();
@@ -1332,6 +1356,10 @@ namespace sb
 				mState = eState::Idle;
 			}
 		}
+	}
+
+	void PlayerTop::Ride()
+	{
 	}
 
 	void PlayerTop::HIdle()
@@ -2716,6 +2744,7 @@ namespace sb
 		if (mState == eState::Stop
 			&& playerbottom->GetStopState() == false)
 			mState = eState::Idle;
+		mRide = playerbottom->GetRide();
 		Transform* tr = GetComponent<Transform>();
 		Vector2 pos = playerbottom->GetPlayerPosition();
 		pos.y = pos.y - 30.0f;
@@ -2746,6 +2775,8 @@ namespace sb
 
 	void PlayerTop::CreatHeavyBullet(bool Direct, float mheavybullet, math::Vector2 offset, bool Down)
 	{
+		if (mRide)
+			return;
 		PlayerBottom* playerbottom = static_cast<PlayerBottom*>(mPlayerBottomOwner);
 		if (mheavybullet == 0.0f)
 		{

@@ -37,7 +37,6 @@ namespace sb
 		Texture* imageBGboss = Resources::Load<Texture>(L"Mission1bossbackground"
 			, L"..\\Resource\\Map\\Neo Geo NGCD - Metal Slug 2 Metal Slug X - Mission 1 bossground.bmp");
 		Transform* tr = AddComponent<Transform>();
-		tr->SetPosition(Vector2(16460.0f, 190.0f));
 		Animator* at = AddComponent<Animator>();
 		at->CreateAnimation(L"mission1bossbackgroundAX", imageBGboss
 			, Vector2(0.0f, 0.0f), Vector2(307.0f, 208.0f), 4);

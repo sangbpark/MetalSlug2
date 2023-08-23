@@ -29,8 +29,9 @@ namespace sb::enums
 	{
 		Backgroud,
 		Floor,
-		BossMonster,
 		Monster,
+		BossMonster,
+		Vehicle,
 		Npc,
 		Player,
 		Effects,

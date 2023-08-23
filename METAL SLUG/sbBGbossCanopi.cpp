@@ -28,8 +28,10 @@ namespace sb
 		switch (mState)
 		{
 		case sb::BGbossCanopi::eState::Create:
+			Create();
 			break;
 		case sb::BGbossCanopi::eState::Idle:
+			Idle();
 			break;
 		case sb::BGbossCanopi::eState::End:
 			break;
@@ -45,7 +47,7 @@ namespace sb
 	}
 	void BGbossCanopi::Create()
 	{
-		Animator* at = AddComponent<Animator>();
+		Animator* at = GetComponent<Animator>();
 		if (mPosition == ePosition::Left)
 		{
 			at->PlayAnimation(L"bosscanopiAY", true);
@@ -54,10 +56,11 @@ namespace sb
 		{
 			at->PlayAnimation(L"bosscanopi2AY", true);
 		}
-		mState == eState::Idle;
+		mState = eState::Idle;
 	}
 	void BGbossCanopi::Idle()
 	{
+		
 	}
 	void BGbossCanopi::ResourseLoad()
 	{

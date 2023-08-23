@@ -20,7 +20,7 @@ namespace sb
 	{
 		for (GameObject* obj : mGameObjects)
 		{
-			if (obj->GetState() == GameObject::eState::Pause)
+			if (obj->GetState() == GameObject::eGameObjectState::Pause)
 				continue;
 
 			obj->Update();
@@ -30,7 +30,7 @@ namespace sb
 	{
 		for (GameObject* obj : mGameObjects)
 		{
-			if (obj->GetState() == GameObject::eState::Pause)
+			if (obj->GetState() == GameObject::eGameObjectState::Pause)
 				continue;
 
 			obj->Render(hdc);
@@ -41,7 +41,7 @@ namespace sb
 			; iter != mGameObjects.end()
 			; )
 		{
-			if ((*iter)->GetState() == GameObject::eState::Dead)
+			if ((*iter)->GetState() == GameObject::eGameObjectState::Dead)
 			{
 				GameObject* deadObj = *iter;
 				delete deadObj;

@@ -137,7 +137,7 @@ namespace sb
 		Animator* at = GetComponent<Animator>();
 		if (at->Getcomplete())
 		{
-			Destroy(this);
+			this->Pause();
 		}
 	}
 	void Berserker::NormalBulletCollsionEnter(Collider* other)

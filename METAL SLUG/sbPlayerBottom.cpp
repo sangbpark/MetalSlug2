@@ -16,24 +16,28 @@
 #include "sbArabianknife.h"
 #include "sbMiddleBossRocket.h"
 #include "sbBerserkerKnife.h"
+#include "sbCamel.h"
+#include "sbCollisionManager.h"
+
 
 namespace sb
 {
 	math::Vector2 PlayerBottom::mPlayposition = {};
 	PlayerBottom::PlayerBottom()
-		:mKeyUp(false)
-		,mRun(false)
-		,mFree(false)
-		,mLateDirect(true)
-		,PBtimecheck(0.0f)
-		,mInvincible(0.0f)
-		,mDirect(true)
-		,mChange(false)
-		,mState(eState::Idle)
-		,mWeaponState(eWeaponState::normal)
+		: mKeyUp(false)
+		, mRun(false)
+		, mFree(false)
+		, mLateDirect(true)
+		, PBtimecheck(0.0f)
+		, mInvincible(0.0f)
+		, mDirect(true)
+		, mChange(false)
+		, mState(eState::Idle)
+		, mWeaponState(eWeaponState::normal)
 		, mHeavyBulletCount(0)
 		, mEfBombCount(10)
-		,mStop(false)
+		, mStop(false)
+		, mRide(false)
 	{
 		ResourceLoad();
 	}
@@ -121,6 +125,9 @@ namespace sb
 		case sb::PlayerBottom::eState::revive:
 			Revive();
 			break;
+		case sb::PlayerBottom::eState::RIde:
+			Ride();
+			break;
 		case sb::PlayerBottom::eState::End:
 			break;
 		default:
@@ -152,10 +159,11 @@ namespace sb
 				mState = eState::Stopanimator;
 		}
 
+
 	}
 	void PlayerBottom::Render(HDC hdc)
 	{
-		GameObject::Render(hdc);
+			GameObject::Render(hdc);
 	}
 
 	void PlayerBottom::OnCollisionEnter(Collider* other)
@@ -1878,36 +1886,85 @@ namespace sb
 
 	void PlayerBottom::Stop()
 	{
-		if (mStop == false)
+		if (mStop == false
+			&& mRide == false)
 			mState = eState::Idle;
 	}
 
 	void PlayerBottom::StopAnimator()
 	{
-		Animator* at = GetComponent<Animator>();
-		if (mWeaponState == eWeaponState::normal)
+		if(mRide == false)
 		{
-			if (mDirect)
+			Animator* at = GetComponent<Animator>();
+			if (mWeaponState == eWeaponState::normal)
 			{
-				at->PlayAnimation(L"PlayerIdlerightBAX", true);
+				if (mDirect)
+				{
+					at->PlayAnimation(L"PlayerIdlerightBAX", true);
+				}
+				else
+				{
+					at->PlayAnimation(L"PlayerIdleleftBAX", true);
+				}
 			}
-			else
+			else if (mWeaponState == eWeaponState::heavy)
 			{
-				at->PlayAnimation(L"PlayerIdleleftBAX", true);
-			}
-		}
-		else if (mWeaponState == eWeaponState::heavy)
-		{
-			if (mDirect)
-			{
-				at->PlayAnimation(L"PlayerIdlerightBAX", true);
-			}
-			else
-			{
-				at->PlayAnimation(L"PlayerIdleleftBAX", true);
+				if (mDirect)
+				{
+					at->PlayAnimation(L"PlayerIdlerightBAX", true);
+				}
+				else
+				{
+					at->PlayAnimation(L"PlayerIdleleftBAX", true);
+				}
 			}
 		}
 		mState = eState::Stop;
+	}
+
+	void PlayerBottom::Ride()
+	{
+
+		Transform* tr = GetComponent<Transform>();
+		Transform* Vehicltr = mVehicle->GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		if (Input::GetKey(eKeyCode::RIGHT))
+		{
+			pos.x += Player_Speed * Time::DeltaTime();
+		}
+
+		if (Input::GetKey(eKeyCode::LEFT))
+		{
+			pos.x -= Player_Speed * Time::DeltaTime();
+		}
+		Vector2 pos2 = Vehicltr->GetPosition();
+		pos.y = pos2.y - 90.0f;
+		tr->SetPosition(pos);
+	}
+
+	void PlayerBottom::RideOn()
+	{
+		Animator* at = GetComponent<Animator>();
+		Transform* tr = GetComponent<Transform>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		rb->SetGround(true);
+		at->PlayAnimation(L"PlayerIdlerideAX");
+		mState = eState::RIde;
+
+	}
+
+	void PlayerBottom::RideOff()
+	{
+		Animator* at = GetComponent<Animator>();
+		Transform* tr = GetComponent<Transform>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		rb->SetGround(false);
+		if(mDirect)
+			at->PlayAnimation(L"PlayerrightjumpBAX");
+		else
+			at->PlayAnimation(L"PlayerleftjumpBAX");
+
+		mState = eState::jump;
 	}
 
 	void PlayerBottom::Revive()
@@ -1952,6 +2009,7 @@ namespace sb
 		Rigidbody* rb = this->AddComponent<Rigidbody>();
 		Collider* col = this->AddComponent<Collider>();
 		Transform* tr = this->AddComponent<Transform>();
+		at->CreateAnimation(L"PlayerIdlerideAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 1);
 		at->CreateAnimation(L"PlayerIdlerightBAX", imagePlayer, Vector2(176.0f, 258.0f), Vector2(44.0f, 36.0f), 1);
 		at->CreateAnimation(L"PlayerIdleleftBAX", imagePlayer, Vector2(0.0f, 299.0f), Vector2(44.0f, 36.0f), 1, Vector2(-35.0f, 0.0f));
 		at->CreateAnimation(L"PlayerrightBAX", imagePlayer, Vector2(0.0f, 506.0f), Vector2(44.0f, 25.0f), 12, Vector2(-10.0f, 40.0f), 0.05f);

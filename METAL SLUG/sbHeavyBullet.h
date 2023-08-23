@@ -30,6 +30,7 @@ namespace sb
 		void MiddleBossLauncherEnter(Collider* other);
 		void TruckCollisionEnter(Collider* other);
 		void BerserkerCollisionEnter(Collider* other);
+		void BossCollisionEnter(Collider* other);
 
 	private:
 		float mDeathTime;

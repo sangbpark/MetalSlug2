@@ -184,6 +184,27 @@
     <Filter Include="Content\GameObejct\ControlTower">
       <UniqueIdentifier>{832527d5-8d74-49ec-b44e-8f242b2693ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\GameObejct\Vehicle">
+      <UniqueIdentifier>{3b574027-162b-40c3-a8bb-ea8d2ff1bc4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Vehicle\Camel">
+      <UniqueIdentifier>{8eb535fa-2b37-4b21-89ac-474a24248b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\CamelGun">
+      <UniqueIdentifier>{5ae57562-7605-49cf-a307-859ad746752b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\CamelBullet">
+      <UniqueIdentifier>{a3bafc35-d630-4213-aa93-796adbb31860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Monster\Boss">
+      <UniqueIdentifier>{5c5c1676-5fea-4bed-b046-6c0b7be06678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\BossWing">
+      <UniqueIdentifier>{4e45eb14-c6c8-4325-9899-df8e19bd6479}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Floor\BossFloor">
+      <UniqueIdentifier>{0426574c-acaa-4b6c-a90f-7799808ebcb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -375,6 +396,24 @@
     <ClInclude Include="sbControlTower.h">
       <Filter>Content\GameObejct\ControlTower</Filter>
     </ClInclude>
+    <ClInclude Include="sbCamel.h">
+      <Filter>Content\GameObejct\Vehicle\Camel</Filter>
+    </ClInclude>
+    <ClInclude Include="sbCamelGun.h">
+      <Filter>Content\GameObejct\Effects\CamelGun</Filter>
+    </ClInclude>
+    <ClInclude Include="sbCamelBullet.h">
+      <Filter>Content\GameObejct\Effects\CamelBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBoss.h">
+      <Filter>Content\GameObejct\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBossWing.h">
+      <Filter>Content\GameObejct\Effects\BossWing</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBossFloor.h">
+      <Filter>Content\GameObejct\Floor\BossFloor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="METAL SLUG.ico">
@@ -556,6 +595,24 @@
     </ClCompile>
     <ClCompile Include="sbControlTower.cpp">
       <Filter>Content\GameObejct\ControlTower</Filter>
+    </ClCompile>
+    <ClCompile Include="sbCamel.cpp">
+      <Filter>Content\GameObejct\Vehicle\Camel</Filter>
+    </ClCompile>
+    <ClCompile Include="sbCamelGun.cpp">
+      <Filter>Content\GameObejct\Effects\CamelGun</Filter>
+    </ClCompile>
+    <ClCompile Include="sbCamelBullet.cpp">
+      <Filter>Content\GameObejct\Effects\CamelBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBoss.cpp">
+      <Filter>Content\GameObejct\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBossWing.cpp">
+      <Filter>Content\GameObejct\Effects\BossWing</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBossFloor.cpp">
+      <Filter>Content\GameObejct\Floor\BossFloor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

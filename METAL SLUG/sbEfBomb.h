@@ -43,6 +43,7 @@ namespace sb
 		void ArabianCollisionEnter(Collider* other);
 		void MiddleBossRocketCollisionEnter(Collider* other);
 		void TruckCollisionEnter(Collider* other);
+		void BossCollisionEnter(Collider* other);
 
 	private:
 		bool mBombDirect;

@@ -14,7 +14,14 @@ namespace sb
 			rockon,
 			prepare,
 			attack,
+			jump,
+			bossCreate,
 			death,
+		};
+		enum class eArabianCreate
+		{
+			Normal,
+			Boss,
 		};
 		Arabian();
 		virtual ~Arabian();
@@ -29,7 +36,8 @@ namespace sb
 		void Patrol();
 		void Prepare();
 		void Attack();
-
+		void Jump();
+		void bossCreate();
 
 		void ResourceLoad();
 
@@ -40,7 +48,11 @@ namespace sb
 		void NormalBulletCollsionEnter(Collider* other);
 		void HeavyBulletCollsionEnter(Collider* other);
 		void EfBombCollsionEnter(Collider* other);
+		void BossFloorCollsionEnter(Collider* other);
+		void CamelBulletCollsionEnter(Collider* other);
 
+		void SetArabianDirecet(bool direct) { mDirect = direct; }
+		void SetArabianCreate(eArabianCreate create) { mCreate = create; }
 		Arabianstate GetArabianState() {return mState;}
 	private:
 		bool mDirect;
@@ -49,6 +61,7 @@ namespace sb
 		float mPlayerDistance;
 		int mPatrolCount;
 
+		eArabianCreate mCreate;
 		Arabianstate mState;
 	};
 }

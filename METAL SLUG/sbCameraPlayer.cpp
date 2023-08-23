@@ -66,6 +66,15 @@ namespace sb
 		math::Vector2 pos = PlayerBottom::GetPlayerPosition();
 		math::Vector2 pos2 = tr->GetPosition();
 
+		if (Input::GetKey(eKeyCode::Q))
+		{
+			pos2.y -= 100.0f * Time::DeltaTime();
+		}
+		if (Input::GetKey(eKeyCode::E))
+		{
+			pos2.y += 100.0f * Time::DeltaTime();
+		}
+
 		pos.y = pos2.y;
 
 		if (pos.x <= pos2.x)

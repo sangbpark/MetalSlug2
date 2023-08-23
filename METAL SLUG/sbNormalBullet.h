@@ -35,6 +35,7 @@ namespace sb
 		void HOldManEnter(Collider* other);
 		void TruckCollisionEnter(Collider* other);
 		void BerserkerCollisionEnter(Collider* other);
+		void BossCollisionEnter(Collider* other);
 	private:
 		eBulletState mState;
 		float mDeathTime;

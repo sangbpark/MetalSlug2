@@ -108,7 +108,7 @@ namespace sb
 		Animator* at = GetComponent<Animator>();
 		if (at->Getcomplete())
 		{
-			Destroy(this);
+			this->Pause();
 		}
 	}
 	MiddleBossRocket::ePosition MiddleBossLauncher::GetPosition(ePosition position)

@@ -12,6 +12,7 @@
 #include "sbMiddleBossLauncher.h"
 #include "sbTruck.h"
 #include "sbBerserker.h"
+#include "sbBoss.h"
 
 namespace sb
 {
@@ -100,6 +101,7 @@ namespace sb
 		MiddleBossLauncherEnter(other);
 		TruckCollisionEnter(other);
 		BerserkerCollisionEnter(other);
+		BossCollisionEnter(other);
 	}
 	void HeavyBullet::OnCollisionStay(Collider* other)
 	{
@@ -154,7 +156,17 @@ namespace sb
 		else
 			Destroy(this);
 	}
-
+	void HeavyBullet::BossCollisionEnter(Collider* other)
+	{
+		Boss* boss = dynamic_cast<Boss*>(other->GetOwner());
+		if (boss == nullptr
+			|| boss->GetBossStage() == Boss::eBossStage::Death)
+			return;
+		else
+		{
+			Destroy(this);
+		}
+	}
 	void HeavyBullet::BerserkerCollisionEnter(Collider* other)
 	{
 		Berserker* berserker = dynamic_cast<Berserker*>(other->GetOwner());

@@ -13,6 +13,9 @@
 #include "sbPlayerBottom.h"
 #include "sbHeavyBullet.h"
 #include "sbArabianknife.h"
+#include "sbBossFloor.h"
+#include "sbCamelBullet.h"
+
 namespace sb
 {
 	Arabian::Arabian()
@@ -22,6 +25,7 @@ namespace sb
 		,mPatrolCount(0)
 		,mPlayerDistance(0.0f)
 		,mTimecheck(0.0f)
+		,mCreate(eArabianCreate::Normal)
 	{
 		ResourceLoad();
 	}
@@ -60,6 +64,12 @@ namespace sb
 		case sb::Arabian::Arabianstate::patrol:
 			Patrol();
 			break;
+		case sb::Arabian::Arabianstate::jump:
+			Jump();
+			break;
+		case sb::Arabian::Arabianstate::bossCreate:
+			bossCreate();
+			break;
 		default:
 			break;
 		}
@@ -76,14 +86,47 @@ namespace sb
 
 	void Arabian::Idle()
 	{
-		mTimecheck += Time::DeltaTime();
-		Transform* tr = GetComponent<Transform>();
-		Vector2 pos = tr->GetPosition();
-		Animator* ar = GetComponent<Animator>();
-		mPlayerDistance = pos.x - PlayerBottom::GetPlayerPosition().x;
-
-		if (mTimecheck > 3.0f)
+		if(mCreate == eArabianCreate::Normal)
 		{
+			mTimecheck += Time::DeltaTime();
+			Transform* tr = GetComponent<Transform>();
+			Vector2 pos = tr->GetPosition();
+			Animator* ar = GetComponent<Animator>();
+			mPlayerDistance = pos.x - PlayerBottom::GetPlayerPosition().x;
+
+			if (mTimecheck > 3.0f)
+			{
+				if (mDirect)
+				{
+					ar->PlayAnimation(L"arabianrightmoveAX", true);
+				}
+				else
+				{
+					ar->PlayAnimation(L"arabianleftmoveAX", true);
+				}
+				mState = Arabianstate::patrol;
+				mTimecheck = 0.0f;
+			}
+
+			if (fabs(mPlayerDistance) < Scale + 500.0f)
+			{
+				if (mPlayerDistance >= 0)
+				{
+					ar->PlayAnimation(L"arabianleftmoveAX", true);
+					mDirect = false;
+				}
+				else
+				{
+					ar->PlayAnimation(L"arabianrightmoveAX", true);
+					mDirect = true;
+				}
+				mState = Arabianstate::rockon;
+				mTimecheck = 0.0f;
+			}
+		}
+		else
+		{
+			Animator* ar = GetComponent<Animator>();
 			if (mDirect)
 			{
 				ar->PlayAnimation(L"arabianrightmoveAX", true);
@@ -92,24 +135,7 @@ namespace sb
 			{
 				ar->PlayAnimation(L"arabianleftmoveAX", true);
 			}
-			mState = Arabianstate::patrol;
-			mTimecheck = 0.0f;
-		}
-
-		if (fabs(mPlayerDistance) < Scale + 500.0f)
-		{
-			if (mPlayerDistance >= 0 )
-			{
-				ar->PlayAnimation(L"arabianleftmoveAX", true);
-				mDirect = false;
-			}
-			else
-			{
-				ar->PlayAnimation(L"arabianrightmoveAX", true);
-				mDirect = true;
-			}
-			mState = Arabianstate::rockon;
-			mTimecheck = 0.0f;
+			mState = Arabianstate::bossCreate;
 		}
 	}
 
@@ -302,8 +328,44 @@ namespace sb
 		}
 	}
 
+	void Arabian::Jump()
+	{
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		if (rb->GetGround())
+		{
+			Animator* ar = GetComponent<Animator>();
+			if (mDirect)
+			{
+				ar->PlayAnimation(L"arabianrightidleAX", true);
+			}
+			else
+			{
+				ar->PlayAnimation(L"arabianleftidleAX", true);
+			}
+			mCreate = eArabianCreate::Normal;
+			mState = Arabianstate::idle;
+			return;
+		}
 
-
+		Transform* tr = GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		if (mDirect)
+			pos.x += 100.0f * Time::DeltaTime();
+		else
+			pos.x -= 100.0f * Time::DeltaTime();
+		tr->SetPosition(pos);
+	}
+	void Arabian::bossCreate()
+	{
+		Transform* tr = GetComponent<Transform>();
+		Vector2 pos = tr->GetPosition();
+		if (mDirect)
+			pos.x += 200.0f * Time::DeltaTime();
+		else
+			pos.x -= 200.0f * Time::DeltaTime();
+		tr->SetPosition(pos);
+		mCreate = eArabianCreate::Normal;
+	}
 	void Arabian::OnCollisionEnter(Collider* other)
 	{
 		if (!(mState == Arabianstate::death))
@@ -311,6 +373,8 @@ namespace sb
 			NormalBulletCollsionEnter(other);
 			EfBombCollsionEnter(other);
 			HeavyBulletCollsionEnter(other);
+			CamelBulletCollsionEnter(other);		
+			BossFloorCollsionEnter(other);
 		}
 	}
 	void Arabian::OnCollisionStay(Collider* other)
@@ -366,6 +430,53 @@ namespace sb
 		}
 
 	}
+	void Arabian::BossFloorCollsionEnter(Collider* other)
+	{
+		BossFloor* floor = dynamic_cast<BossFloor*>(other->GetOwner());
+		if (floor == nullptr)
+			return;
+		else
+		{
+			float len = fabs(other->GetPosition().x - this->GetComponent<Collider>()->GetPosition().x);
+			float scale = fabs(other->GetSize().x /2.0f) - 100.0f;
+
+
+			if (len >= scale)
+			{
+				Rigidbody* rb = GetComponent<Rigidbody>();
+				Vector2 velocity = rb->GetVelocity();
+				velocity.y = -500.0f;
+				rb->SetVelocity(velocity);
+				rb->SetGround(false);
+				Animator* animator = GetComponent<Animator>();
+				if (mDirect)
+				{
+					animator->PlayAnimation(L"arabianrightjumpAX");
+					mState = Arabianstate::jump;
+				}
+				else
+				{
+					animator->PlayAnimation(L"arabianleftjumpAX");
+					mState = Arabianstate::jump;
+				}
+			}
+		}
+	}
+	void Arabian::CamelBulletCollsionEnter(Collider* other)
+	{
+		CamelBullet* camelbullet = dynamic_cast<CamelBullet*>(other->GetOwner());
+		Animator* ar = this->GetComponent<Animator>();
+		if (camelbullet == nullptr)
+			return;
+		else
+		{
+			this->mState = Arabianstate::death;
+			if (mDirect)
+				ar->PlayAnimation(L"arabianrightdeadAX");
+			else
+				ar->PlayAnimation(L"arabianleftdeadAX");
+		}
+	}
 	void Arabian::ResourceLoad()
 	{
 		Texture* image = Resources::Load<Texture>(L"Arabian"
@@ -383,6 +494,8 @@ namespace sb
 		ar->CreateAnimation(L"arabianrightmoveAX", image, Vector2(.0f, 176.0f), Vector2(88.0f, 88.0f), 11, Vector2(-20.0f, -10.0f));
 		ar->CreateAnimation(L"arabianleftattackAX", image, Vector2(0.0f, 440.0f), Vector2(88.0f, 88.0f), 8, Vector2(-55.0f, -10.0f));
 		ar->CreateAnimation(L"arabianrightattackAX", image, Vector2(.0f, 528.0f), Vector2(88.0f, 88.0f), 8, Vector2(55.0f, -10.0f));
+		ar->CreateAnimation(L"arabianleftjumpAX", image, Vector2(0.0f, 792.0f), Vector2(88.0f, 88.0f), 11, Vector2(0.0f, -10.0f));
+		ar->CreateAnimation(L"arabianrightjumpAX", image, Vector2(0.0f, 880.0f), Vector2(88.0f, 88.0f), 11, Vector2(0.0f, -10.0f)); 
 		ar->PlayAnimation(L"arabianleftidleAX",true);
 		ar->SetScale(Vector2(4.0f, 4.0f));
 		col->SetSize(Vector2(90.0f, 150.0f));

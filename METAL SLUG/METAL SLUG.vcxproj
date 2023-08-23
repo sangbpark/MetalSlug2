@@ -141,6 +141,12 @@
     <ClInclude Include="sbBerserkerKnife.h" />
     <ClInclude Include="sbBGBackGround.h" />
     <ClInclude Include="sbBGbossCanopi.h" />
+    <ClInclude Include="sbBoss.h" />
+    <ClInclude Include="sbBossFloor.h" />
+    <ClInclude Include="sbBossWing.h" />
+    <ClInclude Include="sbCamel.h" />
+    <ClInclude Include="sbCamelBullet.h" />
+    <ClInclude Include="sbCamelGun.h" />
     <ClInclude Include="sbControlTower.h" />
     <ClInclude Include="sbEfBomb.h" />
     <ClInclude Include="sbCamera.h" />
@@ -209,6 +215,12 @@
     <ClCompile Include="sbBerserkerKnife.cpp" />
     <ClCompile Include="sbBGBackGround.cpp" />
     <ClCompile Include="sbBGbossCanopi.cpp" />
+    <ClCompile Include="sbBoss.cpp" />
+    <ClCompile Include="sbBossFloor.cpp" />
+    <ClCompile Include="sbBossWing.cpp" />
+    <ClCompile Include="sbCamel.cpp" />
+    <ClCompile Include="sbCamelBullet.cpp" />
+    <ClCompile Include="sbCamelGun.cpp" />
     <ClCompile Include="sbControlTower.cpp" />
     <ClCompile Include="sbEfBomb.cpp" />
     <ClCompile Include="sbCamera.cpp" />

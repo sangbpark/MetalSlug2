@@ -154,6 +154,14 @@ namespace sb::math
     }
 
 
+    inline Vector2 BulletRotate2(Vector2 vector, float degree, float speed)
+    {
+        vector.x += speed * cos(degree * (PI / 180));
+        vector.y -= speed * sin(degree * (PI / 180));
+        return vector;
+    }
+
+
     inline float Dot(Vector2& v1, Vector2& v2)
     {
         return v1.x * v2.x + v1.y * v2.y;

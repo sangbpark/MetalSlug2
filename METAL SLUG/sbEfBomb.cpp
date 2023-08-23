@@ -13,6 +13,7 @@
 #include "sbHOldMan.h"
 #include "sbMiddleBossRocket.h"
 #include "sbTruck.h"
+#include "sbBoss.h"
 
 namespace sb
 {
@@ -88,6 +89,7 @@ namespace sb
 			HOldManCollisionEnter(other);
 			MiddleBossRocketCollisionEnter(other);
 			TruckCollisionEnter(other);
+			BossCollisionEnter(other);
 		}
 	}
 	void EfBomb::OnCollisionStay(Collider* other)
@@ -226,6 +228,20 @@ namespace sb
 		Truck* tk = dynamic_cast<Truck*>(other->GetOwner());
 		if (tk == nullptr
 			|| tk->GetTruckState() != Truck::eState::Create)
+			return;
+		else
+		{
+			Animator* ar = GetComponent<Animator>();
+			Rigidbody* rb = GetComponent<Rigidbody>();
+			ar->PlayAnimation(L"BombDeathAX");
+			mState = BombState::death;
+		}
+	}
+	void EfBomb::BossCollisionEnter(Collider* other)
+	{
+		Boss* boss = dynamic_cast<Boss*>(other->GetOwner());
+		if (boss == nullptr
+			|| boss->GetBossStage() == Boss::eBossStage::Death)
 			return;
 		else
 		{

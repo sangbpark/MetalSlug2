@@ -33,6 +33,8 @@ namespace sb
 		void BerserkerColliderExit(Collider* other);
 		void TruckColliderEnter(Collider* other);
 		void TruckColliderExit(Collider* other);
+		void CamelColliderEnter(Collider* other);
+		void CamelColliderExit(Collider* other);
 
 		void HeavyMachineGunColliderEnter(Collider* other);
 		void HeavyMachineGunColliderExit(Collider* other);

@@ -12,6 +12,8 @@
 #include "sbSupply.h"
 #include "sbBerserker.h"
 #include "sbTruck.h"
+#include "sbCamel.h"
+
 
 namespace sb
 {
@@ -42,6 +44,7 @@ namespace sb
 		SupplyColliderEnter(other);
 		BerserkerColliderEnter(other);
 		TruckColliderEnter(other);
+		CamelColliderEnter(other);
 	}
 
 	void Floor::OnCollisionStay(Collider* other)
@@ -58,12 +61,14 @@ namespace sb
 		SupplyColliderExit(other);
 		BerserkerColliderExit(other);
 		TruckColliderExit(other);
+		CamelColliderExit(other);
 	}
 
 	void Floor::PlayerColliderEnter(Collider* other)
 	{
 		PlayerBottom* playerb = dynamic_cast<PlayerBottom*>(other->GetOwner());
-		if (playerb == nullptr)
+		if (playerb == nullptr
+			|| playerb->GetRide() == true)
 			return;	
 		else
 		{
@@ -89,7 +94,8 @@ namespace sb
 	void Floor::PlayerColliderExit(Collider* other)
 	{
 		PlayerBottom* playerb = dynamic_cast<PlayerBottom*>(other->GetOwner());
-		if (playerb == nullptr)
+		if (playerb == nullptr
+			|| playerb->GetRide() == true)
 			return;
 		else
 		{
@@ -282,6 +288,43 @@ namespace sb
 		else
 		{
 			Rigidbody* rb = truck->GetComponent<Rigidbody>();
+			rb->SetGround(false);
+		}
+	}
+
+	void Floor::CamelColliderEnter(Collider* other)
+	{
+		Camel* camel = dynamic_cast<Camel*>(other->GetOwner());
+
+		if (camel == nullptr)
+			return;
+		else
+		{
+			Transform* tr = camel->GetComponent<Transform>();
+			Rigidbody* rb = camel->GetComponent<Rigidbody>();
+
+			float len = fabs(other->GetPosition().y - this->GetComponent<Collider>()->GetPosition().y);
+			float scale = fabs(other->GetSize().y / 2.0f + this->GetComponent<Collider>()->GetSize().y / 2.0f);
+
+
+			if (len < scale)
+			{
+				Vector2 playerPos = tr->GetPosition();
+				playerPos.y -= (scale - len) - 1.0f;
+				tr->SetPosition(playerPos);
+			}
+			rb->SetGround(true);
+		}
+	}
+
+	void Floor::CamelColliderExit(Collider* other)
+	{
+		Camel* camel = dynamic_cast<Camel*>(other->GetOwner());
+		if (camel == nullptr)
+			return;
+		else
+		{
+			Rigidbody* rb = camel->GetComponent<Rigidbody>();
 			rb->SetGround(false);
 		}
 	}
