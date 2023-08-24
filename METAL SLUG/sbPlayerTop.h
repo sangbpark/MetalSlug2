@@ -115,9 +115,10 @@ namespace sb
 		bool mHeavyBulletCount;
 		bool mRide;
 		float ptTimecheck;
+		bool mVictory;
 		float mHeavyBullet;
 		float mHeavyBullettime;
-
+		
 		GameObject* mPlayerBottomOwner;
 
 		eWeaponState mWeaponState;

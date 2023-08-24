@@ -158,7 +158,7 @@ namespace sb
 		rb->SetGround(true);
 		if (ar->Getcomplete())
 		{
-			Destroy(this);
+			this->Pause();
 		}
 	}
 	void EfBomb::FloorCollisionEnter(Collider* other)

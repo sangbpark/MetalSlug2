@@ -16,7 +16,7 @@
 namespace sb
 {
 	MiddleBossRocket::MiddleBossRocket()
-		:mHp(2.0f)
+		:mHp(0.5f)
 		,mState(eState::Create)
 		, mRockOnTime(0.0f)
 		, mRotation(0.0f)
@@ -103,7 +103,7 @@ namespace sb
 			tr->SetPosition(pos);
 		}
 
-		if (mRockOnTime >= 3.0f)
+		if (mRockOnTime >= 2.0f)
 			mState = eState::Rockon;
 	}
 	void MiddleBossRocket::Create()
@@ -152,7 +152,7 @@ namespace sb
 			pos2 = BulletRotate(pos, mRotation, 30, true);
 			pos2 = pos2 - pos;
 			col->SetOffset(pos2);
-			pos = BulletRotate(pos, mRotation, 100.0f * Time::DeltaTime(), true);
+			pos = BulletRotate(pos, mRotation, 180.0f * Time::DeltaTime(), true);
 			tr->SetPosition(pos);
 		}
 		else
@@ -160,7 +160,7 @@ namespace sb
 			pos2 = BulletRotate(pos, mRotation, 30, false);
 			pos2 = pos2 - pos;
 			col->SetOffset(pos2);
-			pos = BulletRotate(pos, mRotation, 100.0f * Time::DeltaTime(), false);
+			pos = BulletRotate(pos, mRotation, 180.0f * Time::DeltaTime(), false);
 			tr->SetPosition(pos);
 		}
 	}

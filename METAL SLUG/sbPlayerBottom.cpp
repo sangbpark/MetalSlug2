@@ -19,6 +19,7 @@
 #include "sbCamel.h"
 #include "sbCollisionManager.h"
 #include "sbBossWing.h"
+#include "sbHeavyMachineGun.h"
 
 
 namespace sb
@@ -39,6 +40,7 @@ namespace sb
 		, mEfBombCount(10)
 		, mStop(false)
 		, mRide(false)
+		, mVictory(false)
 	{
 		ResourceLoad();
 	}
@@ -130,6 +132,9 @@ namespace sb
 			Ride();
 			break;
 		case sb::PlayerBottom::eState::End:
+			break;
+		case sb::PlayerBottom::eState::Victory:
+			Victory();
 			break;
 		default:
 			break;
@@ -1985,6 +1990,18 @@ namespace sb
 		tr->SetPosition(pos);
 	}
 
+	void PlayerBottom::Victory()
+	{
+	}
+
+	void PlayerBottom::VictoryOn()
+	{
+		Animator* at = GetComponent<Animator>();
+		at->PlayAnimation(L"PlayervitoryBAX", true);
+		mState = eState::Victory;
+		mVictory = true;
+	}
+
 	void PlayerBottom::RideOn()
 	{
 		Animator* at = GetComponent<Animator>();
@@ -2040,6 +2057,10 @@ namespace sb
 		Animator* at = GetComponent<Animator>();
 		if (at->Getcomplete())
 		{
+			Transform* tr = GetComponent<Transform>();
+			Vector2 pos = tr->GetPosition();
+			pos.x += 100.0f;
+			HeavyMachineGun* hmg = object::Instantiate<HeavyMachineGun>(eLayerType::Effects, pos);
 			at->PlayAnimation(L"PlayerreviveBAX");
 			mState = eState::revive;
 		}
@@ -2085,8 +2106,9 @@ namespace sb
 		at->CreateAnimation(L"hPlayerrightdownknifeBAX", imagePlayer, Vector2(0.0f, 3168.0f), Vector2(88.0f, 44.0f), 7, Vector2(35.0f, -18.0f), 0.001f);
 		at->CreateAnimation(L"hPlayerleftdownknifeBAX", imagePlayer, Vector2(616.0f, 3168.0f), Vector2(88.0f, 44.0f), 7, Vector2(-60.0f, -18.0f), 0.001f);
 		at->CreateAnimation(L"PlayerreviveBAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(44.0f, 264.0f), 7,Vector2(-15.0f, -460.0f));
-		at->SetScale(Vector2(4.5f, 4.5f));
+		at->CreateAnimation(L"PlayervitoryBAX", imagePlayer, Vector2(0.0f, 1628.0f), Vector2(44.0f, 44.0f), 4, Vector2(0.0f, -20.0f));
 		at->PlayAnimation(L"PlayerIdlerightBAX", true);
+		at->SetScale(Vector2(4.5f, 4.5f));
 		col->SetSize(Vector2(100.0f, 160.0f));
 		Vector2 pbpos = tr->GetPosition();
 		col->SetPosition(pbpos);

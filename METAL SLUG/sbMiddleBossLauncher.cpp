@@ -15,7 +15,7 @@ namespace sb
 {
 	MiddleBossLauncher::MiddleBossLauncher()
 		:mHp(15.0f)
-		,mFireTime(3.0f)
+		,mFireTime(1.0f)
 		,mState(eState::Idle)
 		,mHit(false)
 	{
@@ -100,7 +100,7 @@ namespace sb
 		{
 			at->PlayAnimation(L"MiddleBossLauncheridleAX");
 			mState = eState::Idle;
-			mFireTime = 3.0f;
+			mFireTime = 2.5f;
 		}
 	}
 	void MiddleBossLauncher::Death()

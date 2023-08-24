@@ -33,7 +33,7 @@ namespace sb
 		, mHeavyBulletCount(false)
 		, mState(eState::Idle)
 		, mRide(false)
-	
+		, mVictory(false)
 	{
 		ResourceLoad();
 	}
@@ -48,7 +48,8 @@ namespace sb
 		GameObject::Update();
 
 		GetPlayerBottomState();
-		if(!mRide)
+		if(!mRide
+			|| !mVictory)
 		{
 			if (mWeaponState == eWeaponState::heavy)
 				mHeavyBullettime += Time::DeltaTime();

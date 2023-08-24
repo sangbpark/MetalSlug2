@@ -28,6 +28,7 @@ namespace sb
 			Stopanimator,
 			Stop,
 			RIde,
+			Victory,
 			End,
 		};
 
@@ -72,7 +73,9 @@ namespace sb
 		void Stop();
 		void StopAnimator();
 		void Ride();
+		void Victory();
 
+		void VictoryOn();
 
 		void RideOn();
 		void RideOff();
@@ -125,6 +128,7 @@ namespace sb
 		bool mGround;
 		bool mStop;
 		bool mRide;
+		bool mVictory;
 		GameObject* mVehicle;
 		math::Vector2 mCameraTransform;
 
