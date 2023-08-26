@@ -8,10 +8,10 @@
 
 namespace sb
 {
-	
+	bool CameraPlayer::mStageClear = false;
 	CameraPlayer::CameraPlayer()
-		:mState(eState::Idle)
-		,mStage(eStage::Idle)
+		: mState(eState::Idle)
+		, mStage(eStage::Idle)
 		, mTime(0.0f)
 	{
 		Ui* ui = object::Instantiate<Ui>(enums::eLayerType::UI, Vector2(100.0f, 100.0f));
@@ -51,7 +51,8 @@ namespace sb
 		case sb::CameraPlayer::eState::Resetting:
 			Resetting();
 			break;
-		case sb::CameraPlayer::eState::End:
+		case sb::CameraPlayer::eState::StageClear:
+			StageClear();
 			break;
 		default:
 			break;
@@ -126,6 +127,9 @@ namespace sb
 		}
 		else if (mStage == eStage::Boss)
 		{
+			Vector2 pos = tr->GetPosition();			
+			pos.x = 16420.0f;
+			tr->SetPosition(pos);
 			mState = eState::Rock;
 		}
 	}
@@ -148,6 +152,10 @@ namespace sb
 		{
 			mState = eState::Idle;
 		}
+	}
+	void CameraPlayer::StageClear()
+	{
+		mStageClear = true;
 	}
 	void CameraPlayer::SearchControlTower()
 	{
@@ -180,7 +188,7 @@ namespace sb
 				else if ((*iter)->GetStage() == ControlTower::eStage::Boss)
 				{
 					mStage = eStage::Boss;
-					mState = eState::Rock;
+					mState = eState::Move;
 				}
 
 				return;
@@ -197,10 +205,25 @@ namespace sb
 			{
 				if ((*iter)->GetTargetLive() == false)
 				{
-					auto controltower = *iter;
-					controltower->SetActive(false);
-					controltower->SetTargetlive(true);
-					mState = eState::Resetting;
+					if (mStage == eStage::Boss)
+					{
+						PlayerBottom* pb = dynamic_cast<PlayerBottom*>(mOwner);
+						if (pb->GetRide() == true)
+							pb->RideVictory0n();
+						else if (pb->GetRide() == false)
+							pb->VictoryOn();
+						auto controltower = *iter;
+						controltower->SetActive(false);
+						controltower->SetTargetlive(true);
+						mState = eState::StageClear;
+					}
+					else
+					{
+						auto controltower = *iter;
+						controltower->SetActive(false);
+						controltower->SetTargetlive(true);
+						mState = eState::Resetting;
+					}
 				}
 			}
 			

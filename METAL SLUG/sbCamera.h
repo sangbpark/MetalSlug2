@@ -9,6 +9,7 @@ namespace sb
 	public:
 		static void Initialize();
 		static void Update();
+		static void Clear();
 
 		static Vector2 CalculatePosition(Vector2 pos) { return pos - mDistance; }
 

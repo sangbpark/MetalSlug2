@@ -101,6 +101,16 @@ namespace sb
 				mStage = eStage::Idle;
 			}
 		}
+		else if (mStage == eStage::Boss)
+		{
+			Boss* boss = dynamic_cast<Boss*>(mTarget);
+			if (boss->GetBossStage() == Boss::eBossStage::Death)
+			{
+				mTargetlive = false;
+				mState = eState::Idle;
+				mStage = eStage::Idle;
+			}
+		}
 	}
 
 	void ControlTower::OnCollisionEnter(Collider* other)

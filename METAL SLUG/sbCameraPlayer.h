@@ -14,6 +14,7 @@ namespace sb
 			Move,
 			Rock,
 			Resetting,
+			StageClear,
 			End,
 		};
 		enum class eStage
@@ -37,12 +38,15 @@ namespace sb
 		void Move();
 		void Rock();
 		void Resetting();
+		void StageClear();
 
 		void SearchControlTower();
 		void SearchControlTowerTarget();
 		void UiSetting();
 
 		void SetOwner(GameObject* owner) { mOwner = owner; }
+
+		static bool GetStageClear() { return mStageClear; }
 
 	private:
 		GameObject* mOwner;
@@ -51,6 +55,7 @@ namespace sb
 		eState mState;
 		eStage mStage;
 
+		static bool mStageClear;
 		float mTime;
 	};
 }

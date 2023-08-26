@@ -15,7 +15,7 @@ namespace sb
 		CreateScene<TitleScene>(L"TitleScene");
 		CreateScene<Mission1>(L"Mission1");
 
-		LoadScene(L"Mission1");
+		LoadScene(L"TitleScene");
 	}
 
 	void SceneManager::Update()

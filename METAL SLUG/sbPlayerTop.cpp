@@ -120,7 +120,8 @@ namespace sb
 				case sb::PlayerTop::eState::Ride:
 					Ride();
 					break;
-				case sb::PlayerTop::eState::End:
+				case sb::PlayerTop::eState::Victory:
+					Victory();
 					break;
 				default:
 					break;
@@ -196,8 +197,8 @@ namespace sb
 				case sb::PlayerTop::eState::Ride:
 					Ride();
 					break;
-				case sb::PlayerTop::eState::End:
-					break;
+				case sb::PlayerTop::eState::Victory:
+					Victory();
 				default:
 					break;
 				}
@@ -211,6 +212,7 @@ namespace sb
 	{
 		if(!mRide)
 			GameObject::Render(hdc);
+
 	}
 	void PlayerTop::OnCollisionEnter(Collider* other)
 	{
@@ -2687,6 +2689,11 @@ namespace sb
 	{
 	}
 
+	void PlayerTop::Victory()
+	{
+		mVictory = true;
+	}
+
 	void PlayerTop::GetPlayerBottomState()
 	{
 		PlayerBottom* playerbottom = static_cast<PlayerBottom*>(mPlayerBottomOwner);
@@ -2730,7 +2737,6 @@ namespace sb
 		{
 			if (mState != eState::Death)
 			{
-				Animator* at = GetComponent<Animator>();
 				at->PlayAnimation(L"PlayerdeadTAX");
 				mState = eState::Death;
 			}
@@ -2746,6 +2752,12 @@ namespace sb
 			&& playerbottom->GetStopState() == false)
 			mState = eState::Idle;
 		mRide = playerbottom->GetRide();
+		if (playerbottom->GetVictory() == true
+			&& mVictory == false)
+		{
+			at->PlayAnimation(L"PlayerreviveTAX");
+			mState = eState::Victory;
+		}
 		Transform* tr = GetComponent<Transform>();
 		Vector2 pos = playerbottom->GetPlayerPosition();
 		pos.y = pos.y - 30.0f;
@@ -3084,7 +3096,7 @@ namespace sb
 		at->CreateAnimation(L"hPlayerleftdownTAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 12, Vector2(5.0f, 72.0f), 0.000001f); 
 		at->CreateAnimation(L"hPlayerrightjumpTAX", imagePlayer, Vector2(0.0f, 3212.0f), Vector2(44.0f, 44.0f), 6, Vector2(10.0f, 20.0f),0.2f);
 		at->CreateAnimation(L"hPlayerleftjumpTAX", imagePlayer, Vector2(264.0f, 3212.0f), Vector2(44.0f, 44.0f), 6, Vector2(-13.0f, 20.0f),0.2f);
-		at->CreateAnimation(L"PlayerreviveTAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 2, Vector2(-13.0f, 20.0f));
+		at->CreateAnimation(L"PlayerreviveTAX", imagePlayer, Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 1, Vector2(-13.0f, 20.0f));
 		at->SetScale(Vector2(4.5f, 4.5f));
 		at->PlayAnimation(L"PlayerIdlerightTAX", true);
 

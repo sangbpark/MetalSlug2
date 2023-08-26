@@ -17,6 +17,8 @@
 #include "sbBossFloor.h"
 #include "sbArabian.h"
 #include "sbBossWingFire.h"
+#include "sbDestroyEffect.h"
+#include "sbBossDeath.h"
 
 namespace sb
 {
@@ -30,6 +32,7 @@ namespace sb
 		, mHit(false)
 		, mStage2On(false)
 		, mArabianTime(0.0f)
+		, mDestroy(0.0f)
 	{
 		ResourceLoad();
 	}
@@ -137,12 +140,34 @@ namespace sb
 	}
 	void Boss::Death()
 	{
+		mDestroy += Time::DeltaTime();
 		Transform* tr = GetComponent<Transform>();
 		Vector2 pos = tr->GetPosition();;
-		pos.y += 100.0f * Time::DeltaTime();
-		if (pos.y >= 300.0f)
+		if (mDestroy >= 0.65f)
 		{
-			pos.y = 300.0f;
+			int RandomDirectx = 0;
+			int RandomDirecty = 0;
+			Vector2 pos2 = tr->GetPosition();
+
+			RandomDirectx = rand();
+			RandomDirecty = rand();
+			if (RandomDirectx % 2 == 0)
+				pos2.x += ((rand() % 1000) / (rand() % 2 + 1))/2;
+			else
+				pos2.x -= ((rand() % 1000) / (rand() % 2 + 1))/2;
+			if (RandomDirecty % 2 == 0)
+				pos2.y += (rand() % 1000)/ (rand() % 3 + 5);
+			else
+				pos2.y -= (rand() % 1000)/ (rand() % 3 + 5);
+			DestroyEffect* de = object::Instantiate<DestroyEffect>(eLayerType::Effects, pos2);
+		
+			mDestroy = 0.0f;
+		}
+		pos.y += 70.0f * Time::DeltaTime();
+		if (pos.y >= 350.0f)
+		{
+			pos.y = 350.0f;
+			BossDeath* bd = object::Instantiate<BossDeath>(eLayerType::Npc, pos);
 			this->Pause();
 		}
 		tr->SetPosition(pos);

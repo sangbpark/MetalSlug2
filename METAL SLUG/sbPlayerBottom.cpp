@@ -136,6 +136,9 @@ namespace sb
 		case sb::PlayerBottom::eState::Victory:
 			Victory();
 			break;
+		case sb::PlayerBottom::eState::RideVictory:
+			RideVictory();
+			break;
 		default:
 			break;
 		}
@@ -2000,6 +2003,32 @@ namespace sb
 		at->PlayAnimation(L"PlayervitoryBAX", true);
 		mState = eState::Victory;
 		mVictory = true;
+	}
+
+	void PlayerBottom::RideVictory0n()
+	{
+		Animator* at = GetComponent<Animator>();
+		Transform* tr = GetComponent<Transform>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		rb->SetGround(false);
+		if (mDirect)
+			at->PlayAnimation(L"PlayerrightjumpBAX");
+		else
+			at->PlayAnimation(L"PlayerleftjumpBAX");
+		mRide = false;
+		mState = eState::RideVictory;
+	}
+
+	void PlayerBottom::RideVictory()
+	{
+		Animator* at = GetComponent<Animator>();
+		Rigidbody* rb = GetComponent<Rigidbody>();
+		if(rb->GetGround())
+		{
+			at->PlayAnimation(L"PlayervitoryBAX", true);
+			mState = eState::Victory;
+			mVictory = true;
+		}
 	}
 
 	void PlayerBottom::RideOn()

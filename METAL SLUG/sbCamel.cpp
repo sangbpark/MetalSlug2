@@ -343,7 +343,8 @@ namespace sb
 	void Camel::PlayerStateCheck(Collider* other)
 	{
 		PlayerBottom* pb = dynamic_cast<PlayerBottom*>(mOwner);
-		if (pb->GetState() == PlayerBottom::eState::Death)
+		if (pb->GetState() == PlayerBottom::eState::Death
+			|| pb->GetState() == PlayerBottom::eState::RideVictory)
 		{
 			Animator* at = GetComponent<Animator>();
 			mRideOn = false;

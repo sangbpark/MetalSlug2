@@ -142,6 +142,7 @@
     <ClInclude Include="sbBGBackGround.h" />
     <ClInclude Include="sbBGbossCanopi.h" />
     <ClInclude Include="sbBoss.h" />
+    <ClInclude Include="sbBossDeath.h" />
     <ClInclude Include="sbBossFloor.h" />
     <ClInclude Include="sbBossWing.h" />
     <ClInclude Include="sbBossWingFire.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="sbCamelBullet.h" />
     <ClInclude Include="sbCamelGun.h" />
     <ClInclude Include="sbControlTower.h" />
+    <ClInclude Include="sbDestroyEffect.h" />
     <ClInclude Include="sbEfBomb.h" />
     <ClInclude Include="sbCamera.h" />
     <ClInclude Include="sbCameraPlayer.h" />
@@ -193,6 +195,8 @@
     <ClInclude Include="sbSpriteRenderer.h" />
     <ClInclude Include="sbMission1.h" />
     <ClInclude Include="sbTime.h" />
+    <ClInclude Include="sbTitleBackGround.h" />
+    <ClInclude Include="sbTitleCamera.h" />
     <ClInclude Include="sbTitleScene.h" />
     <ClInclude Include="sbTransform.h" />
     <ClInclude Include="sbTruck.h" />
@@ -217,6 +221,7 @@
     <ClCompile Include="sbBGBackGround.cpp" />
     <ClCompile Include="sbBGbossCanopi.cpp" />
     <ClCompile Include="sbBoss.cpp" />
+    <ClCompile Include="sbBossDeath.cpp" />
     <ClCompile Include="sbBossFloor.cpp" />
     <ClCompile Include="sbBossWing.cpp" />
     <ClCompile Include="sbBossWingFire.cpp" />
@@ -224,6 +229,7 @@
     <ClCompile Include="sbCamelBullet.cpp" />
     <ClCompile Include="sbCamelGun.cpp" />
     <ClCompile Include="sbControlTower.cpp" />
+    <ClCompile Include="sbDestroyEffect.cpp" />
     <ClCompile Include="sbEfBomb.cpp" />
     <ClCompile Include="sbCamera.cpp" />
     <ClCompile Include="sbCameraPlayer.cpp" />
@@ -265,6 +271,8 @@
     <ClCompile Include="sbSpriteRenderer.cpp" />
     <ClCompile Include="sbMission1.cpp" />
     <ClCompile Include="sbTime.cpp" />
+    <ClCompile Include="sbTitleBackGround.cpp" />
+    <ClCompile Include="sbTitleCamera.cpp" />
     <ClCompile Include="sbTitleScene.cpp" />
     <ClCompile Include="sbTransform.cpp" />
     <ClCompile Include="sbTruck.cpp" />

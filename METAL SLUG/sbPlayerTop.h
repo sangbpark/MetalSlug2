@@ -34,6 +34,7 @@ namespace sb
 			StopAnimator,
 			Stop,
 			Ride,
+			Victory,
 			End,
 		};
 		enum class eWeaponState
@@ -93,7 +94,7 @@ namespace sb
 
 		void StopAnimator();
 		void Stop();
-
+		void Victory();
 		void GetPlayerBottomState();
 		void Revive();
 		void Clear();

@@ -1,23 +1,25 @@
 #pragma once
-#include "sbScene.h"
+class TitleBackGround
+{
+};
+
+#pragma once
 #include "sbGameObject.h"
 
 namespace sb
 {
-	class TitleScene : public Scene
+	class TitleBackGround : public GameObject
 	{
 	public:
-		TitleScene();
-		virtual ~TitleScene();
+
+		TitleBackGround();
+		virtual ~TitleBackGround();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void Render(HDC hdc) override;
 
-
-
 	private:
-		GameObject* mCamera;
+		
 	};
 }
-

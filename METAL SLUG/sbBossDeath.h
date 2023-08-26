@@ -1,23 +1,20 @@
 #pragma once
-#include "sbScene.h"
 #include "sbGameObject.h"
 
 namespace sb
 {
-	class TitleScene : public Scene
+	class BossDeath : public GameObject
 	{
 	public:
-		TitleScene();
-		virtual ~TitleScene();
+		BossDeath();
+		virtual ~BossDeath();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void Render(HDC hdc) override;
 
-
+		void ResourseLoad();
 
 	private:
-		GameObject* mCamera;
 	};
 }
-

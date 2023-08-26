@@ -29,6 +29,7 @@ namespace sb
 			Stop,
 			RIde,
 			Victory,
+			RideVictory,
 			End,
 		};
 
@@ -76,6 +77,8 @@ namespace sb
 		void Victory();
 
 		void VictoryOn();
+		void RideVictory0n();
+		void RideVictory();
 
 		void RideOn();
 		void RideOff();
@@ -107,6 +110,7 @@ namespace sb
 		bool GetRide() { return mRide; }
 		void SetInvincible(float value) { mInvincible = value; }
 		void SetVehicle(GameObject* vehicle) { mVehicle = vehicle; }
+		bool GetVictory() { return mVictory; }
 		//class Texture* mFloorTexture;
 	
 		math::Vector2 CameraOut(math::Vector2 value);

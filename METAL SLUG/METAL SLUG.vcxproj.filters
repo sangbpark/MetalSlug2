@@ -208,6 +208,18 @@
     <Filter Include="Content\GameObejct\Effects\BossWingFire">
       <UniqueIdentifier>{95628bc9-8a91-4691-b4a1-d059fad4cd02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\GameObejct\Effects\DestroyEffect">
+      <UniqueIdentifier>{22701459-e38c-43fc-ab71-a07d521e7a36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\Effects\BossDeath">
+      <UniqueIdentifier>{20902a8c-99d5-498d-8dc4-69081295ac82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\BackGround\TitleBackGround">
+      <UniqueIdentifier>{8a0984a4-aa89-44b9-8dbe-7b0fe49fc9ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\GameObejct\TItleCamera">
+      <UniqueIdentifier>{0b826d88-ba76-414a-97f7-f1e03638fe55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -420,6 +432,18 @@
     <ClInclude Include="sbBossWingFire.h">
       <Filter>Content\GameObejct\Effects\BossWingFire</Filter>
     </ClInclude>
+    <ClInclude Include="sbDestroyEffect.h">
+      <Filter>Content\GameObejct\Effects\DestroyEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="sbBossDeath.h">
+      <Filter>Content\GameObejct\Effects\BossDeath</Filter>
+    </ClInclude>
+    <ClInclude Include="sbTitleBackGround.h">
+      <Filter>Content\GameObejct\BackGround\TitleBackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="sbTitleCamera.h">
+      <Filter>Content\GameObejct\TItleCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="METAL SLUG.ico">
@@ -622,6 +646,18 @@
     </ClCompile>
     <ClCompile Include="sbBossWingFire.cpp">
       <Filter>Content\GameObejct\Effects\BossWingFire</Filter>
+    </ClCompile>
+    <ClCompile Include="sbDestroyEffect.cpp">
+      <Filter>Content\GameObejct\Effects\DestroyEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="sbBossDeath.cpp">
+      <Filter>Content\GameObejct\Effects\BossDeath</Filter>
+    </ClCompile>
+    <ClCompile Include="sbTitleBackGround.cpp">
+      <Filter>Content\GameObejct\BackGround\TitleBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="sbTitleCamera.cpp">
+      <Filter>Content\GameObejct\TItleCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

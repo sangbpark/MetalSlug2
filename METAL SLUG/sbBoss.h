@@ -59,6 +59,7 @@ namespace sb
 		bool mHit;
 		bool mStage2On;
 		float mArabianTime;
+		float mDestroy;
 	};
 }
 
