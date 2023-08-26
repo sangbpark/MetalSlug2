@@ -2,6 +2,7 @@
 #include "sbGameObject.h"
 #include "sbUi.h"
 #include "sbControlTower.h"
+#include "sbSound.h";
 
 namespace sb
 {
@@ -45,7 +46,8 @@ namespace sb
 		void UiSetting();
 
 		void SetOwner(GameObject* owner) { mOwner = owner; }
-
+		Sound* GetSound() { return mSound; }
+		void SetSound(Sound* sound) { mSound = sound; }
 		static bool GetStageClear() { return mStageClear; }
 
 	private:
@@ -54,6 +56,7 @@ namespace sb
 		std::vector<ControlTower*> mControlTower;
 		eState mState;
 		eStage mStage;
+		Sound* mSound;
 
 		static bool mStageClear;
 		float mTime;

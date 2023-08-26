@@ -15,6 +15,7 @@
 #include "sbArabianknife.h"
 #include "sbBossFloor.h"
 #include "sbCamelBullet.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -394,8 +395,7 @@ namespace sb
 			NormalBulletCollsionEnter(other);
 			EfBombCollsionEnter(other);
 			HeavyBulletCollsionEnter(other);
-			CamelBulletCollsionEnter(other);		
-
+			CamelBulletCollsionEnter(other);
 		}
 	}
 	void Arabian::OnCollisionStay(Collider* other)
@@ -417,6 +417,9 @@ namespace sb
 				ar->PlayAnimation(L"arabianrightdeadAX");
 			else
 				ar->PlayAnimation(L"arabianleftdeadAX");
+			Sound* sound = Resources::Load<Sound>(L"arabiandeath"
+				, L"..\\Resource\\sound\\metal-slug-arabian-scream.wav");
+			sound->Play(false);
 		}
 			
 	}
@@ -433,6 +436,9 @@ namespace sb
 				ar->PlayAnimation(L"arabianrightdeadAX");
 			else
 				ar->PlayAnimation(L"arabianleftdeadAX");
+			Sound* sound = Resources::Load<Sound>(L"arabiandeath"
+				, L"..\\Resource\\sound\\metal-slug-arabian-scream.wav");
+			sound->Play(false);
 		}
 	}
 	void Arabian::EfBombCollsionEnter(Collider* other)
@@ -448,6 +454,9 @@ namespace sb
 			else
 				ar->PlayAnimation(L"arabianleftdeadAX");
 			mState = Arabianstate::death;
+			Sound* sound = Resources::Load<Sound>(L"arabiandeath"
+				, L"..\\Resource\\sound\\metal-slug-arabian-scream.wav");
+			sound->Play(false);
 		}
 
 	}
@@ -465,6 +474,9 @@ namespace sb
 				ar->PlayAnimation(L"arabianrightdeadAX");
 			else
 				ar->PlayAnimation(L"arabianleftdeadAX");
+			Sound* sound = Resources::Load<Sound>(L"arabiandeath"
+				, L"..\\Resource\\sound\\metal-slug-arabian-scream.wav");
+			sound->Play(false);
 		}
 	}
 	void Arabian::ResourceLoad()

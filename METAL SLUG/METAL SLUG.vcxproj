@@ -158,10 +158,12 @@
     <ClInclude Include="sbCollisionManager.h" />
     <ClInclude Include="sbDev.h" />
     <ClInclude Include="sbEffects.h" />
+    <ClInclude Include="sbEndScene.h" />
     <ClInclude Include="sbFloor.h" />
     <ClInclude Include="sbFrontBackGround.h" />
     <ClInclude Include="sbHeavyBullet.h" />
     <ClInclude Include="sbHeavyMachineGun.h" />
+    <ClInclude Include="sbLoadingScene.h" />
     <ClInclude Include="sbMiddleBoss.h" />
     <ClInclude Include="sbMiddleBossColumn.h" />
     <ClInclude Include="sbMiddleBossLauncher.h" />
@@ -238,12 +240,14 @@
     <ClCompile Include="sbComponent.cpp" />
     <ClCompile Include="sbDev.cpp" />
     <ClCompile Include="sbEffects.cpp" />
+    <ClCompile Include="sbEndScene.cpp" />
     <ClCompile Include="sbEntity.cpp" />
     <ClCompile Include="sbFloor.cpp" />
     <ClCompile Include="sbFrontBackGround.cpp" />
     <ClCompile Include="sbGameObject.cpp" />
     <ClCompile Include="sbHeavyBullet.cpp" />
     <ClCompile Include="sbHeavyMachineGun.cpp" />
+    <ClCompile Include="sbLoadingScene.cpp" />
     <ClCompile Include="sbMath.cpp" />
     <ClCompile Include="sbMiddleBoss.cpp" />
     <ClCompile Include="sbMiddleBossColumn.cpp" />

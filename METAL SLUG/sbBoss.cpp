@@ -396,5 +396,6 @@ namespace sb
 		Collider* flcol = floor->AddComponent<Collider>();
 		flcol->SetSize(Vector2(600.0f, 25.0f));
 
+
 	}
 }

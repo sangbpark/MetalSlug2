@@ -3,6 +3,8 @@
 #include "sbAnimator.h"
 #include "sbTexture.h"
 #include "sbResources.h"
+#include "sbSound.h"
+
 namespace sb
 {
 	BossDeath::BossDeath()
@@ -37,5 +39,9 @@ namespace sb
 		at->CreateAnimation(L"bossdeathAX", image, Vector2(0.0f, 0.0f), Vector2(88.0f, 88.0f), 23, Vector2(0.0f, 0.0f));
 		at->SetScale(Vector2(8.5f, 5.5f));
 		at->PlayAnimation(L"bossdeathAX");
+		Sound* sound = Resources::Load<Sound>(L"bossdeath"
+			, L"..\\Resource\\sound\\bossDeath (2).wav");
+		sound->Play(false);
+		sound->SetVolume(60.0f);
 	}
 }

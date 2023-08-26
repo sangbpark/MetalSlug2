@@ -13,6 +13,7 @@
 #include "sbTruck.h"
 #include "sbBerserker.h"
 #include "sbBoss.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -188,6 +189,10 @@ namespace sb
 		sr->SetImage(image);
 		sr->SetScale(Vector2(4.5f, 4.5f));
 		col->SetSize(Vector2(20.0f, 20.0f));
+		Sound* sound = Resources::Load<Sound>(L"heavybulletsound"
+			, L"..\\Resource\\sound\\Heavy.wav");
+		sound->Play(false);
+		sound->SetVolume(30.0f);
 	}
 
 }

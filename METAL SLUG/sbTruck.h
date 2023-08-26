@@ -1,5 +1,6 @@
 #pragma once
 #include "sbGameObject.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -48,6 +49,7 @@ namespace sb
 		void ResourceLoad();
 	private:
 		eState mState;
+		Sound* mMoveSound;
 		float mHp;
 		float mCreateBerserkerTime;
 		bool mHit;

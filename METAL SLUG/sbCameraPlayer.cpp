@@ -127,6 +127,7 @@ namespace sb
 		}
 		else if (mStage == eStage::Boss)
 		{
+			mSound->Stop(true);
 			Vector2 pos = tr->GetPosition();			
 			pos.x = 16420.0f;
 			tr->SetPosition(pos);

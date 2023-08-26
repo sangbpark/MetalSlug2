@@ -1,6 +1,7 @@
 #pragma once
 #include "sbGameObject.h"
 #include "sbTruck.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -53,6 +54,7 @@ namespace sb
 		bool mTargetlive;
 		bool mEnter;
 
+		Sound* mSound;
 		eStage mStage;
 		eState mState;
 	};

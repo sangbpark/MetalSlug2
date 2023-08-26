@@ -1,6 +1,7 @@
 #pragma once
 #include "sbScene.h"
 #include "sbGameObject.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -18,6 +19,7 @@ namespace sb
 
 	private:
 		GameObject* mCamera;
+		Sound* mSound;
 	};
 }
 

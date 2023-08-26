@@ -12,6 +12,7 @@
 #include "sbSupply.h"
 #include "sbObject.h"
 #include "sbPlayerBottom.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -132,6 +133,9 @@ namespace sb
 		{
 			mState = eState::Free;
 			ar->PlayAnimation(L"NpcOldManfreeAX");
+			Sound* sound = Resources::Load<Sound>(L"ty"
+				, L"..\\Resource\\sound\\metal-slug-thank-you-tenkiu.wav");
+			sound->Play(false);
 		}
 
 	}
@@ -145,6 +149,9 @@ namespace sb
 		{
 			mState = eState::Free;
 			ar->PlayAnimation(L"NpcOldManfreeAX");
+			Sound* sound = Resources::Load<Sound>(L"ty"
+				, L"..\\Resource\\sound\\metal-slug-thank-you-tenkiu.wav");
+			sound->Play(false);
 		}
 	}
 	void HOldMan::EfBombCollsionEnter(Collider* other)
@@ -157,6 +164,9 @@ namespace sb
 		{
 			mState = eState::Free;
 			ar->PlayAnimation(L"NpcOldManfreeAX");
+			Sound* sound = Resources::Load<Sound>(L"ty"
+				, L"..\\Resource\\sound\\metal-slug-thank-you-tenkiu.wav");
+			sound->Play(false);
 		}
 
 	}

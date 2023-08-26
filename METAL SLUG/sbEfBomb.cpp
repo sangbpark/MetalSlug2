@@ -14,6 +14,7 @@
 #include "sbMiddleBossRocket.h"
 #include "sbTruck.h"
 #include "sbBoss.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -172,6 +173,10 @@ namespace sb
 			Animator* ar = GetComponent<Animator>();
 			ar->PlayAnimation(L"BombDeathAX");
 			mState = BombState::death;
+			Sound* sound = Resources::Load<Sound>(L"efbombsound"
+				, L"..\\Resource\\sound\\efbomb.wav");
+			sound->Play(false);
+			sound->SetVolume(50.0f);
 			return;
 		}
 		if (!(fl == nullptr))
@@ -191,6 +196,10 @@ namespace sb
 			Animator* ar = GetComponent<Animator>();
 			Rigidbody* rb = GetComponent<Rigidbody>();
 			ar->PlayAnimation(L"BombDeathAX");
+			Sound* sound = Resources::Load<Sound>(L"efbombsound"
+				, L"..\\Resource\\sound\\efbomb.wav");
+			sound->Play(false);
+			sound->SetVolume(50.0f);
 			mState = BombState::death;
 		}
 	}
@@ -205,6 +214,10 @@ namespace sb
 			Animator* ar = GetComponent<Animator>();
 			Rigidbody* rb = GetComponent<Rigidbody>();
 			ar->PlayAnimation(L"BombDeathAX");
+			Sound* sound = Resources::Load<Sound>(L"efbombsound"
+				, L"..\\Resource\\sound\\efbomb.wav");
+			sound->Play(false);
+			sound->SetVolume(50.0f);
 			mState = BombState::death;
 		}
 		
@@ -220,6 +233,10 @@ namespace sb
 			Animator* ar = GetComponent<Animator>();
 			Rigidbody* rb = GetComponent<Rigidbody>();
 			ar->PlayAnimation(L"BombDeathAX");
+			Sound* sound = Resources::Load<Sound>(L"efbombsound"
+				, L"..\\Resource\\sound\\efbomb.wav");
+			sound->Play(false);
+			sound->SetVolume(50.0f);
 			mState = BombState::death;
 		}
 	}
@@ -234,6 +251,10 @@ namespace sb
 			Animator* ar = GetComponent<Animator>();
 			Rigidbody* rb = GetComponent<Rigidbody>();
 			ar->PlayAnimation(L"BombDeathAX");
+			Sound* sound = Resources::Load<Sound>(L"efbombsound"
+				, L"..\\Resource\\sound\\efbomb.wav");
+			sound->Play(false);
+			sound->SetVolume(50.0f);
 			mState = BombState::death;
 		}
 	}
@@ -249,6 +270,10 @@ namespace sb
 			Rigidbody* rb = GetComponent<Rigidbody>();
 			ar->PlayAnimation(L"BombDeathAX");
 			mState = BombState::death;
+			Sound* sound = Resources::Load<Sound>(L"efbombsound"
+				, L"..\\Resource\\sound\\efbomb.wav");
+			sound->Play(false);
+			sound->SetVolume(50.0f);
 		}
 	}
 }

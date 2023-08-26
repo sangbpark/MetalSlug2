@@ -10,6 +10,7 @@
 #include "sbMiddleBossColumn.h"
 #include "sbMiddleBossSmoke.h"
 #include "sbObject.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -60,6 +61,10 @@ namespace sb
 			NormalBulletCollisionEnter(other);
 			if (mHp <= 0.0f)
 			{
+				Sound* sound = Resources::Load<Sound>(L"middleDeath"
+					, L"..\\Resource\\sound\\MiddleBOSSdeath.wav");
+				sound->Play(false);
+				sound->SetVolume(100.0f);
 				MiddleBossColumn* mdc = dynamic_cast<MiddleBossColumn*>(mOwner);
 				mdc->SetMiddleBossColumn(MiddleBossColumn::eState::Death);
 				Animator* at = GetComponent<Animator>();
@@ -83,6 +88,10 @@ namespace sb
 
 		if (mFireTime <= 0.0f)
 		{
+			Sound* sound = Resources::Load<Sound>(L"middlefire"
+				, L"..\\Resource\\sound\\middlefire.wav");
+			sound->Play(false);
+			sound->SetVolume(50.0f);
 			Vector2 pos = tr->GetPosition();
 			pos.y += 10.0f;
 			MiddleBossSmoke* mbs = object::Instantiate<MiddleBossSmoke>(eLayerType::Effects, pos);

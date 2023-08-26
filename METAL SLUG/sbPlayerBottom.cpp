@@ -1990,6 +1990,7 @@ namespace sb
 		}
 		Vector2 pos2 = Vehicltr->GetPosition();
 		pos.y = pos2.y - 90.0f;
+		pos = CameraOut(pos);
 		tr->SetPosition(pos);
 	}
 

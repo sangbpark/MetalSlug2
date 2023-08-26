@@ -2682,6 +2682,7 @@ namespace sb
 			else
 				at->PlayAnimation(L"hPlayerIdleleftTAX", true);
 		}
+		mHeavyBullet = 0.0f;
 		mState = eState::Stop;
 	}
 

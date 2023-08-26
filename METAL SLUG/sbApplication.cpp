@@ -6,6 +6,7 @@
 #include "sbMission1.h"
 #include "sbCamera.h"
 #include "sbCollisionManager.h"
+#include "sbSoundManager.h"
 
 namespace sb
 {
@@ -50,6 +51,7 @@ namespace sb
 
 		Time::Initailize();
 		Input::Initailize();
+		SoundManager::Initialize();
 		Camera::Initialize();
 
 		CollisionManager::Initialize();

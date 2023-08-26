@@ -1,5 +1,6 @@
 #include "sbSceneManager.h"
 #include "sbMission1.h"
+#include "sbEndScene.h"
 #include "sbTitleScene.h"
 #include "sbInput.h"
 
@@ -14,7 +15,7 @@ namespace sb
 	{
 		CreateScene<TitleScene>(L"TitleScene");
 		CreateScene<Mission1>(L"Mission1");
-
+		CreateScene<EndScene>(L"EndScene");
 		LoadScene(L"TitleScene");
 	}
 

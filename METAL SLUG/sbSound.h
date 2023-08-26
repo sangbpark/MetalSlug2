@@ -1,11 +1,5 @@
 #pragma once
-class Sound
-{
-};
-#pragma once
 #include "sbResource.h"
-
-
 
 namespace sb
 {

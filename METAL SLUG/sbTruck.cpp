@@ -83,6 +83,10 @@ namespace sb
 				at->PlayAnimation(L"TruckdestroyAX",true);
 				HeavyMachineGun* hmg = object::Instantiate<HeavyMachineGun>(eLayerType::Effects, pos);
 				mState = eState::Destroy;
+				Sound* sound = Resources::Load<Sound>(L"truckdestory"
+					, L"..\\Resource\\sound\\truckDestroy.wav");
+				sound->Play(false);
+				sound->SetVolume(50.0f);
 			}
 		}
 	}
@@ -106,6 +110,11 @@ namespace sb
 		pos.x -= 150.0f * Time::DeltaTime();
 		if (pos.x <= 7200.0f)
 		{
+			mMoveSound->Stop(true);
+			Sound* sound = Resources::Load<Sound>(L"truckstop"
+				, L"..\\Resource\\sound\\TruckStop.wav");
+			sound->Play(false);
+			sound->SetVolume(50.0f);
 			Animator* at = GetComponent<Animator>();
 			pos.x = 7200.0f;
 			mState = eState::Drop;
@@ -225,5 +234,10 @@ namespace sb
 		at->SetScale(Vector2(4.5f, 4.5f));
 		at->PlayAnimation(L"TruckIdleAX");
 		col->SetSize(Vector2(500.0f, 350.0f));
+		Sound* sound = Resources::Load<Sound>(L"truckmove"
+			, L"..\\Resource\\sound\\TruckMove.wav");
+		sound->Play(true);
+		sound->SetVolume(50.0f);
+		mMoveSound = sound;
 	}
 }

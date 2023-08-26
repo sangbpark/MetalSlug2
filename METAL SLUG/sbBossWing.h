@@ -1,5 +1,6 @@
 #pragma once
 #include "sbGameObject.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -46,5 +47,7 @@ namespace sb
 		eWingState mWingState;
 		eWingPosition mWingPosition;
 		GameObject* mOwner;
+		Sound* mSound;
+		Sound* mAttackSound;
 	};
 }

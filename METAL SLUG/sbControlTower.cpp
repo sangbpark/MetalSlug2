@@ -6,6 +6,8 @@
 #include "sbCameraPlayer.h"
 #include "sbMiddleBoss.h"
 #include "sbBoss.h"
+#include "sbResources.h"
+#include "sbMission1.h"
 
 namespace sb
 {
@@ -76,6 +78,11 @@ namespace sb
 			Boss* boss = object::Instantiate<Boss>(enums::eLayerType::BossMonster, Vector2(16420.0f, -500.0f));
 			mTarget = boss;
 			mState = eState::Detection;
+			Sound* sound = Resources::Load<Sound>(L"Boss"
+				, L"..\\Resource\\sound\\1-04-Boss-Stage.wav");
+			sound->Play(true);
+			mSound = sound;
+			
 		}
 	}
 	void ControlTower::Detection()
@@ -106,6 +113,7 @@ namespace sb
 			Boss* boss = dynamic_cast<Boss*>(mTarget);
 			if (boss->GetBossStage() == Boss::eBossStage::Death)
 			{
+				mSound->Stop(false);
 				mTargetlive = false;
 				mState = eState::Idle;
 				mStage = eStage::Idle;

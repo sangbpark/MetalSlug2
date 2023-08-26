@@ -7,9 +7,7 @@
 #include <string>
 #include <filesystem>
 #include <bitset>
-
 #include <assert.h>
-
 
 #include "framework.h"
 #include "sbMath.h"

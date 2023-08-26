@@ -14,11 +14,12 @@
 #include "sbTruck.h"
 #include "sbBerserker.h"
 #include "sbBoss.h"
+#include "sbSound.h"
 
 namespace sb
 {
 	sbNormalBullet::sbNormalBullet()
-		:mDeathTime(2.0f)
+		:mDeathTime(1.0f)
 		,mCreat(true)
 	{
 	}
@@ -196,5 +197,9 @@ namespace sb
 			col->SetSize(Vector2(30.0f, 20.0f));
 		}
 		sr->SetScale(Vector2(3.5f, 2.5f));
+		Sound* sound = Resources::Load<Sound>(L"normalbulletsound"
+			, L"..\\Resource\\sound\\normalbullet.wav");
+		sound->Play(false);
+		sound->SetVolume(20.0f);
 	}
 }

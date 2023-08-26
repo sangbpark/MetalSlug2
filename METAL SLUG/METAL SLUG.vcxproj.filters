@@ -220,6 +220,12 @@
     <Filter Include="Content\GameObejct\TItleCamera">
       <UniqueIdentifier>{0b826d88-ba76-414a-97f7-f1e03638fe55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Scene\LoadingScene">
+      <UniqueIdentifier>{644d3832-6672-4b63-a4a9-bbe1dd1c5619}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Scene\EndScene">
+      <UniqueIdentifier>{3c57f81d-b44b-4f22-bc54-f980fe7c95fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -444,6 +450,12 @@
     <ClInclude Include="sbTitleCamera.h">
       <Filter>Content\GameObejct\TItleCamera</Filter>
     </ClInclude>
+    <ClInclude Include="sbLoadingScene.h">
+      <Filter>Engine\Scene\LoadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="sbEndScene.h">
+      <Filter>Content\Scene\EndScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="METAL SLUG.ico">
@@ -658,6 +670,12 @@
     </ClCompile>
     <ClCompile Include="sbTitleCamera.cpp">
       <Filter>Content\GameObejct\TItleCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="sbLoadingScene.cpp">
+      <Filter>Engine\Scene\LoadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="sbEndScene.cpp">
+      <Filter>Content\Scene\EndScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

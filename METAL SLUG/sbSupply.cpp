@@ -7,6 +7,7 @@
 #include "sbResources.h"
 #include "sbPlayerBottom.h"
 #include "sbTime.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -45,6 +46,9 @@ namespace sb
 		{
 			player->SetEfBombCount(10);
 			Destroy(this);
+			Sound* sound = Resources::Load<Sound>(L"supply"
+				, L"..\\Resource\\sound\\ok-metal-slug-sound.wav");
+			sound->Play(false);
 		}
 	}
 

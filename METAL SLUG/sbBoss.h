@@ -1,5 +1,6 @@
 #pragma once
 #include "sbGameObject.h"
+#include "sbSound.h"
 
 namespace sb
 {

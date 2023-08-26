@@ -7,6 +7,7 @@
 #include "sbResources.h"
 #include "sbPlayerBottom.h"
 #include "sbTime.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -47,6 +48,9 @@ namespace sb
 			player->SetChange(true);
 			player->SetHeavyBulletCount(200);
 			Destroy(this);
+			Sound* sound = Resources::Load<Sound>(L"HeavyMachine"
+				, L"..\\Resource\\sound\\heavy-machine-gun.wav");
+			sound->Play(false);
 		}
 	}
 

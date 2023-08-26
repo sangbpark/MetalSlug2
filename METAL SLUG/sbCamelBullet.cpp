@@ -15,6 +15,7 @@
 #include "sbAnimator.h"
 #include "sbCamelBullet.h"
 #include "sbBoss.h"
+#include "sbSound.h"
 
 namespace sb
 {
@@ -188,5 +189,9 @@ namespace sb
 		at->SetScale(Vector2(4.5f, 4.5f));
 		at->PlayAnimation(L"CamelBulletIdleAX");
 		col->SetSize(Vector2(20.0f, 20.0f));
+		Sound* sound = Resources::Load<Sound>(L"heavybulletsound"
+			, L"..\\Resource\\sound\\Heavy.wav");
+		sound->Play(false);
+		sound->SetVolume(30.0f);
 	}
 }

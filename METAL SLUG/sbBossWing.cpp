@@ -63,6 +63,8 @@ namespace sb
 		Boss* boss = dynamic_cast<Boss*>(mOwner);
 		if (boss->GetBossStage() == Boss::eBossStage::Death)
 		{
+			mSound->Stop(false);
+			mAttackSound->Stop(false);
 			this->Pause();
 		}
 	}
@@ -94,6 +96,8 @@ namespace sb
 		Animator* at = GetComponent<Animator>(); 
 		if (at->Getcomplete())
 		{
+			mSound->Stop(true);
+			mAttackSound->Play(true);
 			Boss* boss = dynamic_cast<Boss*>(mOwner);
 			boss->SetBossStage(Boss::eBossStage::Attack);
 			Collider* col = GetComponent<Collider>();
@@ -117,6 +121,8 @@ namespace sb
 				at->PlayAnimation(L"WingRestleftAX");
 			else
 				at->PlayAnimation(L"WingRestrightAX");
+			mAttackSound->Stop(true);
+			mSound->Play(true);
 			mWingState = eWingState::Rest;
 		}
 	}
@@ -160,5 +166,14 @@ namespace sb
 		at->CreateAnimation(L"WingAttackrightAX", image, Vector2(0.0f, 880.0f), Vector2(88.0f, 176.0f), 6, Vector2(0.0f, 0.0f));
 		at->CreateAnimation(L"WingRestrightAX", image, Vector2(0.0f, 1056.0f), Vector2(88.0f, 176.0f), 16, Vector2(0.0f, 0.0f));	
 		at->SetScale(Vector2(4.5f, 4.5f));
+		Sound* sound = Resources::Load<Sound>(L"bosssound"
+			, L"..\\Resource\\sound\\bossmeet.wav");
+		sound->Play(true);
+		sound->SetVolume(20.0f);
+		mSound = sound;
+		Sound* sound2 = Resources::Load<Sound>(L"bossattacksound"
+			, L"..\\Resource\\sound\\bossattack.wav");
+		mAttackSound = sound2;
+		mAttackSound->SetVolume(70.0f);
 	}
 }

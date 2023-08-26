@@ -12,6 +12,7 @@
 #include "sbEfBomb.h"
 #include "sbPlayerBottom.h"
 #include "sbHeavyBullet.h"
+#include "sbSound.h"
 
 
 
@@ -71,6 +72,9 @@ namespace sb
 				else
 					at->PlayAnimation(L"berserkerdeathleftAX");
 				mState = eState::Death;
+				Sound* sound = Resources::Load<Sound>(L"arabiandeath"
+					, L"..\\Resource\\sound\\metal-slug-arabian-scream.wav");
+				sound->Play(false);
 			}
 		}
 

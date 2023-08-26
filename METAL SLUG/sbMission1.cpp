@@ -30,10 +30,14 @@
 #include "sbBoss.h"
 #include "sbBGBackGround.h"
 #include "sbInput.h"
+#include "sbTime.h"
+#include "sbLoadingScene.h"
+
 
 namespace sb
 {
 	Mission1::Mission1()
+		: mEndTime(0.0f)
 	{
 	}
 	Mission1::~Mission1()
@@ -155,6 +159,10 @@ namespace sb
 		Collider* col = floor2->AddComponent<Collider>();
 		col->SetSize(Vector2(20000.0f, 100.0f));
 
+		Sound* sound = Resources::Load<Sound>(L"bgsound"
+			, L"..\\Resource\\sound\\Metal-Slug-2.wav");
+		mSound = sound;
+		cameraplayer->SetSound(mSound);
 		
 		
 		Camera::SetTarget(cameraplayer);
@@ -175,6 +183,11 @@ namespace sb
 	}
 	void Mission1::Update()
 	{
+		if(LoadingScene::GetSceneLoading())
+		{
+			mSound->Play(true);
+			LoadingScene::SetSceneNext(false);
+		}
 		Scene::Update();
 		Camera::SetTarget(mCamera);
 		Camera::Update();
@@ -188,8 +201,24 @@ namespace sb
 		Collider::SetColliderRender(mColliderRender);
 		if (CameraPlayer::GetStageClear())
 		{
-			Camera::Clear();
-			SceneManager::LoadScene(L"TitleScene");
+
+			if (mEndTime == 0.0f)
+			{
+				Sound* sound = Resources::Load<Sound>(L"missionComplete"
+					, L"..\\Resource\\sound\\metal-slug-mission-complete-_1_.wav");
+				sound->Play(false);
+				sound->SetVolume(150.0f);
+			}
+			mEndTime += Time::DeltaTime();
+		
+			if(mEndTime>= 10.0f)
+			{
+				mEndTime = 0.0f;
+				Camera::Clear();
+				SceneManager::LoadScene(L"EndScene");
+				LoadingScene::SetSceneLoading(true);
+				LoadingScene::SetSceneNext(true);
+			}
 			
 		}
 	}
@@ -198,6 +227,10 @@ namespace sb
 	void Mission1::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
+		LoadingScene::Render(hdc);
+		if (!LoadingScene::GetSceneNext())
+			LoadingScene::SetSceneLoading(false);
 
 	}
+
 }
