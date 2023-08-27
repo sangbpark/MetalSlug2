@@ -1979,6 +1979,7 @@ namespace sb
 
 		Transform* tr = GetComponent<Transform>();
 		Transform* Vehicltr = mVehicle->GetComponent<Transform>();
+		mDirect = true;
 		Vector2 pos = tr->GetPosition();
 		if (Input::GetKey(eKeyCode::RIGHT))
 		{

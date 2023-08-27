@@ -138,7 +138,7 @@ namespace sb
 			; iter++)
 		{
 			auto middlebossrocket = *iter;
-			if (middlebossrocket == nullptr)
+			if (middlebossrocket->GetState() == eGameObjectState::Pause)
 				continue;
 			if (middlebossrocket->GetMiddleRocketState() != MiddleBossRocket::eState::Death)
 			{

@@ -169,7 +169,7 @@ namespace sb
 		mDeath = true;
 		Animator* at = GetComponent<Animator>();
 		if (at->Getcomplete())
-			Destroy(this);
+			this->Pause();
 	}
 	void MiddleBossRocket::ResourceLoad()
 	{
