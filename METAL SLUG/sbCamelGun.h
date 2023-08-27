@@ -23,5 +23,6 @@ namespace sb
 
 	private:
 		GameObject* mOwner;
+		bool mFire;
 	};
 }

@@ -39,10 +39,13 @@ namespace sb
 		void CreatHeavyBullet(float Rotation, math::Vector2 offset = math::Vector2::Zero, bool Down = false);
 		eCamelState GetCamelState() { return mState; }
 		float GetCamelRotate() { return mRotate; }
+		bool GetFire() { return mFire; }
+		void SetFire(bool value) { mFire = value; }
 
 	private:
 		eCamelState mState;
 		bool mRideOn;
+		bool mFire;
 		GameObject* mOwner;
 		GameObject* mGun;
 		float mRotate;

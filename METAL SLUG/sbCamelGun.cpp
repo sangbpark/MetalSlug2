@@ -11,6 +11,7 @@
 namespace sb
 {
 	CamelGun::CamelGun()
+		:mFire(false)
 	{
 		ResourseLoad();
 	}
@@ -25,9 +26,23 @@ namespace sb
 		GameObject::Update();
 		Transform* tr = GetComponent<Transform>();
 		Transform* ownertr = mOwner->GetComponent<Transform>();
+		Animator* at = GetComponent<Animator>();
 		Vector2 pos = ownertr->GetPosition();
 		Camel* ca = dynamic_cast<Camel*>(mOwner);
 		tr->SetRotation(ca->GetCamelRotate());
+		if (ca->GetFire()
+			&& !mFire)
+		{
+			mFire = true;
+			at->PlayAnimation(L"camelbulletGunAX");
+		}
+		if (at->Getcomplete())
+		{
+			mFire = false;
+			at->PlayAnimation(L"camelbulletIdleAX");
+			ca->SetFire(false);
+		}
+
 		if(ca->GetCamelState() == Camel::eCamelState::Ready)
 		{
 			pos.x -= 80.0f;
@@ -60,8 +75,8 @@ namespace sb
 		Transform* tr = AddComponent<Transform>();
 		Texture* image = Resources::Load<Texture>(L"CamelGun",
 			L"..\\Resource\\Vehicle\\camelbullet.png");
-		at->CreateAnimation(L"camelbulletIdleAX", image, Vector2(0.0f, 0.0f), Vector2(176.0f, 176.0f), 1, Vector2(0.0f, -20.0f));
-		at->CreateAnimation(L"camelbulletGunAX", image, Vector2(0.0f, 176.0f), Vector2(176.0f, 176.0f), 4, Vector2(0.0f, -20.0f));
+		at->CreateAnimation(L"camelbulletIdleAX", image, Vector2(0.0f, 0.0f), Vector2(176.0f, 176.0f), 1, Vector2(0.0f, 0.0f));
+		at->CreateAnimation(L"camelbulletGunAX", image, Vector2(0.0f, 176.0f), Vector2(176.0f, 176.0f), 4, Vector2(0.0f, 0.0f),0.001f);
 		at->SetScale(Vector2(3.5f, 3.5f));
 		at->PlayAnimation(L"camelbulletIdleAX", true);
 	}

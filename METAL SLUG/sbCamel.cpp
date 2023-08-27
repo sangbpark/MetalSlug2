@@ -22,6 +22,7 @@ namespace sb
 		, mBulletTime(0.0f)
 		, mRideTime(0.0f)
 		, mDeathTime(0.0f)
+		, mFire(false)
 	{
 		ResourceLoad();
 	}
@@ -116,30 +117,9 @@ namespace sb
 		{
 			if(mBulletTime <= 0.0f)
 			{
-				Vector2 pos = Vector2(0.0f, 0.0f);
-				if (mRotate == 0.0f)
-				{
-					pos = Vector2(0.0f, -20.0f);
-				}
-				else if (mRotate < 0.0f
-					&& mRotate >-20.0f)
-				{
-					pos = Vector2(-20.0f, -10.0f);
-				}
-				else if (mRotate <= -20.0f)
-				{
-					pos = Vector2(-20.0f, 0.0f);
-				}
-				else if (mRotate >= 180.0f
-					&& mRotate <= 200.0f)
-				{
-					pos = Vector2(0.0f, 30.0f);
-				}
-				else
-				{
-					pos = Vector2(30.0f, 0.0f);
-				}
-				CreatHeavyBullet(-mRotate, pos);
+				if(mFire==false)
+					mFire = true;
+				CreatHeavyBullet(-mRotate, Vector2(0.0f,0.0f));
 				mBulletTime = 0.1f;
 			}
 		}

@@ -141,7 +141,7 @@ namespace sb
 		//Arabian* arabian25 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(15000.0f, 500.0f));
 		//Arabian* arabian26 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(14900.0f, 500.0f));
 
-		Camel* camel = object::Instantiate<Camel>(enums::eLayerType::Vehicle, Vector2(11000.0f, 200.0f));
+		Camel* camel = object::Instantiate<Camel>(enums::eLayerType::Vehicle, Vector2(750.0f, 200.0f));
 
 		PlayerBottom* playerbottom = object::Instantiate<PlayerBottom>(enums::eLayerType::Player, Vector2(750.0f, 200.0f));
 
