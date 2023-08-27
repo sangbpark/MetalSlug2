@@ -114,15 +114,15 @@ namespace sb
 
 	
 
-		//Arabian* arabian1 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(1500.0f, 500.0f));
-		//Arabian* arabian2 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(1700.0f, 500.0f));
-		//Arabian* arabian3 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(1900.0f, 500.0f));
-		//Arabian* arabian4 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(2200.0f, 500.0f));
-		//Arabian* arabian5 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(2500.0f, 500.0f));
-		//Arabian* arabian6 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(3000.0f, 500.0f));
-		//Arabian* arabian7 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(3500.0f, 500.0f));
-		//Arabian* arabian8 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(3600.0f, 500.0f));
-		//Arabian* arabian9 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(5000.0f, 500.0f));
+		//Arabian* arabian1 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(1500.0f, 600.0f));
+		//Arabian* arabian2 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(1700.0f, 600.0f));
+		//Arabian* arabian3 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(1900.0f, 600.0f));
+		//Arabian* arabian4 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(2200.0f, 600.0f));
+		//Arabian* arabian5 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(2500.0f, 600.0f));
+		//Arabian* arabian6 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(3000.0f, 600.0f));
+		//Arabian* arabian7 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(3500.0f, 600.0f));
+		//Arabian* arabian8 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(3600.0f, 600.0f));
+		//Arabian* arabian9 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(5000.0f, 600.0f));
 		//Arabian* arabian10 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(13000.0f, 500.0f));
 		//Arabian* arabian11 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(13100.0f, 500.0f));
 		//Arabian* arabian12 = object::Instantiate<Arabian>(enums::eLayerType::Monster, Vector2(13200.0f, 500.0f));
@@ -143,12 +143,13 @@ namespace sb
 
 		Camel* camel = object::Instantiate<Camel>(enums::eLayerType::Vehicle, Vector2(750.0f, 200.0f));
 
-		PlayerBottom* playerbottom = object::Instantiate<PlayerBottom>(enums::eLayerType::Player, Vector2(750.0f, 200.0f));
+		PlayerBottom* playerbottom = object::Instantiate<PlayerBottom>(enums::eLayerType::Player, Vector2(750.0f, 600.0f));
 
 		PlayerTop* playerTop = object::Instantiate<PlayerTop>(enums::eLayerType::Player);
 		playerTop->SetPlayerBottomOnwer(playerbottom);
 		
 		
+
 	
 			
 		CameraPlayer* cameraplayer = object::Instantiate<CameraPlayer>(enums::eLayerType::Player , Vector2(600.0f, 400.0f));

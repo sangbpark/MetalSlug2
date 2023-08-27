@@ -119,7 +119,12 @@ namespace sb
 			{
 				if(mFire==false)
 					mFire = true;
-				CreatHeavyBullet(-mRotate, Vector2(0.0f,0.0f));
+
+				Transform* tr = GetComponent<Transform>();
+				Vector2 pos = tr->GetPosition();
+				Vector2 pos2 = pos + Vector2(20.0f, 20.0f);
+				pos = Rotate(pos2, mRotate);
+				CreatHeavyBullet(-mRotate, pos);
 				mBulletTime = 0.1f;
 			}
 		}
