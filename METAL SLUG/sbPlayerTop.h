@@ -119,6 +119,7 @@ namespace sb
 		bool mVictory;
 		float mHeavyBullet;
 		float mHeavyBullettime;
+
 		
 		GameObject* mPlayerBottomOwner;
 

@@ -111,6 +111,8 @@ namespace sb
 		void SetInvincible(float value) { mInvincible = value; }
 		void SetVehicle(GameObject* vehicle) { mVehicle = vehicle; }
 		bool GetVictory() { return mVictory; }
+
+		bool GetPlayerTopRideOff() { return mPlayerTobRideOff; }
 		//class Texture* mFloorTexture;
 	
 		math::Vector2 CameraOut(math::Vector2 value);
@@ -133,6 +135,7 @@ namespace sb
 		bool mStop;
 		bool mRide;
 		bool mVictory;
+		bool mPlayerTobRideOff;
 		GameObject* mVehicle;
 		math::Vector2 mCameraTransform;
 

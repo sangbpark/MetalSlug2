@@ -48,8 +48,7 @@ namespace sb
 		GameObject::Update();
 
 		GetPlayerBottomState();
-		if(!mRide
-			|| !mVictory)
+		if(!mVictory)
 		{
 			if (mWeaponState == eWeaponState::heavy)
 				mHeavyBullettime += Time::DeltaTime();
@@ -244,6 +243,8 @@ namespace sb
 
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 
@@ -396,6 +397,8 @@ namespace sb
 	
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 				if (mDirect)
@@ -501,6 +504,8 @@ namespace sb
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 				if (mDirect)
@@ -841,6 +846,8 @@ namespace sb
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 				if (mDirect)
@@ -1401,6 +1408,8 @@ namespace sb
 
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 
@@ -1559,6 +1568,8 @@ namespace sb
 
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 				if (mDirect)
@@ -1862,6 +1873,8 @@ namespace sb
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 				if (mDirect)
@@ -1956,6 +1969,8 @@ namespace sb
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 				if (mDirect)
@@ -2195,6 +2210,8 @@ namespace sb
 		}
 		if (Input::GetKey(eKeyCode::DOWN))
 		{
+			if (mRide)
+				return;
 			if (mbGround)
 			{
 				if (mDirect)
@@ -2759,6 +2776,7 @@ namespace sb
 			at->PlayAnimation(L"PlayerreviveTAX");
 			mState = eState::Victory;
 		}
+
 		Transform* tr = GetComponent<Transform>();
 		Vector2 pos = playerbottom->GetPlayerPosition();
 		pos.y = pos.y - 30.0f;

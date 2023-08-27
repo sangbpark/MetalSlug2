@@ -41,6 +41,7 @@ namespace sb
 		, mStop(false)
 		, mRide(false)
 		, mVictory(false)
+		, mPlayerTobRideOff(false)
 	{
 		ResourceLoad();
 	}
@@ -2039,6 +2040,7 @@ namespace sb
 		Rigidbody* rb = GetComponent<Rigidbody>();
 		rb->SetGround(true);
 		at->PlayAnimation(L"PlayerIdlerideAX");
+		mPlayerTobRideOff = false;
 		mState = eState::RIde;
 
 	}
@@ -2054,6 +2056,7 @@ namespace sb
 		else
 			at->PlayAnimation(L"PlayerleftjumpBAX");
 		mRide = false;
+		mPlayerTobRideOff = true;
 		mState = eState::jump;
 	}
 
