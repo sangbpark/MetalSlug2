@@ -21,6 +21,8 @@ namespace sb
 
 		void SetPlayerBomb(int value) { mPlayerBomb = value; }
 		void SetPlayerHeavyBullet(int value) { mPlayerHeavyBullet = value; }
+
+		void GdiTest(HDC hdc);
 	private:
 		int mPlayerBomb;
 		int mPlayerHeavyBullet;

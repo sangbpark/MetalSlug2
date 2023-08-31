@@ -15,5 +15,5 @@
 #include <tchar.h>
 
 #include <gdiplus.h>
-
+#pragma comment(lib, "gdi32.lib")
 #pragma comment(lib, "Gdiplus.lib")

@@ -49,6 +49,7 @@ namespace sb
 			= (HBITMAP)SelectObject(mBackHdc, mBackBuffer);
 		DeleteObject(defaultBitmap);
 
+
 		Time::Initailize();
 		Input::Initailize();
 		SoundManager::Initialize();

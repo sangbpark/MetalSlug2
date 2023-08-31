@@ -13,6 +13,10 @@ namespace sb
 		virtual void Update() override;
 		virtual void Render(HDC hdc) override;
 
+		void MapResource();
+		void CharacterResource();
+		void CollisionResource();
+
 	private:
 		float mEndTime;
 		bool mColliderRender;

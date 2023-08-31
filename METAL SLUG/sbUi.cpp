@@ -3,6 +3,7 @@
 #include "sbResources.h"
 #include "sbSpriteRenderer.h"
 #include "sbTransform.h"
+
 namespace sb
 {
 	Ui::Ui()
@@ -25,6 +26,7 @@ namespace sb
 		GameObject::Render(hdc);
 		RenderBomb(hdc);
 		RenderHeavyBullet(hdc);
+		//GdiTest(hdc);
 	}
 	void Ui::ResourceLoad()
 	{
@@ -38,6 +40,7 @@ namespace sb
 	}
 	void Ui::RenderBomb(HDC hdc)
 	{
+	
 		wchar_t szFloat[50] = {};
 		HFONT hFONT = CreateFont(35, 0, 0, 0, FW_BOLD, FALSE, FALSE, 0,
 			DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
@@ -63,5 +66,25 @@ namespace sb
 		TextOut(hdc, 410, 80, szFloat, strLen);
 		SelectObject(hdc, OldFont);
 		DeleteObject(hFONT);
+	}
+	void Ui::GdiTest(HDC hdc)
+	{
+		wchar_t szFloat[50] = {};
+		swprintf_s(szFloat, 50, L"%d", mPlayerBomb);
+		int strLen = wcsnlen_s(szFloat, 50);
+		
+		AddFontResourceW(L"..\\Resource\\Ui\\metalslugfont.fnt");
+
+		Gdiplus::Graphics graphics(hdc);
+		
+		Gdiplus::FontFamily fontFamily(L"metalslugfont");
+		
+		Gdiplus::Font F(&fontFamily, 20, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel);
+
+		Gdiplus::PointF P(520.0f, 80.0f);
+
+		Gdiplus::SolidBrush B(Gdiplus::Color(0, 0, 255));
+
+		graphics.DrawString(szFloat, -1, &F, P, &B);
 	}
 }

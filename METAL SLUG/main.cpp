@@ -17,6 +17,7 @@ sb::Application application;                   // 내가 만든application 추�
 ULONG_PTR gdiplusToken;
 Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 
+
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
