@@ -2083,6 +2083,7 @@ namespace sb
 		mDirect = true;
 		mState = eState::Idle;
 		mHeavyBulletCount = 0;
+		mEfBombCount = 10;
 		mWeaponState = eWeaponState::normal;
 	}
 	

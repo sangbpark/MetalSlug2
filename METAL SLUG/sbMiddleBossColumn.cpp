@@ -147,7 +147,7 @@ namespace sb
 	}
 	void MiddleBossColumn::Find()
 	{
-		if (PlayerBottom::GetPlayerPosition().x >= 8950.0f)
+		if (PlayerBottom::GetPlayerPosition().x >= 8900.0f)
 		{
 			mTime += Time::DeltaTime();
 			if(mTime >= 3.4f)
